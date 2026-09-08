@@ -2821,14 +2821,43 @@ void BattleUnit::updateMovementFalling(GameState &state, unsigned int &moveTicks
 		}
 	}
 
+	auto &map = tileObject->map;
+	bool descending = newPosition.z < previousPosition.z;
+	bool landedOnFloor = false;
+	bool inGoalColumn = launched && descending && (int)newPosition.x == (int)launchGoal.x &&
+	                    (int)newPosition.y == (int)launchGoal.y;
+	if (descending && (collisionIgnoredTicks == 0 || inGoalColumn) && newPosition.x >= 0.0f &&
+	    newPosition.x < map.size.x && newPosition.y >= 0.0f && newPosition.y < map.size.y)
+	{
+		int topZ = std::min((int)previousPosition.z, map.size.z - 1);
+		int bottomZ = std::max((int)std::floor(newPosition.z), 0);
+		for (int z = topZ; z >= bottomZ && !landedOnFloor; z--)
+		{
+			auto *t = map.getTile((int)newPosition.x, (int)newPosition.y, z);
+			if (!t->getCanStand(isLarge()))
+			{
+				continue;
+			}
+			float surfaceZ = t->getRestingPosition(isLarge()).z;
+			if (surfaceZ <= previousPosition.z && surfaceZ > newPosition.z)
+			{
+				newPosition.z = surfaceZ;
+				landedOnFloor = true;
+			}
+		}
+	}
+
 	// Fell into a unit
 	if (isConscious())
 	{
-		auto presentUnit =
-		    tileObject->map.getTile(newPosition)->getUnitIfPresent(true, true, false, tileObject);
-		if (presentUnit)
+		auto *newTile = map.getTile(newPosition);
+		if (newTile)
 		{
-			updateFallingIntoUnit(state, *presentUnit->getUnit());
+			auto presentUnit = newTile->getUnitIfPresent(true, true, false, tileObject);
+			if (presentUnit)
+			{
+				updateFallingIntoUnit(state, *presentUnit->getUnit());
+			}
 		}
 	}
 
@@ -2890,10 +2919,10 @@ void BattleUnit::updateMovementFalling(GameState &state, unsigned int &moveTicks
 	atGoal = true;
 
 	// Check if reached ground
-	if (collisionIgnoredTicks == 0)
+	if (collisionIgnoredTicks == 0 || landedOnFloor || inGoalColumn)
 	{
 		auto restingPosition = tileObject->getOwningTile()->getRestingPosition(isLarge());
-		if (position.z < restingPosition.z)
+		if (landedOnFloor || position.z < restingPosition.z)
 		{
 			// Stopped falling
 			falling = false;
