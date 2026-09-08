@@ -1620,6 +1620,10 @@ void BattleUnit::applyDamageDirect(GameState &state, int damage, bool generateFa
 	else
 	{
 		bool lessThanOneThird = agent->modified_stats.health * 3 / agent->current_stats.health == 0;
+		if (agent->owner == state.getPlayer())
+		{
+			agent->recordHealthLost(std::min(damage, std::max(0, agent->modified_stats.health)));
+		}
 		agent->modified_stats.health -= damage;
 		agent->modified_stats.loseMorale(damage * 50 * (15 - agent->modified_stats.bravery / 10) /
 		                                 agent->current_stats.health / 100);
@@ -2283,6 +2287,11 @@ void BattleUnit::updateWoundsAndHealing(GameState &state, unsigned int ticks)
 		{
 			if (w.second > 0)
 			{
+				if (agent->owner == state.getPlayer())
+				{
+					agent->recordHealthLost(
+					    std::min(w.second, std::max(0, agent->modified_stats.health)));
+				}
 				agent->modified_stats.health -= w.second;
 				if (isHealing && healingBodyPart == w.first)
 				{
@@ -4708,11 +4717,12 @@ bool BattleUnit::useSpawner(GameState &state, const AEquipmentType &item)
 void BattleUnit::die(GameState &state, StateRef<BattleUnit> attacker, bool violently)
 {
 	auto attackerOrg = attacker ? attacker->agent->owner : nullptr;
-	if (attacker)
+	auto ourOrg = agent->owner;
+	if (attacker && attackerOrg == state.getPlayer() &&
+	    attackerOrg->isRelatedTo(ourOrg) == Organisation::Relation::Hostile)
 	{
 		attacker->recordKill();
 	}
-	auto ourOrg = agent->owner;
 	bool destroy = false;
 	// Violent deaths (spawn stuff, blow up)
 	if (violently)

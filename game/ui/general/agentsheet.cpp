@@ -72,11 +72,12 @@ void AgentSheet::displayHistory(const Agent &item)
 	killCount << item.getKills();
 	historyForm->findControlTyped<Label>("VALUE_KILL_COUNT")->setText(killCount.str());
 
-	for (unsigned int i = 5; i > item.getMedalTier(); i--)
+	const auto medalTier = item.getMedalTier(*state);
+	for (unsigned int i = 1; i <= 5; i++)
 	{
 		auto formLabel = format("MEDAL_{0}", i);
 		auto medalFormElement = historyForm->findControlTyped<Graphic>(formLabel);
-		medalFormElement->setVisible(false);
+		medalFormElement->setVisible(i <= medalTier);
 	}
 }
 

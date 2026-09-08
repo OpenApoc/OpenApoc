@@ -1494,10 +1494,38 @@ unsigned int Agent::getKills() const { return killCount; }
 
 unsigned int Agent::getMissions() const { return missionCount; }
 
-unsigned int Agent::getMedalTier() const { return 0; }
+unsigned int Agent::getVictoryPoints(const GameState &state) const
+{
+	return std::max(victoryPoints, missionCount * 10 + killCount) + getDaysInService(state);
+}
 
-void Agent::incrementMissionCount() { missionCount++; }
+unsigned int Agent::getMedalTier(const GameState &state) const
+{
+	static const unsigned int thresholds[] = {200, 400, 700, 1000, 1500};
+	const auto points = getVictoryPoints(state);
+	unsigned int tier = 0;
+	for (const auto &threshold : thresholds)
+	{
+		if (points >= threshold)
+		{
+			tier++;
+		}
+	}
+	return tier;
+}
 
-void Agent::incrementKillCount() { killCount++; }
+void Agent::incrementMissionCount()
+{
+	missionCount++;
+	victoryPoints += 10;
+}
+
+void Agent::incrementKillCount()
+{
+	killCount++;
+	victoryPoints++;
+}
+
+void Agent::recordHealthLost(int amount) { victoryPoints += std::max(0, amount); }
 
 } // namespace OpenApoc
