@@ -4009,6 +4009,84 @@ void BattleUnit::launch(GameState &state, Vec3<float> targetPosition, BodyState 
 	beginBodyStateChange(state, bodyState);
 }
 
+bool BattleUnit::canJumpDown(Vec3<int> target, Vec3<float> &landing)
+{
+	if (!tileObject || isLarge() || canFly() || !isConscious())
+	{
+		return false;
+	}
+	auto &map = tileObject->map;
+	auto *ownTile = tileObject->getOwningTile();
+	Vec3<int> from = ownTile->position;
+	if (target.x == from.x && target.y == from.y)
+	{
+		return false;
+	}
+	if (std::abs(target.x - from.x) > 1 || std::abs(target.y - from.y) > 1)
+	{
+		return false;
+	}
+	if (target.z > from.z || target.z < 0 || !map.tileIsValid({target.x, target.y, from.z}))
+	{
+		return false;
+	}
+	float ownSurface = ownTile->getRestingPosition(false).z;
+	auto *edgeTile = map.getTile(target.x, target.y, from.z);
+	Tile *landingTile = nullptr;
+	for (int z = from.z; z >= 0; z--)
+	{
+		auto *t = map.getTile(target.x, target.y, z);
+		if (!t->getCanStand(false))
+		{
+			continue;
+		}
+		if (t->getRestingPosition(false).z >= ownSurface)
+		{
+			return false;
+		}
+		landingTile = t;
+		break;
+	}
+	if (!landingTile || target.z < landingTile->position.z)
+	{
+		return false;
+	}
+	BattleUnitTileHelper helper(map, *this);
+	if (!helper.canEnterTile(nullptr, landingTile) ||
+	    landingTile->getUnitIfPresent(true, true, false, tileObject))
+	{
+		return false;
+	}
+	BattleUnitTileHelper edgeHelper(map, false, false, true, agent->type->bodyType->maxHeight,
+	                                tileObject);
+	bool jumped = false;
+	bool doorInTheWay = false;
+	float cost = 0.0f;
+	if (!edgeHelper.canEnterTile(ownTile, edgeTile, landingTile != edgeTile, jumped, cost,
+	                             doorInTheWay, true, true, true) ||
+	    doorInTheWay)
+	{
+		return false;
+	}
+	landing = landingTile->getRestingPosition(false);
+	return true;
+}
+
+void BattleUnit::jumpDown(GameState &state, Vec3<float> landing, BodyState bodyState)
+{
+	Vec3<float> targetVectorXY = {landing.x - position.x, landing.y - position.y, 0.0f};
+	if (glm::length(targetVectorXY) == 0.0f)
+	{
+		return;
+	}
+	startFalling(state);
+	launchGoal = landing;
+	launched = true;
+	velocity = glm::normalize(targetVectorXY) * 0.5f * VELOCITY_SCALE_BATTLE;
+	collisionIgnoredTicks = (int)ceilf(36.0f / glm::length(velocity / VELOCITY_SCALE_BATTLE)) + 1;
+	beginBodyStateChange(state, bodyState);
+}
+
 void BattleUnit::startMoving(GameState &state)
 {
 	auto targetMovementMode = missions.empty()

@@ -1577,19 +1577,25 @@ void BattleUnitMission::update(GameState &state, BattleUnit &u, unsigned int tic
 	switch (this->type)
 	{
 		case Type::Jump:
-			if (!jumped && !u.falling && u.atGoal && u.facing == u.goalFacing &&
+			if (!cancelled && !jumped && !u.falling && u.atGoal && u.facing == u.goalFacing &&
 			    u.facing == targetFacing &&
 			    (u.current_body_state == u.target_body_state ||
 			     targetBodyState == BodyState::Jumping) &&
 			    u.target_body_state == targetBodyState)
 			{
-				// Jumping cost assumed same as walking into tile
-				int cost = STANDART_MOVE_TU_COST;
-				if (!spendAgentTUs(state, u, cost, true))
+				if (targetBodyState == BodyState::Jumping)
 				{
-					return;
+					// Jumping cost assumed same as walking into tile
+					if (!spendAgentTUs(state, u, STANDART_MOVE_TU_COST, true))
+					{
+						return;
+					}
+					u.launch(state, jumpTarget, targetBodyState);
 				}
-				u.launch(state, jumpTarget, targetBodyState);
+				else
+				{
+					u.jumpDown(state, jumpTarget, targetBodyState);
+				}
 				jumped = true;
 			}
 			return;
@@ -1975,7 +1981,14 @@ void BattleUnitMission::start(GameState &state, BattleUnit &u)
 			{
 				u.setFacing(state, u.goalFacing);
 			}
-			cancelled = u.isLarge() || !u.canLaunch(jumpTarget);
+			if (targetBodyState == BodyState::Jumping)
+			{
+				cancelled = u.isLarge() || !u.canLaunch(jumpTarget);
+			}
+			else
+			{
+				cancelled = !u.canJumpDown((Vec3<int>)jumpTarget, jumpTarget);
+			}
 			return;
 		case Type::ChangeBodyState:
 		case Type::AcquireTU:

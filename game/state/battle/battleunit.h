@@ -524,6 +524,11 @@ class BattleUnit : public StateObject<BattleUnit>, public std::enable_shared_fro
 	// Launch unit towards target position
 	void launch(GameState &state, Vec3<float> targetPosition,
 	            BodyState bodyState = BodyState::Standing);
+	// Returns whether the unit may step off its ledge into the adjacent tile column "target",
+	// filling "landing" with the resting position it would come down on
+	bool canJumpDown(Vec3<int> target, Vec3<float> &landing);
+	// Step off the ledge towards "landing" at a constant horizontal speed, gravity does the rest
+	void jumpDown(GameState &state, Vec3<float> landing, BodyState bodyState);
 	// Start unit's falling routine
 	void startFalling(GameState &state);
 	// Make unit move
