@@ -51,6 +51,80 @@ using namespace OpenApoc;
 namespace OpenApoc
 {
 
+namespace
+{
+
+// Relative option defaults from options.cpp.
+constexpr const char *kDefaultDataPath = "./data";
+constexpr const char *kDefaultModPath = "./data/mods";
+
+// True if the path is a directory that actually holds OpenApoc data. A directory that exists
+// but holds none of these markers is a leftover, not a data directory.
+bool dataPathLooksValid(const UString &path)
+{
+	if (path.empty())
+	{
+		return false;
+	}
+	std::error_code ec;
+	fs::path p(path);
+	if (!fs::is_directory(p, ec))
+	{
+		return false;
+	}
+	return fs::exists(p / "mods", ec) || fs::exists(p / "fonts", ec) ||
+	       fs::exists(p / "city", ec) || fs::exists(p / "forms", ec);
+}
+
+// The settings file keeps whatever Framework.Data was last used, and that path can simply stop
+// existing -- a deleted checkout or worktree is the usual way. Nothing validated it, so the game
+// carried on with a dead path: every asset load failed one at a time, and the first visible
+// symptom was an unrelated-looking mod error rather than "your data path is gone".
+void applyDataPathFallback()
+{
+	const UString configured = Options::dataPathOption.get();
+	if (dataPathLooksValid(configured))
+	{
+		return;
+	}
+	if (dataPathLooksValid(kDefaultDataPath))
+	{
+		LogWarning("Data path \"{0}\" is missing; falling back to \"{1}\"", configured,
+		           kDefaultDataPath);
+		Options::dataPathOption.set(kDefaultDataPath);
+		return;
+	}
+	LogWarning("Data path \"{0}\" is missing and no fallback was found", configured);
+}
+
+// Mods live inside the data directory, so the mod path has to follow it. ModPath was resolved
+// independently, against the working directory, so pointing Framework.Data at a data directory
+// elsewhere left mods unfindable -- and unlike every other asset that failed with a hard error.
+//
+// Keyed off the *value* rather than config().optionOverridden(): the settings file routinely
+// carries a persisted "ModPath=./data/mods", which is the default written back out, not a
+// choice the user made. Treating that as an override is what left the mod path pinned.
+void applyDataRelativeModPath()
+{
+	if (Options::modPath.get() != kDefaultModPath)
+	{
+		return;
+	}
+	const UString dataPath = Options::dataPathOption.get();
+	if (dataPath.empty())
+	{
+		return;
+	}
+	const UString resolved = (fs::path(dataPath) / "mods").string();
+	if (resolved != Options::modPath.get())
+	{
+		LogInfo("Mod path follows data path: \"{0}\"", resolved);
+		Options::modPath.set(resolved);
+	}
+}
+
+} // namespace
+
 UString Framework::getDataDir() const { return Options::dataPathOption.get(); }
 
 UString Framework::getCDPath() const { return Options::cdPathOption.get(); }
@@ -185,6 +259,10 @@ Framework::Framework(const UString programName, bool createWindow)
 	logPath += "/log.txt";
 
 	enableFileLogger(logPath.c_str());
+
+	// Order matters: repair a stale data path first, so the mod path follows the repaired one.
+	applyDataPathFallback();
+	applyDataRelativeModPath();
 
 	Options::dumpOptionsToLog();
 
