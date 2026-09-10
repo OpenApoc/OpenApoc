@@ -2290,7 +2290,17 @@ void BattleView::refreshRangeText()
 
 void BattleView::orderJump(Vec3<int> target, BodyState bodyState)
 {
-	orderJump((Vec3<float>)target + Vec3<float>{0.5f, 0.5f, 0.0f}, bodyState);
+	if (battle.battleViewSelectedUnits.empty())
+	{
+		return;
+	}
+	auto unit = battle.battleViewSelectedUnits.front();
+	Vec3<float> landing;
+	if (!unit->canJumpDown(target, landing))
+	{
+		return;
+	}
+	orderJump(landing, bodyState);
 }
 
 void BattleView::orderJump(Vec3<float> target, BodyState bodyState)
@@ -2300,7 +2310,7 @@ void BattleView::orderJump(Vec3<float> target, BodyState bodyState)
 		return;
 	}
 	auto unit = battle.battleViewSelectedUnits.front();
-	unit->setMission(*state, BattleUnitMission::jump(*unit, target, bodyState));
+	unit->setMission(*state, BattleUnitMission::jump(*unit, target, bodyState, false));
 }
 
 void BattleView::updatePathPreview()

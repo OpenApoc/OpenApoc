@@ -2835,14 +2835,43 @@ void BattleUnit::updateMovementFalling(GameState &state, unsigned int &moveTicks
 		}
 	}
 
+	auto &map = tileObject->map;
+	bool descending = newPosition.z < previousPosition.z;
+	bool landedOnFloor = false;
+	bool inGoalColumn = launched && descending && (int)newPosition.x == (int)launchGoal.x &&
+	                    (int)newPosition.y == (int)launchGoal.y;
+	if (descending && (collisionIgnoredTicks == 0 || inGoalColumn) && newPosition.x >= 0.0f &&
+	    newPosition.x < map.size.x && newPosition.y >= 0.0f && newPosition.y < map.size.y)
+	{
+		int topZ = std::min((int)previousPosition.z, map.size.z - 1);
+		int bottomZ = std::max((int)std::floor(newPosition.z), 0);
+		for (int z = topZ; z >= bottomZ && !landedOnFloor; z--)
+		{
+			auto *t = map.getTile((int)newPosition.x, (int)newPosition.y, z);
+			if (!t->getCanStand(isLarge()))
+			{
+				continue;
+			}
+			float surfaceZ = t->getRestingPosition(isLarge()).z;
+			if (surfaceZ <= previousPosition.z && surfaceZ > newPosition.z)
+			{
+				newPosition.z = surfaceZ;
+				landedOnFloor = true;
+			}
+		}
+	}
+
 	// Fell into a unit
 	if (isConscious())
 	{
-		auto presentUnit =
-		    tileObject->map.getTile(newPosition)->getUnitIfPresent(true, true, false, tileObject);
-		if (presentUnit)
+		auto *newTile = map.getTile(newPosition);
+		if (newTile)
 		{
-			updateFallingIntoUnit(state, *presentUnit->getUnit());
+			auto presentUnit = newTile->getUnitIfPresent(true, true, false, tileObject);
+			if (presentUnit)
+			{
+				updateFallingIntoUnit(state, *presentUnit->getUnit());
+			}
 		}
 	}
 
@@ -2910,10 +2939,10 @@ void BattleUnit::updateMovementFalling(GameState &state, unsigned int &moveTicks
 	atGoal = true;
 
 	// Check if reached ground
-	if (collisionIgnoredTicks == 0)
+	if (collisionIgnoredTicks == 0 || landedOnFloor || inGoalColumn)
 	{
 		auto restingPosition = tileObject->getOwningTile()->getRestingPosition(isLarge());
-		if (position.z < restingPosition.z)
+		if (landedOnFloor || position.z < restingPosition.z)
 		{
 			// Stopped falling
 			falling = false;
@@ -3996,6 +4025,84 @@ void BattleUnit::launch(GameState &state, Vec3<float> targetPosition, BodyState 
 	launched = true;
 	velocity = (glm::normalize(targetVectorXY) * velocityXY + Vec3<float>{0.0f, 0.0f, velocityZ}) *
 	           VELOCITY_SCALE_BATTLE;
+	collisionIgnoredTicks = (int)ceilf(36.0f / glm::length(velocity / VELOCITY_SCALE_BATTLE)) + 1;
+	beginBodyStateChange(state, bodyState);
+}
+
+bool BattleUnit::canJumpDown(Vec3<int> target, Vec3<float> &landing)
+{
+	if (!tileObject || isLarge() || canFly() || !isConscious())
+	{
+		return false;
+	}
+	auto &map = tileObject->map;
+	auto *ownTile = tileObject->getOwningTile();
+	Vec3<int> from = ownTile->position;
+	if (target.x == from.x && target.y == from.y)
+	{
+		return false;
+	}
+	if (std::abs(target.x - from.x) > 1 || std::abs(target.y - from.y) > 1)
+	{
+		return false;
+	}
+	if (target.z > from.z || target.z < 0 || !map.tileIsValid({target.x, target.y, from.z}))
+	{
+		return false;
+	}
+	float ownSurface = ownTile->getRestingPosition(false).z;
+	auto *edgeTile = map.getTile(target.x, target.y, from.z);
+	Tile *landingTile = nullptr;
+	for (int z = from.z; z >= 0; z--)
+	{
+		auto *t = map.getTile(target.x, target.y, z);
+		if (!t->getCanStand(false))
+		{
+			continue;
+		}
+		if (t->getRestingPosition(false).z >= ownSurface)
+		{
+			return false;
+		}
+		landingTile = t;
+		break;
+	}
+	if (!landingTile || target.z < landingTile->position.z)
+	{
+		return false;
+	}
+	BattleUnitTileHelper helper(map, *this);
+	if (!helper.canEnterTile(nullptr, landingTile) ||
+	    landingTile->getUnitIfPresent(true, true, false, tileObject))
+	{
+		return false;
+	}
+	BattleUnitTileHelper edgeHelper(map, false, false, true, agent->type->bodyType->maxHeight,
+	                                tileObject);
+	bool jumped = false;
+	bool doorInTheWay = false;
+	float cost = 0.0f;
+	if (!edgeHelper.canEnterTile(ownTile, edgeTile, landingTile != edgeTile, jumped, cost,
+	                             doorInTheWay, true, true, true) ||
+	    doorInTheWay)
+	{
+		return false;
+	}
+	landing = landingTile->getRestingPosition(false);
+	return true;
+}
+
+void BattleUnit::jumpDown(GameState &state, Vec3<float> landing, BodyState bodyState)
+{
+	Vec3<float> targetVectorXY = {landing.x - position.x, landing.y - position.y, 0.0f};
+	if (glm::length(targetVectorXY) == 0.0f)
+	{
+		return;
+	}
+	startFalling(state);
+	launchGoal = landing;
+	launched = true;
+	velocity = glm::normalize(targetVectorXY) * 0.5f * VELOCITY_SCALE_BATTLE;
 	collisionIgnoredTicks = (int)ceilf(36.0f / glm::length(velocity / VELOCITY_SCALE_BATTLE)) + 1;
 	beginBodyStateChange(state, bodyState);
 }
