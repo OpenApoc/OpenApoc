@@ -2435,7 +2435,6 @@ void Battle::giveInterruptChanceToUnit(GameState &state, StateRef<BattleUnit> gi
 				fw().pushEvent(new GameLocationEvent(GameEventType::ZoomView, receiver->position));
 			}
 			interruptQueue.emplace(receiver, receiver->agent->getTULimit(reactionValue));
-			receiver->experiencePoints.reactions++;
 		}
 	}
 }

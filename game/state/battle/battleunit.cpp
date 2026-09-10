@@ -1125,16 +1125,12 @@ bool BattleUnit::startAttackPsiInternal(GameState &state, StateRef<BattleUnit> t
 	}
 	int chance = getPsiChanceForEquipment(target, status, item);
 	int roll = randBoundsExclusive(state.rng, 0, 100);
-	experiencePoints.psi_attack++;
-	experiencePoints.psi_energy++;
 	LogWarning("Psi Attack #{0} Roll {1} Chance {2} {3} Attacker {4} Target {5}", (int)status, roll,
 	           chance, roll < chance ? (UString) "SUCCESS" : (UString) "FAILURE", id, target->id);
 	if (roll >= chance)
 	{
 		return false;
 	}
-	experiencePoints.psi_attack += 2;
-	experiencePoints.psi_energy += 2;
 
 	// Attack hit, apply effects
 
@@ -1939,7 +1935,16 @@ bool BattleUnit::handleCollision(GameState &state, Collision &c)
 			notifyHit(position - glm::normalize(projectile->velocity) * 1.41f);
 			if (projectile->firerUnit)
 			{
-				projectile->firerUnit->experiencePoints.accuracy++;
+				if (projectile->firerUnit->experience.accuracyHits < 40)
+				{
+					projectile->firerUnit->experience.accuracyHits++;
+				}
+				if (state.current_battle->mode == Battle::Mode::TurnBased &&
+				    state.current_battle->interruptUnits.find(projectile->firerUnit) !=
+				        state.current_battle->interruptUnits.end())
+				{
+					projectile->firerUnit->experience.reactionHits++;
+				}
 			}
 			return applyDamage(state, projectile->damage, projectile->damageType, partHit,
 			                   DamageSource::Impact, projectile->firerUnit);
@@ -2208,11 +2213,7 @@ void BattleUnit::updateMorale(GameState &state, unsigned int ticks)
 		{
 			moraleTicksAccumulated -= LOWMORALE_CHECK_INTERVAL;
 
-			if (randBoundsExclusive(state.rng, 0, 100) >= 100 - 2 * agent->modified_stats.morale)
-			{
-				experiencePoints.bravery++;
-			}
-			else
+			if (randBoundsExclusive(state.rng, 0, 100) < 100 - 2 * agent->modified_stats.morale)
 			{
 				moraleStateTicksRemaining = TICKS_PER_LOWMORALE_STATE;
 				moraleState = (MoraleState)(randBoundsInclusive(state.rng, 1, 3));
@@ -2363,6 +2364,7 @@ void BattleUnit::updateRegen(GameState &state, unsigned int ticks)
 					if (agent->modified_stats.stamina > 10)
 					{
 						agent->modified_stats.stamina -= 10;
+						experience.staminaSpent += 10;
 					}
 					else
 					{
@@ -2374,6 +2376,7 @@ void BattleUnit::updateRegen(GameState &state, unsigned int ticks)
 					if (agent->modified_stats.stamina > 30)
 					{
 						agent->modified_stats.stamina -= 30;
+						experience.staminaSpent += 30;
 					}
 					else
 					{
@@ -4139,107 +4142,61 @@ void BattleUnit::sendAgentEvent(GameState &state, GameEventType type, bool check
 	}
 }
 
-int BattleUnit::rollForPrimaryStat(GameState &state, int experience)
-{
-	if (experience > 10)
-	{
-		return randBoundsInclusive(state.rng, 2, 6);
-	}
-	else if (experience > 5)
-	{
-		return randBoundsInclusive(state.rng, 1, 4);
-	}
-	if (experience > 2)
-	{
-		return randBoundsInclusive(state.rng, 1, 3);
-	}
-	if (experience > 0)
-	{
-		return randBoundsInclusive(state.rng, 0, 1);
-	}
-	return 0;
-}
-
-// FIXME: Ensure correct
-// For now, using X-Com 1/2 system of primary/secondary stats,
-// except psi which assumes it's same 3x limit that is applied when using psi gym
 void BattleUnit::processExperience(GameState &state)
 {
-	int secondaryXP = experiencePoints.accuracy + experiencePoints.bravery +
-	                  experiencePoints.psi_attack + experiencePoints.psi_energy +
-	                  experiencePoints.reactions;
-	if (agent->current_stats.accuracy < 100)
+	if (!agent->type->canTrain)
 	{
-		agent->current_stats.accuracy += rollForPrimaryStat(
-		    state, experiencePoints.accuracy * agent->type->improvementPercentagePhysical / 100);
+		return;
 	}
-	if (agent->current_stats.psi_attack < 100 &&
-	    agent->current_stats.psi_attack < agent->initial_stats.psi_attack * 3)
+	if (agent->current_stats.accuracy < 96 && experience.accuracyHits > 0)
 	{
-		agent->current_stats.psi_attack += rollForPrimaryStat(
-		    state, experiencePoints.psi_attack * agent->type->improvementPercentagePsi / 100);
+		int gain = (int)std::ceil((96 - agent->current_stats.accuracy) / 100.0 *
+		                          (experience.accuracyHits / 4));
+		agent->current_stats.accuracy = std::min(96, agent->current_stats.accuracy + gain);
 	}
-	if (agent->current_stats.psi_energy < 100 &&
-	    agent->current_stats.psi_energy < agent->initial_stats.psi_energy * 3)
+	if (agent->current_stats.reactions < 100 && experience.reactionHits > 0 &&
+	    agent->current_stats.reactions > 0)
 	{
-		agent->current_stats.psi_energy += rollForPrimaryStat(
-		    state, experiencePoints.psi_energy * agent->type->improvementPercentagePsi / 100);
+		int gain = std::min(experience.reactionHits / agent->current_stats.reactions, 5);
+		agent->current_stats.reactions = std::min(100, agent->current_stats.reactions + gain);
 	}
-	if (agent->current_stats.reactions < 100)
+	int displayStamina = agent->current_stats.getDisplayStaminaValue();
+	int staminaXP = experience.staminaSpent / 20;
+	if (staminaXP > 0 && displayStamina > 0)
 	{
-		if (state.current_battle->mode == Battle::Mode::TurnBased)
+		int rawGain = staminaXP / displayStamina;
+		if (rawGain > 0)
 		{
-			agent->current_stats.reactions +=
-			    rollForPrimaryStat(state, experiencePoints.reactions *
-			                                  agent->type->improvementPercentagePhysical / 100);
-		}
-		else
-		{
-			agent->current_stats.reactions += rollForPrimaryStat(
-			    state, std::min(3, secondaryXP * agent->type->improvementPercentagePhysical / 100));
+			if (agent->current_stats.speed < 100)
+			{
+				agent->current_stats.speed =
+				    std::min(100, agent->current_stats.speed + std::min(rawGain, 5));
+			}
+			if (agent->current_stats.stamina < 2000)
+			{
+				agent->current_stats.stamina =
+				    std::min(2000, agent->current_stats.stamina + rawGain * 10);
+			}
 		}
 	}
-	if (agent->current_stats.bravery < 100)
-	{
-		agent->current_stats.bravery +=
-		    10 * randBoundsExclusive(state.rng, 0, 99) <
-		    experiencePoints.bravery * 9 * agent->type->improvementPercentagePhysical / 100;
-	}
-	// Units with slower improvement rates need to gain more xp to have a chance to improve
-	// >= 100% improvement rate need just 1 xp
-	// 50% improvement rate needs 2 xp
-	// 10% improvement rate needs 10 xp
-	// ---
-	// Percentile increase also affected (units with 100% improvement gain 10% of their missing
-	// stat, units with 50% gain 5% etc)
-	if (agent->type->improvementPercentagePhysical > 0 &&
-	    secondaryXP > 100 / agent->type->improvementPercentagePhysical)
+	if (experience.killScore > 0)
 	{
 		if (agent->current_stats.health < 100)
 		{
-			int healthBoost = randBoundsInclusive(state.rng, 0, 2) +
-			                  (100 - agent->current_stats.health) / 10 *
-			                      agent->type->improvementPercentagePhysical / 100;
-			agent->current_stats.health += healthBoost;
-			agent->modified_stats.health += healthBoost;
+			int healthGain = experience.killScore >= 30 ? 2 : (experience.killScore >= 15 ? 1 : 0);
+			healthGain = std::min(healthGain, 100 - agent->current_stats.health);
+			agent->current_stats.health += healthGain;
+			agent->modified_stats.health += healthGain;
 		}
-		if (agent->current_stats.speed < 100)
+		if (agent->current_stats.bravery < 100)
 		{
-			agent->current_stats.speed += randBoundsInclusive(state.rng, 0, 2) +
-			                              (100 - agent->current_stats.speed) / 10 *
-			                                  agent->type->improvementPercentagePhysical / 100;
-		}
-		if (agent->current_stats.stamina < 2000)
-		{
-			agent->current_stats.stamina += randBoundsInclusive(state.rng, 0, 2) * 20 +
-			                                (2000 - agent->current_stats.stamina) / 10 *
-			                                    agent->type->improvementPercentagePhysical / 100;
-		}
-		if (agent->current_stats.strength < 100)
-		{
-			agent->current_stats.strength += randBoundsInclusive(state.rng, 0, 2) +
-			                                 (100 - agent->current_stats.strength) / 10 *
-			                                     agent->type->improvementPercentagePhysical / 100;
+			bool gain = agent->current_stats.bravery <= 0
+			                ? true
+			                : experience.killScore * 2 > agent->current_stats.bravery;
+			if (gain)
+			{
+				agent->current_stats.bravery = std::min(100, agent->current_stats.bravery + 10);
+			}
 		}
 	}
 	agent->updateModifiedStats();
@@ -4863,6 +4820,7 @@ void BattleUnit::die(GameState &state, StateRef<BattleUnit> attacker, bool viole
 	         player->isRelatedTo(ourOrg) == Organisation::Relation::Hostile)
 	{
 		attacker->combatRating += agent->type->score;
+		attacker->experience.killScore += agent->type->score;
 		state.current_battle->score.combatRating += agent->type->score;
 	}
 	// Penalty for unit in squad dying
