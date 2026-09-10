@@ -23,342 +23,433 @@
         <font>smalfont</font>
       </label>
       <label id="LOCATION">
+        <tooltip text="The building, UFO or base the battle is fought in" font="smallset"/>
         <position x="36" y="80"/>
-        <size width="500" height="16"/>
+        <size width="450" height="16"/>
         <alignment horizontal="left" vertical="top"/>
         <font>smalfont</font>
       </label>
       <textbutton id="BUTTON_SELECTMAP" text="Select">
+        <tooltip text="Choose where the battle takes place" font="smallset"/>
         <position x="494" y="74"/>
         <size width="70" height="28"/>
         <font>smalfont</font>
       </textbutton>
-      <label text = "_____________________________________________________">
-        <position x="36" y="95"/>
-        <size width="500" height="16"/>
-        <alignment horizontal="left" vertical="top"/>
-        <font>smalfont</font>
-      </label>
-      <label text = "PLAYER / TECH LEVEL / SCORE SETTINGS">
-        <position x="36" y="115"/>
-        <size width="500" height="16"/>
+      <control>
+        <position x="36" y="106"/>
+        <size width="528" height="1"/>
+        <backcolour r="160" g="160" b="160" a="255"/>
+      </control>
+
+      <label text="SQUAD">
+        <position x="36" y="114"/>
+        <size width="528" height="16"/>
         <alignment horizontal="left" vertical="top"/>
         <font>smalfont</font>
       </label>
 
-      <label text = "Number of Human Agents">
-        <position x="36" y="135"/>
+      <label text="Number of human agents">
+        <position x="36" y="134"/>
         <size width="170" height="16"/>
         <alignment horizontal="centre" vertical="top"/>
         <font>smalfont</font>
       </label>
+      <graphic>
+        <position x="61" y="159"/>
+        <size width="105" height="6"/>
+        <image>BUTTON_SLIDER_TRACK</image>
+        <imageposition>stretch</imageposition>
+      </graphic>
       <scroll id="NUM_HUMANS_SLIDER">
-        <position x="61" y="155"/>
+        <tooltip text="How many human agents fight for you" font="smallset"/>
+        <position x="61" y="154"/>
         <size width="105" height="15"/>
         <range min="0" max="36"/>
       </scroll>
       <graphicbutton scrollprev="NUM_HUMANS_SLIDER">
-        <position x="46" y="153"/>
+        <position x="46" y="152"/>
         <size width="16" height="20"/>
         <image>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:55:ui/menuopt.pal</image>
         <imagedepressed>BUTTON_SLIDER_LEFT_DEPRESSED</imagedepressed>
       </graphicbutton>
       <graphicbutton scrollnext="NUM_HUMANS_SLIDER">
-        <position x="167" y="153"/>
+        <position x="167" y="152"/>
         <size width="17" height="20"/>
         <image>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:56:ui/menuopt.pal</image>
         <imagedepressed>BUTTON_SLIDER_RIGHT_DEPRESSED</imagedepressed>
       </graphicbutton>
-      <label id = "NUM_HUMANS" text = "0">
-        <position x="184" y="153"/>
+      <label id="NUM_HUMANS" text="0">
+        <position x="184" y="152"/>
         <size width="20" height="16"/>
         <alignment horizontal="centre" vertical="top"/>
         <font>smalfont</font>
       </label>
 
-      <label text = "Number of Hybrid Agents">
-        <position x="206" y="135"/>
+      <label text="Number of hybrid agents">
+        <position x="206" y="134"/>
         <size width="170" height="16"/>
         <alignment horizontal="centre" vertical="top"/>
         <font>smalfont</font>
       </label>
+      <graphic>
+        <position x="231" y="159"/>
+        <size width="105" height="6"/>
+        <image>BUTTON_SLIDER_TRACK</image>
+        <imageposition>stretch</imageposition>
+      </graphic>
       <scroll id="NUM_HYBRIDS_SLIDER">
-        <position x="231" y="155"/>
+        <tooltip text="How many mutant hybrid agents fight for you" font="smallset"/>
+        <position x="231" y="154"/>
         <size width="105" height="15"/>
         <range min="0" max="36"/>
       </scroll>
       <graphicbutton scrollprev="NUM_HYBRIDS_SLIDER">
-        <position x="216" y="153"/>
+        <position x="216" y="152"/>
         <size width="16" height="20"/>
         <image>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:55:ui/menuopt.pal</image>
         <imagedepressed>BUTTON_SLIDER_LEFT_DEPRESSED</imagedepressed>
       </graphicbutton>
       <graphicbutton scrollnext="NUM_HYBRIDS_SLIDER">
-        <position x="337" y="153"/>
+        <position x="337" y="152"/>
         <size width="17" height="20"/>
         <image>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:56:ui/menuopt.pal</image>
         <imagedepressed>BUTTON_SLIDER_RIGHT_DEPRESSED</imagedepressed>
       </graphicbutton>
-      <label id = "NUM_HYBRIDS" text = "0">
-        <position x="354" y="153"/>
+      <label id="NUM_HYBRIDS" text="0">
+        <position x="354" y="152"/>
         <size width="20" height="16"/>
         <alignment horizontal="centre" vertical="top"/>
         <font>smalfont</font>
       </label>
 
-      <label text = "Number of Android Agents">
-        <position x="376" y="135"/>
+      <label text="Number of android agents">
+        <position x="376" y="134"/>
         <size width="170" height="16"/>
         <alignment horizontal="centre" vertical="top"/>
         <font>smalfont</font>
       </label>
+      <graphic>
+        <position x="401" y="159"/>
+        <size width="105" height="6"/>
+        <image>BUTTON_SLIDER_TRACK</image>
+        <imageposition>stretch</imageposition>
+      </graphic>
       <scroll id="NUM_ANDROIDS_SLIDER">
-        <position x="401" y="155"/>
+        <tooltip text="How many android agents fight for you" font="smallset"/>
+        <position x="401" y="154"/>
         <size width="105" height="15"/>
         <range min="0" max="36"/>
       </scroll>
       <graphicbutton scrollprev="NUM_ANDROIDS_SLIDER">
-        <position x="386" y="153"/>
+        <position x="386" y="152"/>
         <size width="16" height="20"/>
         <image>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:55:ui/menuopt.pal</image>
         <imagedepressed>BUTTON_SLIDER_LEFT_DEPRESSED</imagedepressed>
       </graphicbutton>
       <graphicbutton scrollnext="NUM_ANDROIDS_SLIDER">
-        <position x="507" y="153"/>
+        <position x="507" y="152"/>
         <size width="17" height="20"/>
         <image>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:56:ui/menuopt.pal</image>
         <imagedepressed>BUTTON_SLIDER_RIGHT_DEPRESSED</imagedepressed>
       </graphicbutton>
-      <label id = "NUM_ANDROIDS" text = "0">
-        <position x="524" y="153"/>
+      <label id="NUM_ANDROIDS" text="0">
+        <position x="524" y="152"/>
         <size width="20" height="16"/>
         <alignment horizontal="centre" vertical="top"/>
         <font>smalfont</font>
       </label>
 
-      <label text = "Days of Physical Gym Training">
-        <position x="36" y="185"/>
+      <label text="TRAINING AND EQUIPMENT">
+        <position x="36" y="210"/>
+        <size width="528" height="16"/>
+        <alignment horizontal="left" vertical="top"/>
+        <font>smalfont</font>
+      </label>
+
+      <label text="Days of physical training">
+        <position x="36" y="230"/>
         <size width="170" height="16"/>
         <alignment horizontal="centre" vertical="top"/>
         <font>smalfont</font>
       </label>
+      <graphic>
+        <position x="61" y="255"/>
+        <size width="105" height="6"/>
+        <image>BUTTON_SLIDER_TRACK</image>
+        <imageposition>stretch</imageposition>
+      </graphic>
       <scroll id="DAYS_PHYSICAL_SLIDER">
-        <position x="61" y="205"/>
+        <tooltip text="Days of gym training applied to your agents" font="smallset"/>
+        <position x="61" y="250"/>
         <size width="105" height="15"/>
         <range min="0" max="180"/>
       </scroll>
       <graphicbutton scrollprev="DAYS_PHYSICAL_SLIDER">
-        <position x="46" y="203"/>
+        <position x="46" y="248"/>
         <size width="16" height="20"/>
         <image>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:55:ui/menuopt.pal</image>
         <imagedepressed>BUTTON_SLIDER_LEFT_DEPRESSED</imagedepressed>
       </graphicbutton>
       <graphicbutton scrollnext="DAYS_PHYSICAL_SLIDER">
-        <position x="167" y="203"/>
+        <position x="167" y="248"/>
         <size width="17" height="20"/>
         <image>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:56:ui/menuopt.pal</image>
         <imagedepressed>BUTTON_SLIDER_RIGHT_DEPRESSED</imagedepressed>
       </graphicbutton>
-      <label id = "DAYS_PHYSICAL" text = "0">
-        <position x="184" y="203"/>
+      <label id="DAYS_PHYSICAL" text="0">
+        <position x="184" y="248"/>
         <size width="20" height="16"/>
         <alignment horizontal="centre" vertical="top"/>
         <font>smalfont</font>
       </label>
 
-      <label text = "Days of Psi Gym Training">
-        <position x="206" y="185"/>
+      <label text="Days of psi training">
+        <position x="206" y="230"/>
         <size width="170" height="16"/>
         <alignment horizontal="centre" vertical="top"/>
         <font>smalfont</font>
       </label>
+      <graphic>
+        <position x="231" y="255"/>
+        <size width="105" height="6"/>
+        <image>BUTTON_SLIDER_TRACK</image>
+        <imageposition>stretch</imageposition>
+      </graphic>
       <scroll id="DAYS_PSI_SLIDER">
-        <position x="231" y="205"/>
+        <tooltip text="Days of psi gym training applied to your agents" font="smallset"/>
+        <position x="231" y="250"/>
         <size width="105" height="15"/>
         <range min="0" max="180"/>
       </scroll>
       <graphicbutton scrollprev="DAYS_PSI_SLIDER">
-        <position x="216" y="203"/>
+        <position x="216" y="248"/>
         <size width="16" height="20"/>
         <image>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:55:ui/menuopt.pal</image>
         <imagedepressed>BUTTON_SLIDER_LEFT_DEPRESSED</imagedepressed>
       </graphicbutton>
       <graphicbutton scrollnext="DAYS_PSI_SLIDER">
-        <position x="337" y="203"/>
+        <position x="337" y="248"/>
         <size width="17" height="20"/>
         <image>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:56:ui/menuopt.pal</image>
         <imagedepressed>BUTTON_SLIDER_RIGHT_DEPRESSED</imagedepressed>
       </graphicbutton>
-      <label id = "DAYS_PSI" text = "0">
-        <position x="354" y="203"/>
+      <label id="DAYS_PSI" text="0">
+        <position x="354" y="248"/>
         <size width="20" height="16"/>
         <alignment horizontal="centre" vertical="top"/>
         <font>smalfont</font>
       </label>
 
-      <label text = "Default equipment tech level">
-        <position x="376" y="185"/>
+      <label text="Equipment tech level">
+        <position x="376" y="230"/>
         <size width="170" height="16"/>
         <alignment horizontal="centre" vertical="top"/>
         <font>smalfont</font>
       </label>
+      <graphic>
+        <position x="401" y="255"/>
+        <size width="105" height="6"/>
+        <image>BUTTON_SLIDER_TRACK</image>
+        <imageposition>stretch</imageposition>
+      </graphic>
       <scroll id="PLAYER_TECH_SLIDER">
-        <position x="401" y="205"/>
+        <tooltip text="Tech level of the equipment your agents start with" font="smallset"/>
+        <position x="401" y="250"/>
         <size width="105" height="15"/>
         <range min="0" max="12"/>
       </scroll>
       <graphicbutton scrollprev="PLAYER_TECH_SLIDER">
-        <position x="386" y="203"/>
+        <position x="386" y="248"/>
         <size width="16" height="20"/>
         <image>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:55:ui/menuopt.pal</image>
         <imagedepressed>BUTTON_SLIDER_LEFT_DEPRESSED</imagedepressed>
       </graphicbutton>
       <graphicbutton scrollnext="PLAYER_TECH_SLIDER">
-        <position x="507" y="203"/>
+        <position x="507" y="248"/>
         <size width="17" height="20"/>
         <image>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:56:ui/menuopt.pal</image>
         <imagedepressed>BUTTON_SLIDER_RIGHT_DEPRESSED</imagedepressed>
       </graphicbutton>
-      <label id = "PLAYER_TECH" text = "0">
-        <position x="524" y="203"/>
+      <label id="PLAYER_TECH" text="0">
+        <position x="524" y="248"/>
         <size width="20" height="16"/>
         <alignment horizontal="centre" vertical="top"/>
         <font>smalfont</font>
       </label>
 
-      <label text = "Alien Score Level">
-        <position x="36" y="235"/>
+      <label text="DIFFICULTY AND ARMOR">
+        <position x="36" y="306"/>
+        <size width="528" height="16"/>
+        <alignment horizontal="left" vertical="top"/>
+        <font>smalfont</font>
+      </label>
+
+      <label text="Alien score level">
+        <position x="36" y="326"/>
         <size width="170" height="16"/>
         <alignment horizontal="centre" vertical="top"/>
         <font>smalfont</font>
       </label>
+      <graphic>
+        <position x="61" y="351"/>
+        <size width="105" height="6"/>
+        <image>BUTTON_SLIDER_TRACK</image>
+        <imageposition>stretch</imageposition>
+      </graphic>
       <scroll id="ALIEN_SCORE_SLIDER">
-        <position x="61" y="255"/>
+        <tooltip text="Alien score in thousands - higher means tougher aliens" font="smallset"/>
+        <position x="61" y="346"/>
         <size width="105" height="15"/>
         <range min="0" max="42"/>
       </scroll>
       <graphicbutton scrollprev="ALIEN_SCORE_SLIDER">
-        <position x="46" y="253"/>
+        <position x="46" y="344"/>
         <size width="16" height="20"/>
         <image>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:55:ui/menuopt.pal</image>
         <imagedepressed>BUTTON_SLIDER_LEFT_DEPRESSED</imagedepressed>
       </graphicbutton>
       <graphicbutton scrollnext="ALIEN_SCORE_SLIDER">
-        <position x="167" y="253"/>
+        <position x="167" y="344"/>
         <size width="17" height="20"/>
         <image>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:56:ui/menuopt.pal</image>
         <imagedepressed>BUTTON_SLIDER_RIGHT_DEPRESSED</imagedepressed>
       </graphicbutton>
-      <label id = "ALIEN_SCORE" text = "0">
-        <position x="184" y="253"/>
+      <label id="ALIEN_SCORE" text="0">
+        <position x="184" y="344"/>
         <size width="20" height="16"/>
         <alignment horizontal="centre" vertical="top"/>
         <font>smalfont</font>
       </label>
 
-      <label text = "Organisation Tech Level">
-        <position x="206" y="235"/>
+      <label text="Organisation tech level">
+        <position x="206" y="326"/>
         <size width="170" height="16"/>
         <alignment horizontal="centre" vertical="top"/>
         <font>smalfont</font>
       </label>
+      <graphic>
+        <position x="231" y="351"/>
+        <size width="105" height="6"/>
+        <image>BUTTON_SLIDER_TRACK</image>
+        <imageposition>stretch</imageposition>
+      </graphic>
       <scroll id="ORG_SCORE_SLIDER">
-        <position x="231" y="255"/>
+        <tooltip text="Tech level of the defending organisation" font="smallset"/>
+        <position x="231" y="346"/>
         <size width="105" height="15"/>
         <range min="1" max="12"/>
       </scroll>
       <graphicbutton scrollprev="ORG_SCORE_SLIDER">
-        <position x="216" y="253"/>
+        <position x="216" y="344"/>
         <size width="16" height="20"/>
         <image>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:55:ui/menuopt.pal</image>
         <imagedepressed>BUTTON_SLIDER_LEFT_DEPRESSED</imagedepressed>
       </graphicbutton>
       <graphicbutton scrollnext="ORG_SCORE_SLIDER">
-        <position x="337" y="253"/>
+        <position x="337" y="344"/>
         <size width="17" height="20"/>
         <image>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:56:ui/menuopt.pal</image>
         <imagedepressed>BUTTON_SLIDER_RIGHT_DEPRESSED</imagedepressed>
       </graphicbutton>
-      <label id = "ORG_SCORE" text = "0">
-        <position x="354" y="253"/>
+      <label id="ORG_SCORE" text="0">
+        <position x="354" y="344"/>
         <size width="20" height="16"/>
         <alignment horizontal="centre" vertical="top"/>
         <font>smalfont</font>
       </label>
 
-      <label text = "Default equipped armor">
-        <position x="376" y="235"/>
+      <label text="Default equipped armor">
+        <position x="376" y="326"/>
         <size width="170" height="16"/>
         <alignment horizontal="centre" vertical="top"/>
         <font>smalfont</font>
       </label>
+      <graphic>
+        <position x="401" y="351"/>
+        <size width="55" height="6"/>
+        <image>BUTTON_SLIDER_TRACK</image>
+        <imageposition>stretch</imageposition>
+      </graphic>
       <scroll id="ARMOR_SLIDER">
-        <position x="401" y="255"/>
+        <tooltip text="Armor your agents start the battle wearing" font="smallset"/>
+        <position x="401" y="346"/>
         <size width="55" height="15"/>
         <range min="0" max="5"/>
       </scroll>
       <graphicbutton scrollprev="ARMOR_SLIDER">
-        <position x="386" y="253"/>
+        <position x="386" y="344"/>
         <size width="16" height="20"/>
         <image>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:55:ui/menuopt.pal</image>
         <imagedepressed>BUTTON_SLIDER_LEFT_DEPRESSED</imagedepressed>
       </graphicbutton>
       <graphicbutton scrollnext="ARMOR_SLIDER">
-        <position x="457" y="253"/>
+        <position x="457" y="344"/>
         <size width="17" height="20"/>
         <image>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:56:ui/menuopt.pal</image>
         <imagedepressed>BUTTON_SLIDER_RIGHT_DEPRESSED</imagedepressed>
       </graphicbutton>
-      <label id = "ARMOR" text = "0">
-        <position x="474" y="253"/>
+      <label id="ARMOR" text="0">
+        <position x="474" y="344"/>
         <size width="100" height="16"/>
         <alignment horizontal="left" vertical="top"/>
         <font>smalfont</font>
       </label>
 
+      <label text="BATTLE OPTIONS">
+        <position x="36" y="396"/>
+        <size width="528" height="16"/>
+        <alignment horizontal="left" vertical="top"/>
+        <font>smalfont</font>
+      </label>
+
       <checkbox id="CUSTOMISE_FORCES">
-        <position x="46" y="300"/>
+        <tooltip text="Pick the enemy forces yourself on the next screen" font="smallset"/>
+        <position x="46" y="418"/>
         <size width="19" height="16"/>
         <image>BUTTON_CHECKBOX_FALSE</image>
         <imagechecked>BUTTON_CHECKBOX_TRUE</imagechecked>
       </checkbox>
-      <label  text = "Customize forces">
-        <position x="76" y="300"/>
-        <size width="110" height="16"/>
+      <label text="Customize forces">
+        <position x="76" y="418"/>
+        <size width="130" height="16"/>
         <alignment horizontal="left" vertical="top"/>
         <font>smalfont</font>
       </label>
 
       <checkbox id="ALTERNATIVE_ATTACK">
-        <position x="216" y="300"/>
+        <tooltip text="Raid an organisation's building - its guards defend it" font="smallset"/>
+        <position x="216" y="418"/>
         <size width="19" height="16"/>
         <image>BUTTON_CHECKBOX_FALSE</image>
         <imagechecked>BUTTON_CHECKBOX_TRUE</imagechecked>
       </checkbox>
-      <label  text = "Raid mode">
-        <position x="246" y="300"/>
-        <size width="110" height="16"/>
+      <label text="Raid mode">
+        <position x="246" y="418"/>
+        <size width="130" height="16"/>
         <alignment horizontal="left" vertical="top"/>
         <font>smalfont</font>
       </label>
 
       <checkbox id="HOTSEAT">
-        <position x="386" y="300"/>
+        <tooltip text="Both sides played on this machine, taking turns" font="smallset"/>
+        <position x="386" y="418"/>
         <size width="19" height="16"/>
         <image>BUTTON_CHECKBOX_FALSE</image>
         <imagechecked>BUTTON_CHECKBOX_TRUE</imagechecked>
       </checkbox>
-      <label  text = "Hotseat multiplayer">
-        <position x="416" y="300"/>
-        <size width="110" height="16"/>
+      <label text="Hotseat multiplayer">
+        <position x="416" y="418"/>
+        <size width="130" height="16"/>
         <alignment horizontal="left" vertical="top"/>
         <font>smalfont</font>
       </label>
 
       <graphicbutton id="BUTTON_OK">
+        <tooltip text="Start the battle" font="smallset"/>
         <position x="602" y="443"/>
-        <size width="50" height="48"/>
-        <imagedepressed>PCK:xcom3/tacdata/tacbut.pck:xcom3/tacdata/tacbut.tab:5:xcom3/tacdata/tactical.pal</imagedepressed>
+        <size width="35" height="34"/>
+        <image/>
+        <imagedepressed>BUTTON_OK_DEPRESSED</imagedepressed>
       </graphicbutton>
     </style>
   </form>

@@ -19,6 +19,9 @@ class Skirmish : public Stage
   private:
 	sp<Form> menuform;
 
+	// Owns the state when Skirmish is the only gameplay stage (main-menu launch).
+	// Campaign launch still has CityView holding a copy; this keeps both paths safe.
+	sp<GameState> ownedState;
 	GameState &state;
 
 	StateRef<Building> locBuilding;
