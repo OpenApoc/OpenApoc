@@ -38,7 +38,7 @@ void TileObjectBattleUnit::draw(Renderer &r, TileTransform &transform, Vec2<floa
 	    {6, offset_prone + 18}, {7, offset_prone + 20},
 	};
 
-	static const int ICON_STANDART = 0;
+	static const int ICON_STANDARD = 0;
 	static const int ICON_PRONE = 1;
 	static const int ICON_LARGE = 2;
 
@@ -112,7 +112,7 @@ void TileObjectBattleUnit::draw(Renderer &r, TileTransform &transform, Vec2<floa
 			                                : ((unit->current_body_state == BodyState::Prone ||
 			                                    unit->target_body_state == BodyState::Prone)
 			                                       ? ICON_PRONE
-			                                       : ICON_STANDART);
+			                                       : ICON_STANDARD);
 			// Unit facing, in game starts with north (0,-1) and goes clockwise, from 0 to 7
 			int facing_offset = offset_dir_map.at(unit->facing);
 			// Current level offset, 0 = current 1 = above 2 = below
@@ -120,7 +120,7 @@ void TileObjectBattleUnit::draw(Renderer &r, TileTransform &transform, Vec2<floa
 
 			switch (icon_type)
 			{
-				case ICON_STANDART:
+				case ICON_STANDARD:
 					drawTinted(r,
 					           unit->strategyImages->at(side_offset * 120 +
 					                                    curent_level_offset * 40 + facing_offset),
