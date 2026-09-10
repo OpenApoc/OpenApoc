@@ -65,6 +65,7 @@
 #include "game/ui/components/locationscreen.h"
 #include "game/ui/general/aequipscreen.h"
 #include "game/ui/general/ingameoptions.h"
+#include "game/ui/general/mainmenu.h"
 #include "game/ui/general/messagebox.h"
 #include "game/ui/general/messagelogscreen.h"
 #include "game/ui/general/notificationscreen.h"
@@ -4419,6 +4420,24 @@ bool CityView::handleGameStateEvent(Event *e)
 		{
 			setUpdateSpeed(CityUpdateSpeed::Pause);
 			showWeeklyFundingReport();
+		}
+		break;
+		case GameEventType::GameWon:
+		{
+			setUpdateSpeed(CityUpdateSpeed::Pause);
+			auto message_box = mksp<MessageBox>(
+			    tr("VICTORY"), gameEvent->message(), MessageBox::ButtonOptions::Ok, []()
+			    { fw().stageQueueCommand({StageCmd::Command::REPLACEALL, mksp<MainMenu>()}); });
+			fw().stageQueueCommand({StageCmd::Command::PUSH, message_box});
+		}
+		break;
+		case GameEventType::GameLost:
+		{
+			setUpdateSpeed(CityUpdateSpeed::Pause);
+			auto message_box = mksp<MessageBox>(
+			    tr("DEFEAT"), gameEvent->message(), MessageBox::ButtonOptions::Ok, []()
+			    { fw().stageQueueCommand({StageCmd::Command::REPLACEALL, mksp<MainMenu>()}); });
+			fw().stageQueueCommand({StageCmd::Command::PUSH, message_box});
 		}
 		break;
 		default:
