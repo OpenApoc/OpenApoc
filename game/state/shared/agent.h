@@ -88,6 +88,7 @@ class Agent : public StateObject<Agent>,
 	GameTime hiredOn;
 	unsigned int missionCount = 0;
 	unsigned int killCount = 0;
+	unsigned int victoryPoints = 0;
 
 	unsigned int teleportTicksAccumulated = 0;
 	bool canTeleport() const;
@@ -240,10 +241,12 @@ class Agent : public StateObject<Agent>,
 	unsigned int getDaysInService(const GameState &state) const;
 	unsigned int getKills() const;
 	unsigned int getMissions() const;
-	unsigned int getMedalTier() const;
+	unsigned int getVictoryPoints(const GameState &state) const;
+	unsigned int getMedalTier(const GameState &state) const;
 
 	void incrementMissionCount();
 	void incrementKillCount();
+	void recordHealthLost(int amount);
 
 	void destroy() override;
 };
