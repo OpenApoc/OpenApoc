@@ -2598,7 +2598,9 @@ void BattleUnit::updateIdling(GameState &state)
 				bool hasSupport = true;
 				for (auto &t : tileObject->occupiedTiles)
 				{
-					if (!tileObject->map.getTile(t)->getCanStand())
+					auto *supportTile =
+					    tileObject->map.isTileInBounds(t) ? tileObject->map.getTile(t) : nullptr;
+					if (!supportTile || !supportTile->getCanStand())
 					{
 						hasSupport = false;
 						break;
@@ -2853,6 +2855,12 @@ void BattleUnit::updateMovementFalling(GameState &state, unsigned int &moveTicks
 			newPosition.x = glm::clamp(newPosition.x, 0.0f, mapSize.x - 0.01f);
 			newPosition.y = glm::clamp(newPosition.y, 0.0f, mapSize.y - 0.01f);
 			newPosition.z = glm::clamp(newPosition.z, 0.0f, mapSize.z - 0.01f);
+		}
+		if (isLarge())
+		{
+			newPosition.x = glm::clamp(newPosition.x, 1.0f, mapSize.x - 0.01f);
+			newPosition.y = glm::clamp(newPosition.y, 1.0f, mapSize.y - 0.01f);
+			newPosition.z = glm::clamp(newPosition.z, 0.0f, mapSize.z - 1.01f);
 		}
 		// Fell below 0???
 		if (newPosition.z < 0 && !tileObject->map.getTile(newPosition))

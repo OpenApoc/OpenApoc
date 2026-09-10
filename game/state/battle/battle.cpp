@@ -433,7 +433,7 @@ void Battle::initialMapPartRemoval(GameState &state)
 			for (int y = 0; y < 1; y++)
 			{
 				auto t = map->getTile(u.second->position + Vec3<float>{-x, -y, 1.0f});
-				if (t->solidGround)
+				if (t && t->solidGround)
 				{
 					std::list<sp<TileObjectBattleMapPart>> partsToKill;
 					for (auto &o : t->ownedObjects)
@@ -721,6 +721,12 @@ void Battle::initialUnitSpawn(GameState &state)
 		}
 		auto pos = pickRandom(state.rng, spawnLocations[u.second->agent->type]);
 		spawnLocations[u.second->agent->type].remove(pos);
+		if (u.second->isLarge())
+		{
+			pos.x = std::max(pos.x, 1);
+			pos.y = std::max(pos.y, 1);
+			pos.z = std::min(pos.z, map->size.z - 2);
+		}
 		auto tile = map->getTile(pos.x, pos.y, pos.z);
 		u.second->position = tile->getRestingPosition(u.second->isLarge());
 	}
@@ -1220,6 +1226,12 @@ sp<BattleUnit> Battle::placeUnit(GameState &state, StateRef<Agent> agent)
 sp<BattleUnit> Battle::placeUnit(GameState &state, StateRef<Agent> agent, Vec3<float> position)
 {
 	auto u = placeUnit(state, agent);
+	if (map && u->isLarge())
+	{
+		position.x = std::max(position.x, 1.0f);
+		position.y = std::max(position.y, 1.0f);
+		position.z = std::min(position.z, (float)map->size.z - 2.0f);
+	}
 	u->position = position;
 	if (map)
 	{
