@@ -1739,8 +1739,9 @@ StateRef<Building> Vehicle::getServiceDestination(GameState &state)
 	// Step 01: Find first cargo destination and remove arrived cargo
 	for (auto it = cargo.begin(); it != cargo.end();)
 	{
-		if (it->destination == currentBuilding)
+		if (cargoDeliverableAtCurrentBuilding(*it))
 		{
+			it->destination = currentBuilding;
 			// Only add aliens if alien containment is available at base
 			const auto vehicleContainsAlienLoot = cargoContainsAlienLoot();
 			const auto alienContainmentExists =
@@ -2407,7 +2408,7 @@ void Vehicle::updateCargo(GameState &state)
 		// Either this is non-combat loot, or this loot belongs to this building
 		// Don't keep trying to ferry combat loot to other building as we're NOT going to move
 		// when we check it in getServiceDestination method!
-		if (c.originalOwner || c.destination == currentBuilding)
+		if (c.originalOwner || cargoDeliverableAtCurrentBuilding(c))
 		{
 			needFerry = true;
 			break;
@@ -3910,6 +3911,13 @@ const bool Vehicle::cargoContainsAlienLoot() const
 	}
 
 	return false;
+}
+
+bool Vehicle::cargoDeliverableAtCurrentBuilding(const Cargo &c) const
+{
+	return currentBuilding &&
+	       (c.destination == currentBuilding ||
+	        (!c.originalOwner && currentBuilding->base && currentBuilding->owner == owner));
 }
 
 Cargo::Cargo(GameState &state, StateRef<AEquipmentType> equipment, int count, int price,
