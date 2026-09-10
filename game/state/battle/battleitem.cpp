@@ -242,9 +242,9 @@ void BattleItem::update(GameState &state, unsigned int ticks)
 			// Intentional fall-through
 			case TileObject::Type::Ground:
 				// Let item fall so that it can collide with scenery or ground if falling on top of
-				// it
+				// it, but never past the surface we just hit
 				newPosition = {previousPosition.x, previousPosition.y,
-				               std::min(newPosition.z, previousPosition.z)};
+				               std::max(std::min(newPosition.z, previousPosition.z), c.position.z)};
 				break;
 			default:
 				LogError("What the hell is this item colliding with? Type is {0}",
