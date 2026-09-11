@@ -1030,7 +1030,7 @@ bool BattleUnitTileHelper::canEnterTile(Tile *from, Tile *to, bool allowJumping,
 	// If jumping then cost is preset (2x normal movement cost)
 	if (!allowJumping && jumped)
 	{
-		cost = 2.0f * (float)STANDART_MOVE_TU_COST *
+		cost = 2.0f * (float)STANDARD_MOVE_TU_COST *
 		       ((toPos.x != fromPos.x && toPos.y != fromPos.y) ? 3.0f : 2.0f);
 	}
 	else
@@ -1587,7 +1587,7 @@ void BattleUnitMission::update(GameState &state, BattleUnit &u, unsigned int tic
 				if (targetBodyState == BodyState::Jumping)
 				{
 					// Jumping cost assumed same as walking into tile
-					if (!spendAgentTUs(state, u, STANDART_MOVE_TU_COST, true))
+					if (!spendAgentTUs(state, u, STANDARD_MOVE_TU_COST, true))
 					{
 						return;
 					}

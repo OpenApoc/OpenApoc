@@ -33,7 +33,7 @@
 // Base movement ticks consumption rate, this allows us to divide by 2,3,4,5,6,8,9,10,12,15,18,20..
 #define BASE_MOVETICKS_CONSUMPTION_RATE 360
 // Movement cost in TUs for walking movement to adjacent (non-diagonal) tile
-#define STANDART_MOVE_TU_COST 4
+#define STANDARD_MOVE_TU_COST 4
 
 namespace OpenApoc
 {
