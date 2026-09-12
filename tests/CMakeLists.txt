@@ -35,3 +35,11 @@ add_test(NAME ${TEST} COMMAND ${TEST}
 		${CMAKE_SOURCE_DIR}/data/mods/base/data/submods/org.openapoc.base/difficulty0
 		${CMAKE_SOURCE_DIR}/data/mods/base/base_gamestate
 		--Framework.CD=${CD_PATH} --Framework.Data=${CMAKE_SOURCE_DIR}/data)
+
+# Manual diagnostic harness for issue #647, run by hand against its
+# attached savegame; deliberately not add_test'd.
+set(TEST test_mission_end_recheck)
+add_executable(${TEST} ${TEST}.cpp)
+target_link_libraries(${TEST} OpenApoc_Library OpenApoc_Framework
+		OpenApoc_GameState)
+target_compile_definitions(${TEST} PRIVATE -DUNIT_TEST)
