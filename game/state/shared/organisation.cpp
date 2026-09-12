@@ -49,18 +49,18 @@ void Organisation::takeOver(GameState &state, bool forced)
 	militarized = true;
 	infiltrationValue = 200;
 	StateRef<Organisation> org = {&state, id};
-	current_relations[state.getPlayer()] = -100.0f;
-	state.getPlayer()->current_relations[org] = -100.0f;
-	current_relations[state.getAliens()] = 100.0f;
-	state.getAliens()->current_relations[org] = 100.0f;
+	establishRelation(state.getPlayer(), -100.0f);
+	state.getPlayer()->establishRelation(org, -100.0f);
+	establishRelation(state.getAliens(), 100.0f);
+	state.getAliens()->establishRelation(org, 100.0f);
 	for (auto &pair : state.organisations)
 	{
 		if (pair.second->id == id || !pair.second->takenOver)
 		{
 			continue;
 		}
-		current_relations[{&state, pair.first}] = 90.0f;
-		pair.second->current_relations[org] = 90.0f;
+		establishRelation({&state, pair.first}, 90.0f);
+		pair.second->establishRelation(org, 90.0f);
 	}
 	auto event = new GameOrganisationEvent(GameEventType::AlienTakeover, {&state, id});
 	fw().pushEvent(event);
@@ -643,13 +643,13 @@ float Organisation::updateRelations(StateRef<Organisation> &playerOrg)
 	float playerRelationshipDelta = 0.0;
 	for (auto &pair : current_relations)
 	{
-		float &long_term_value = long_term_relations[pair.first];
+		float &previous_value = previous_relations[pair.first];
 
 		if (pair.first == playerOrg)
 		{
-			playerRelationshipDelta = pair.second - long_term_value;
+			playerRelationshipDelta = pair.second - previous_value;
 		}
-		long_term_value = pair.second;
+		previous_value = pair.second;
 	}
 	return playerRelationshipDelta;
 }
@@ -807,6 +807,12 @@ void Organisation::adjustRelationTo(GameState &state, StateRef<Organisation> oth
 	{
 		other->current_relations[{&state, id}] = current_relations[other];
 	}
+}
+
+void Organisation::establishRelation(StateRef<Organisation> other, float relation)
+{
+	current_relations[other] = relation;
+	long_term_relations[other] = relation;
 }
 
 Organisation::Relation Organisation::isRelatedTo(const StateRef<Organisation> &other) const
@@ -969,8 +975,8 @@ void Organisation::signTreatyWith(GameState &state, StateRef<Organisation> other
 	                       : (myRelation > 0) ? std::max(myRelation + 25, 100.0f)
 	                                          : 0;
 
-	current_relations[other] = newValue;
-	other->current_relations[currentOrg] = std::max(newValue, other->getRelationTo(currentOrg));
+	establishRelation(other, newValue);
+	other->establishRelation(currentOrg, std::max(newValue, other->getRelationTo(currentOrg)));
 
 	balance += bribe;
 	other->balance -= bribe;
