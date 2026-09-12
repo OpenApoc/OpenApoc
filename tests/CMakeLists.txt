@@ -21,8 +21,8 @@ target_link_libraries(${TEST} OpenApoc_Library OpenApoc_Framework
 		OpenApoc_GameState)
 target_compile_definitions(${TEST} PRIVATE -DUNIT_TEST)
 add_test(NAME ${TEST}_difficulty0 COMMAND ${TEST}
-		${CMAKE_SOURCE_DIR}/data/mods/base/data/submods/org.openapoc.base/difficulty0
-		${CMAKE_SOURCE_DIR}/data/mods/base/base_gamestate
+		${EXTRACTED_DATA_DIR}/mods/base/data/submods/org.openapoc.base/difficulty0
+		${EXTRACTED_DATA_DIR}/mods/base/base_gamestate
 		--Framework.CD=${CD_PATH} --Framework.Data=${CMAKE_SOURCE_DIR}/data)
 
 # test_lab_assignment requires args (same as test_serialize)
@@ -32,6 +32,6 @@ target_link_libraries(${TEST} OpenApoc_Library OpenApoc_Framework
 		OpenApoc_GameState)
 target_compile_definitions(${TEST} PRIVATE -DUNIT_TEST)
 add_test(NAME ${TEST} COMMAND ${TEST}
-		${CMAKE_SOURCE_DIR}/data/mods/base/data/submods/org.openapoc.base/difficulty0
-		${CMAKE_SOURCE_DIR}/data/mods/base/base_gamestate
+		${EXTRACTED_DATA_DIR}/mods/base/data/submods/org.openapoc.base/difficulty0
+		${EXTRACTED_DATA_DIR}/mods/base/base_gamestate
 		--Framework.CD=${CD_PATH} --Framework.Data=${CMAKE_SOURCE_DIR}/data)
