@@ -2,6 +2,7 @@
 #include "framework/framework.h"
 #include "framework/logger.h"
 #include "game/state/battle/battle.h"
+#include "game/state/city/vehicle.h"
 #include "game/state/gamestate.h"
 #include "game/state/gamestate_serialize.h"
 #include "game/state/shared/organisation.h"
@@ -345,6 +346,105 @@ static bool test_daily_delta_unaffected(sp<GameState> state)
 	return true;
 }
 
+// Vehicle::adjustRelationshipOnDowned() is the real call site that drives the ripple in play:
+// a downed craft's owner takes the direct hit, third parties ripple off it, and (this is the
+// player-visible fix) the victim must not double-count itself as its own "ally" the way the
+// pre-refactor hand-rolled loop did.
+static bool test_vehicle_downed_relation_adjustment(sp<GameState> state)
+{
+	LogInfo("Testing Vehicle::adjustRelationshipOnDowned drives the shared ripple...");
+
+	auto victimOrg = state->getOrganisation("ORG_GOVERNMENT");
+	auto attackerOrg = state->getOrganisation("ORG_MEGAPOL");
+	auto thirdHigh = state->getOrganisation("ORG_MARSEC");     // relation 74 to victim
+	auto thirdMid = state->getOrganisation("ORG_CYBERWEB");    // relation 50 to victim
+	auto thirdZero = state->getOrganisation("ORG_DIABLO");     // relation 0 to victim
+	auto thirdNeg = state->getOrganisation("ORG_TRANSTELLAR"); // relation -100 to victim
+
+	state->current_battle = nullptr;
+
+	// Not hostile (isRelatedTo < -50 would be Hostile and take the -5 branch instead); this
+	// keeps us on the "lose 30 points" branch that matches the -30 delta the measured numbers
+	// below assume.
+	victimOrg->current_relations[attackerOrg] = 20.0f;
+	attackerOrg->current_relations[victimOrg] = 20.0f;
+
+	thirdHigh->current_relations[victimOrg] = 74.0f;
+	thirdHigh->current_relations[attackerOrg] = 0.0f;
+	thirdMid->current_relations[victimOrg] = 50.0f;
+	thirdMid->current_relations[attackerOrg] = 0.0f;
+	thirdZero->current_relations[victimOrg] = 0.0f;
+	thirdZero->current_relations[attackerOrg] = 0.0f;
+	thirdNeg->current_relations[victimOrg] = -100.0f;
+	thirdNeg->current_relations[attackerOrg] = 0.0f;
+
+	// Register real Vehicle objects in state->vehicles so StateRef<Vehicle> resolution (used
+	// internally by adjustRelationshipOnDowned() via the `attacker` parameter) finds them
+	// normally, instead of relying on a pointer that getId() cannot look up.
+	auto victimVehicle = mksp<Vehicle>();
+	victimVehicle->owner = victimOrg;
+	auto victimVehicleId = Vehicle::generateObjectID(*state);
+	state->vehicles[victimVehicleId] = victimVehicle;
+
+	auto attackerVehicle = mksp<Vehicle>();
+	attackerVehicle->owner = attackerOrg;
+	auto attackerVehicleId = Vehicle::generateObjectID(*state);
+	state->vehicles[attackerVehicleId] = attackerVehicle;
+
+	StateRef<Vehicle> attackerRef(state.get(), attackerVehicleId);
+
+	victimVehicle->adjustRelationshipOnDowned(*state, attackerRef);
+
+	state->vehicles.erase(victimVehicleId);
+	state->vehicles.erase(attackerVehicleId);
+
+	if (!nearlyEqual(thirdHigh->current_relations[attackerOrg], -11.1f))
+	{
+		LogError("Expected a third party at relation 74 to the victim to move -11.1 toward the "
+		         "attacker, got {0}",
+		         thirdHigh->current_relations[attackerOrg]);
+		return false;
+	}
+
+	if (!nearlyEqual(thirdMid->current_relations[attackerOrg], -7.5f))
+	{
+		LogError("Expected a third party at relation 50 to the victim to move -7.5 toward the "
+		         "attacker, got {0}",
+		         thirdMid->current_relations[attackerOrg]);
+		return false;
+	}
+
+	if (!nearlyEqual(thirdZero->current_relations[attackerOrg], 0.0f))
+	{
+		LogError("Expected a third party at relation 0 to the victim to stay put, got {0}",
+		         thirdZero->current_relations[attackerOrg]);
+		return false;
+	}
+
+	if (!nearlyEqual(thirdNeg->current_relations[attackerOrg], 7.5f))
+	{
+		LogError("Expected a third party at relation -100 to the victim to move +7.5 toward "
+		         "the attacker, got {0}",
+		         thirdNeg->current_relations[attackerOrg]);
+		return false;
+	}
+
+	// The single most player-visible part of the fix: the victim's own relation to the
+	// attacker must move by exactly the requested -30, not -45. Before f13df229 the victim
+	// was not excluded from its own ripple loop, and getRelationTo(self) returns 100, so it
+	// took an extra -15 hit as its own "ally".
+	if (!nearlyEqual(victimOrg->current_relations[attackerOrg], -10.0f))
+	{
+		LogError("Expected victim's own relation to attacker to move by exactly -30 (20 -> "
+		         "-10), got {0}",
+		         victimOrg->current_relations[attackerOrg]);
+		return false;
+	}
+
+	LogInfo("Vehicle downed relation adjustment test passed");
+	return true;
+}
+
 int main(int argc, char **argv)
 {
 	OpenApoc::config().addPositionalArgument("common", "Common gamestate to load");
@@ -390,6 +490,7 @@ int main(int argc, char **argv)
 	ok &= test_no_ripple_by_default(state);
 	ok &= test_long_term_event_gated(state);
 	ok &= test_daily_delta_unaffected(state);
+	ok &= test_vehicle_downed_relation_adjustment(state);
 
 	if (!ok)
 	{
