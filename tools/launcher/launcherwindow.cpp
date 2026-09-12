@@ -1,11 +1,13 @@
 #include <QApplication>
 #include <QFileDialog>
+#include <QInputDialog>
 #include <QProcess>
 #include <QSize>
 #include <array>
 #include <string_view>
 #include <utility>
 
+#include "cddetect.h"
 #include "launcherwindow.h"
 #include "ui_launcherwindow.h"
 
@@ -17,6 +19,29 @@
 #include "framework/options.h"
 
 using namespace OpenApoc;
+
+// Runs the shared candidate scan + picker flow. Kept as a file-local free function (not a
+// LauncherWindow member) so it can safely be called before `ui` exists, in the ctor's startup
+// detection path.
+static QString resolveCDPath(QWidget *dialogParent, bool forceChooser)
+{
+	QStringList candidates = OpenApoc::CDDetect::detectCandidates();
+	if (candidates.isEmpty())
+	{
+		LogInfo("CD autodetect: no candidates found");
+		return {};
+	}
+	if (!forceChooser && candidates.size() == 1)
+	{
+		return candidates.first();
+	}
+	bool ok = false;
+	QString choice = QInputDialog::getItem(
+	    dialogParent, "Select X-COM: Apocalypse data source",
+	    "Found possible data source(s), pick one (Cancel to leave unchanged):", candidates, 0,
+	    false, &ok);
+	return (ok && !choice.isEmpty()) ? choice : QString();
+}
 
 static std::list<std::pair<UString, ModInfo>> enumerateMods()
 {
@@ -61,6 +86,18 @@ LauncherWindow::LauncherWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui
 
 	config().parseOptions(1, &fake_argv);
 
+	// `ui` does not exist yet at this point in construction, so read/write the CD path option
+	// directly rather than through `ui->cdPath`.
+	const QString currentCD = QString::fromStdString(OpenApoc::Options::cdPathOption.get());
+	if (!OpenApoc::CDDetect::isPlausibleCDPath(currentCD))
+	{
+		const QString detected = resolveCDPath(this, /*forceChooser=*/false);
+		if (!detected.isEmpty())
+		{
+			OpenApoc::Options::cdPathOption.set(detected.toStdString());
+		}
+	}
+
 	this->currentFramework = mkup<OpenApoc::Framework>("OpenApoc_Launcher", false);
 	ui->setupUi(this);
 
@@ -73,6 +110,7 @@ LauncherWindow::LauncherWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui
 	connect(ui->browseCDFile, &QPushButton::clicked, this, &LauncherWindow::browseCDFile);
 	connect(ui->browseCDDir, &QPushButton::clicked, this, &LauncherWindow::browseCDDir);
 	connect(ui->browseDataDir, &QPushButton::clicked, this, &LauncherWindow::browseDataDir);
+	connect(ui->autodetectButton, &QPushButton::clicked, this, &LauncherWindow::onAutodetect);
 	connect(ui->resolutionBox, static_cast<void (QComboBox::*)(int)>(&QComboBox::activated), this,
 	        &LauncherWindow::setResolutionSelection);
 
@@ -416,6 +454,17 @@ void LauncherWindow::browseDataDir()
 	}
 
 	ui->dataPath->setText(newPath);
+}
+
+void LauncherWindow::onAutodetect()
+{
+	// Always show the picker, even for a single candidate, since this is a deliberate,
+	// user-initiated rerun (unlike the silent startup autodetect).
+	const QString detected = resolveCDPath(this, /*forceChooser=*/true);
+	if (!detected.isEmpty())
+	{
+		ui->cdPath->setText(detected);
+	}
 }
 
 void LauncherWindow::exit()
