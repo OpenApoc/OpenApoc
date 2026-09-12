@@ -11,7 +11,7 @@
 // libsmacker.h doesn't set C abi by default, so wrap
 extern "C"
 {
-#include "dependencies/libsmacker/smacker.h"
+#include "framework/video/smacker/smacker.h"
 }
 
 namespace OpenApoc

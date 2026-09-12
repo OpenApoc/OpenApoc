@@ -3,8 +3,11 @@
 #include "framework/serialization/providers/serializationdataprovider.h"
 #include "library/strings.h"
 
-#include "dependencies/miniz/miniz_zip.h"
+// miniz_zip.h alone no longer declares mz_free_func / tinfl_decompressor in this
+// port (moved into miniz.h and miniz_tinfl.h respectively), so miniz.h must come first.
 #include <map>
+#include <miniz/miniz.h>
+#include <miniz/miniz_zip.h>
 
 namespace OpenApoc
 {

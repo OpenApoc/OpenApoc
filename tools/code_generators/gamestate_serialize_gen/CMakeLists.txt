@@ -2,6 +2,7 @@
 PROJECT(OpenApoc_GamestateSerializeGen CXX C)
 
 find_package(Boost REQUIRED COMPONENTS program_options)
+find_package(pugixml CONFIG REQUIRED)
 
 set (GAMESTATESERIALIZEGEN_SOURCE_FILES
 	main.cpp ../serialization_xml.cpp)
@@ -21,7 +22,7 @@ add_executable(OpenApoc_GamestateSerializeGen ${GAMESTATESERIALIZEGEN_SOURCE_FIL
 
 set( EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR}/bin )
 
-target_link_libraries(OpenApoc_GamestateSerializeGen OpenApoc_LibPugixml
+target_link_libraries(OpenApoc_GamestateSerializeGen pugixml::pugixml
 		${Boost_LIBRARIES})
 
 target_include_directories(OpenApoc_GamestateSerializeGen PUBLIC ${Boost_INCLUDE_DIRS})
