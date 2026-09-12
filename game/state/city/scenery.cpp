@@ -1167,22 +1167,7 @@ void Scenery::updateRelationWithAttacker(GameState &state, StateRef<Organisation
 	// Killing scenery is 4x as influential
 	float multiplier = killed ? 4.0f : 1.0f;
 	// Lose 5 points
-	ourOrg->adjustRelationTo(state, attackerOrg, -5.0f * multiplier);
-	// Our allies lose 2.5 points, enemies gain 1 point
-	for (auto &org : state.organisations)
-	{
-		if (org.first != attackerOrg.id && org.first != state.getCivilian().id)
-		{
-			if (org.second->isRelatedTo(ourOrg) == Organisation::Relation::Hostile)
-			{
-				org.second->adjustRelationTo(state, attackerOrg, 1.0f * multiplier);
-			}
-			else if (org.second->isRelatedTo(ourOrg) == Organisation::Relation::Allied)
-			{
-				org.second->adjustRelationTo(state, attackerOrg, -2.5f * multiplier);
-			}
-		}
-	}
+	ourOrg->adjustRelationTo(state, attackerOrg, -5.0f * multiplier, true);
 }
 
 bool Scenery::handleCollision(GameState &state, Collision &c)

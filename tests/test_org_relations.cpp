@@ -16,6 +16,130 @@ static bool nearlyEqual(float a, float b, float epsilon = 0.001f)
 	return std::fabs(a - b) < epsilon;
 }
 
+// Ally ripple: a third-party org that likes 'row' should react in the same direction as the
+// requested delta, and by more when it likes 'row' more (with extra damping when it dislikes it).
+static bool test_ripple_sign_and_magnitude(sp<GameState> state)
+{
+	LogInfo("Testing ripple sign and magnitude...");
+
+	auto row = state->getOrganisation("ORG_GOVERNMENT");
+	auto col = state->getOrganisation("ORG_MEGAPOL");
+	auto ally = state->getOrganisation("ORG_MARSEC");
+	auto hostile = state->getOrganisation("ORG_CYBERWEB");
+
+	state->current_battle = nullptr;
+
+	// Ally likes 'row' a lot -> positive ripple in the same direction as delta.
+	ally->current_relations[row] = 60.0f;
+	ally->current_relations[col] = 0.0f;
+	// A hostile third party dislikes 'row' -> extra-damped ripple, still same sign as delta.
+	hostile->current_relations[row] = -40.0f;
+	hostile->current_relations[col] = 0.0f;
+
+	row->current_relations[col] = 0.0f;
+	const float delta = 40.0f;
+	row->adjustRelationTo(*state, col, delta, true);
+
+	// allyFactor = 60/2 = 30, ripple = 30*40/100 = 12
+	if (!nearlyEqual(ally->current_relations[col], 12.0f))
+	{
+		LogError("Expected allied third party's relation to col to move by +12, got {0}",
+		         ally->current_relations[col]);
+		return false;
+	}
+
+	// allyFactor = -40/2 = -20, damped further (since negative) to -10, ripple = -10*40/100 = -4
+	if (!nearlyEqual(hostile->current_relations[col], -4.0f))
+	{
+		LogError("Expected hostile third party's relation to col to move by -4, got {0}",
+		         hostile->current_relations[col]);
+		return false;
+	}
+
+	if (!nearlyEqual(row->current_relations[col], 40.0f))
+	{
+		LogError("Expected row's own relation to col to become 40, got {0}",
+		         row->current_relations[col]);
+		return false;
+	}
+
+	LogInfo("Ripple sign and magnitude test passed");
+	return true;
+}
+
+// The original silently drops a ripple that would cross -100/100, rather than clamping to it.
+static bool test_ripple_dropped_not_clamped(sp<GameState> state)
+{
+	LogInfo("Testing ripple is dropped rather than clamped at the boundary...");
+
+	auto row = state->getOrganisation("ORG_GOVERNMENT");
+	auto col = state->getOrganisation("ORG_MEGAPOL");
+	auto ally = state->getOrganisation("ORG_MARSEC");
+
+	state->current_battle = nullptr;
+
+	ally->current_relations[row] = 100.0f; // allyFactor = 50
+	ally->current_relations[col] = 98.0f;  // 98 + (50*40/100 = 20) = 118, out of range
+
+	row->current_relations[col] = 0.0f;
+	row->adjustRelationTo(*state, col, 40.0f, true);
+
+	if (!nearlyEqual(ally->current_relations[col], 98.0f))
+	{
+		LogError("Expected out-of-range ripple to be dropped, leaving 98, got {0}",
+		         ally->current_relations[col]);
+		return false;
+	}
+
+	// Same check at the negative boundary
+	ally->current_relations[row] = -100.0f; // allyFactor = -50, damped to -25
+	ally->current_relations[col] = -97.0f;  // -97 + (-25*40/100 = -10) = -107, out of range
+	row->current_relations[col] = 0.0f;
+	row->adjustRelationTo(*state, col, 40.0f, true);
+
+	if (!nearlyEqual(ally->current_relations[col], -97.0f))
+	{
+		LogError("Expected out-of-range negative ripple to be dropped, leaving -97, got {0}",
+		         ally->current_relations[col]);
+		return false;
+	}
+
+	LogInfo("Ripple boundary-drop test passed");
+	return true;
+}
+
+// The ripple loop excludes 'other' (the victim of the adjustment), the same way the original
+// excludes its own row - otherwise a victim with getRelationTo(self) == 100 would take a
+// spurious extra hit as its own "ally".
+static bool test_victim_excluded_from_ripple(sp<GameState> state)
+{
+	LogInfo("Testing victim is excluded from its own ripple...");
+
+	auto row = state->getOrganisation("ORG_GOVERNMENT");
+	auto col = state->getOrganisation("ORG_MEGAPOL");
+
+	state->current_battle = nullptr;
+
+	// If col were not excluded from the loop, it would be processed as its own "third party",
+	// computing an ally factor against itself and writing a spurious self-entry.
+	col->current_relations.erase(col);
+	col->current_relations[row] = 80.0f;
+	row->current_relations[col] = 0.0f;
+
+	row->adjustRelationTo(*state, col, 40.0f, true);
+
+	if (col->current_relations.find(col) != col->current_relations.end())
+	{
+		LogError("Expected victim to be excluded from its own ripple, but a self-entry of {0} "
+		         "was written",
+		         col->current_relations[col]);
+		return false;
+	}
+
+	LogInfo("Victim-exclusion test passed");
+	return true;
+}
+
 // X-COM and the Aliens are always at war, and X-COM's relation to every org mirrors what that
 // org thinks of X-COM, whenever any relation touching the player changes.
 static bool test_player_mirror_and_hard_war(sp<GameState> state)
@@ -258,6 +382,9 @@ int main(int argc, char **argv)
 	state->fillPlayerStartingProperty();
 
 	bool ok = true;
+	ok &= test_ripple_sign_and_magnitude(state);
+	ok &= test_ripple_dropped_not_clamped(state);
+	ok &= test_victim_excluded_from_ripple(state);
 	ok &= test_player_mirror_and_hard_war(state);
 	ok &= test_mirror_fires_during_battle(state);
 	ok &= test_no_ripple_by_default(state);
