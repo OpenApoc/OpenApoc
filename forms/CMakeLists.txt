@@ -8,6 +8,8 @@ set (FORMS_SOURCE_FILES
 	checkbox.cpp
 	control.cpp
 	form.cpp
+	harness_ui.cpp
+	harness_actions.cpp
 	graphicbutton.cpp
 	graphic.cpp
 	label.cpp
@@ -26,6 +28,8 @@ set (FORMS_HEADER_FILES
 	checkbox.h
 	control.h
 	form.h
+	harness_ui.h
+	harness_actions.h
 	forms_enums.h
 	forms.h
 	graphicbutton.h

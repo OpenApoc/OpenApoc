@@ -1,0 +1,64 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+repo_root = File.expand_path("..", __dir__)
+
+Vagrant.configure(2) do |config|
+  config.vm.box = "ubuntu/noble64"
+  config.vm.hostname = "openapoc-live-test"
+
+  config.vm.synced_folder repo_root, "/vagrant"
+
+  config.vm.provider "virtualbox" do |vb|
+    vb.gui = false
+    vb.memory = "4096"
+    vb.cpus = 2
+  end
+
+  config.vm.provision "shell", privileged: false, inline: <<-'SHELL'
+    set -eux
+
+    export DEBIAN_FRONTEND=noninteractive
+    sudo apt-get update
+    sudo apt-get install -y \
+      build-essential \
+      ccache \
+      gettext \
+      git \
+      libboost-filesystem-dev \
+      libboost-locale-dev \
+      libboost-program-options-dev \
+      libboost-system-dev \
+      libsdl2-dev \
+      libunwind8-dev \
+      libvorbis-dev \
+      mesa-utils \
+      pkg-config \
+      python3-venv \
+      qt6-base-dev \
+      wget \
+      x11-xserver-utils \
+      xvfb \
+      xz-utils
+
+    python3 -m venv "$HOME/.openapoc-build-tools"
+    "$HOME/.openapoc-build-tools/bin/pip" install --upgrade pip "cmake>=3.30" ninja
+    export PATH="$HOME/.openapoc-build-tools/bin:$PATH"
+
+    cd /vagrant
+    git submodule update --init --recursive
+
+    mkdir -p data
+    if [ ! -e data/cd.iso ]; then
+      wget http://s2.jonnyh.net/pub/cd_minimal.iso.xz -O data/cd.iso.xz
+      xz -d data/cd.iso.xz
+    fi
+
+    export SDL_AUDIODRIVER=dummy
+    export LIBGL_ALWAYS_SOFTWARE=1
+
+    cmake -S . -B build -G Ninja
+    cmake --build build
+    ctest --test-dir build --output-on-failure
+  SHELL
+end

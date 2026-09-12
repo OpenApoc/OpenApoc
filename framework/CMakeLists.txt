@@ -6,6 +6,7 @@ option(DIALOG_ON_ERROR "Pop up a dialog box showing errors" ON)
 
 set (FRAMEWORK_SOURCE_FILES
 	configfile.cpp
+	harness.cpp
 	data.cpp
 	event.cpp
 	font.cpp
@@ -32,6 +33,7 @@ list(APPEND ALL_SOURCE_FILES ${FRAMEWORK_SOURCE_FILES})
 
 set (FRAMEWORK_HEADER_FILES
 	configfile.h
+	harness.h
 	data.h
 	event.h
 	font.h
@@ -196,6 +198,7 @@ if(APPLE)
 			"-DBROKEN_THREAD_LOCAL")
 elseif(WIN32)
 	target_compile_definitions(OpenApoc_Framework PRIVATE "-DGLESWRAP_PLATFORM_WGL")
+	target_link_libraries(OpenApoc_Framework PUBLIC ws2_32)
 else()
 	target_compile_definitions(OpenApoc_Framework PRIVATE "-DGLESWRAP_PLATFORM_GLX")
 endif()
