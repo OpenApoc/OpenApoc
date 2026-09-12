@@ -10,10 +10,6 @@
 
 using namespace OpenApoc;
 
-// Issue #1325: a player craft chasing a UFO with an AttackVehicle mission kept the mission
-// alive after the UFO escaped through a dimension gate into the other city, because
-// isFinishedInternal()'s AttackVehicle case never compared the target's city against the
-// pursuer's (unlike the FollowVehicle case immediately below it, which already does).
 // This reproduces the escape without going through the dimension-gate sound/portal machinery:
 // it moves the target the same way enterDimensionGate()/leaveDimensionGate() do at the
 // storage level (removeFromMap, reassign city, addObjectToMap on the other city's map), which is
