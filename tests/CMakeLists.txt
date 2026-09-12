@@ -36,7 +36,7 @@ add_test(NAME ${TEST} COMMAND ${TEST}
 		${CMAKE_SOURCE_DIR}/data/mods/base/base_gamestate
 		--Framework.CD=${CD_PATH} --Framework.Data=${CMAKE_SOURCE_DIR}/data)
 
-# Standalone harness for #983/#1008 (crashed vehicle recovery throughput). Not wired to
+# Standalone harness for crashed vehicle recovery throughput. Not wired to
 # add_test: it is a manually-run before/after comparison, not a regression gate.
 set(TEST test_crashed_vehicle_recovery)
 add_executable(${TEST} ${TEST}.cpp)
