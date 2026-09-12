@@ -1,7 +1,7 @@
 // Verifies the GravliftLineOfFire option gate on
 // TileObjectBattleMapPart::getVoxelMap. Uses synthetic map part types (no
 // extracted tileset/gamestate data required), so this runs under normal CI
-// unlike the manual full-battle harnesses for issue #1330.
+// unlike the manual full-battle harnesses.
 #include "framework/configfile.h"
 #include "framework/logger.h"
 #include "game/state/battle/battlemappart.h"

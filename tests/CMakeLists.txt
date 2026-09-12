@@ -38,12 +38,11 @@ add_test(NAME ${TEST} COMMAND ${TEST}
 		--Framework.CD=${CD_PATH} --Framework.Data=${CMAKE_SOURCE_DIR}/data)
 
 # test_gravlift_lof and test_gravlift_ai_battle are manual investigation
-# harnesses for issue #1330 (grav-lift line-of-fire/sight). They boot a real
-# battle in one of the base game's grav-lift tilesets to exercise the real
-# voxel/AI code paths, which needs the fully extracted tileset/map/gamestate
-# data CI's minimal cd.iso does not provide. They are deliberately not
-# add_test()-ed; build and run them by hand (see the header comment in each
-# .cpp for arguments).
+# harnesses that boot a real battle in one of the base game's grav-lift tilesets
+# to exercise the real voxel/AI code paths, which needs the fully extracted
+# tileset/map/gamestate data CI's minimal cd.iso does not provide. They are
+# deliberately not add_test()-ed; build and run them by hand (see the header
+# comment in each .cpp for arguments).
 set(TEST test_gravlift_lof)
 add_executable(${TEST} ${TEST}.cpp)
 target_link_libraries(${TEST} OpenApoc_Library OpenApoc_Framework OpenApoc_GameState)

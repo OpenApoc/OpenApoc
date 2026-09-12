@@ -1,8 +1,8 @@
-// Verification harness for OpenApoc issue #1330, sub-problems A and B
-// (line of fire through grav-lift geometry). NOT part of the committed fix:
-// it needs the full extracted tileset/map/gamestate data that CI's minimal
-// cd.iso does not provide, so it is kept out of tests/CMakeLists.txt and run
-// manually from the scratchpad instead.
+// Verification harness for sub-problems A and B (line of fire through
+// grav-lift geometry). NOT part of the committed fix: it needs the full
+// extracted tileset/map/gamestate data that CI's minimal cd.iso does not
+// provide, so it is kept out of tests/CMakeLists.txt and run manually from
+// the scratchpad instead.
 //
 // Boots a real battle (common + gamestate, exactly like the other tests in
 // tests/) in a building that actually uses a grav-lift tileset, so every

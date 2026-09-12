@@ -1,27 +1,6 @@
-// Manual AI-behaviour verification harness for OpenApoc issue #1330.
-// Not part of the committed fix (needs full extracted tileset/gamestate data
-// CI does not provide); build and run exactly like test_gravlift_lof.cpp.
-//
-// Purpose: the GravliftLineOfFire option lets a unit SEE another unit
-// vertically through a lift shaft that it could not see before. That feeds
-// BattleUnit::calculateVisionToUnit -> Battle::visibleUnits per organisation,
-// which drives AI target selection (AIBlockTactical::think, called every
-// Battle::update from battle.cpp) and reaction fire. The hypothesis under
-// test: an AI unit spots a target only reachable/shootable via a path it
-// cannot use, fixates on it, and stalls or loops instead of making progress
-// (the same class of bug as GameState::canTurbo() spinning forever on an
-// unreachable vehicle attack mission).
-//
-// Method: build a real battle in a tileset with grav-lift floor pads (see
-// CANDIDATE_TILESETS), carve a synthetic 2-column lift shaft out of the
-// tileset's real grav-lift pieces (same construction as
-// test_gravlift_lof.cpp), put the player unit at the bottom of the shaft and
-// a hostile org unit at the top (same column, so the only new sightline is
-// the vertical one through the grav-lift floor pads), then drive
-// Battle::update() in RealTime mode for many ticks. Log target selection,
-// position, mission queue and wall-clock time per batch; run once with the
-// flag ON and once OFF (set via config before Framework construction) and
-// diff.
+// Manual AI-behaviour verification harness. Not part of the committed fix
+// (needs full extracted tileset/gamestate data CI does not provide); build
+// and run exactly like test_gravlift_lof.cpp.
 //
 // Build:
 //   1. Copy into tests/, add to tests/CMakeLists.txt like test_gravlift_lof.
@@ -29,16 +8,6 @@
 //   3. ./build/bin/test_gravlift_ai_battle <common> <gamestate> [tileset] [seed] \
 //        --OpenApoc.NewFeature.GravliftLineOfFire=true|false \
 //        --Framework.CD=data/cd.iso --Framework.Data=data
-//
-// [seed] is an optional fixed RNG seed (default 424242) used to make battle
-// map generation reproducible: OpenApoc.NewFeature.SeedRng defaults to true
-// and reseeds GameState::rng from wall-clock time in GameState::startGame(),
-// and BattleMap::generateMap consumes that same rng to decide vertical
-// stacking, sector packing order and sector choice, so without a fixed seed
-// two runs (e.g. flag=false vs flag=true) can silently generate different
-// map geometry and any AI-behaviour comparison between them is not
-// controlled. This harness forces OpenApoc.NewFeature.SeedRng off and pins
-// the seed explicitly so both arms of a comparison run see the same map.
 #include "framework/configfile.h"
 #include "framework/framework.h"
 #include "framework/logger.h"
