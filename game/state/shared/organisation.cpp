@@ -49,18 +49,18 @@ void Organisation::takeOver(GameState &state, bool forced)
 	militarized = true;
 	infiltrationValue = 200;
 	StateRef<Organisation> org = {&state, id};
-	current_relations[state.getPlayer()] = -100.0f;
-	state.getPlayer()->current_relations[org] = -100.0f;
-	current_relations[state.getAliens()] = 100.0f;
-	state.getAliens()->current_relations[org] = 100.0f;
+	establishRelation(state.getPlayer(), -100.0f);
+	state.getPlayer()->establishRelation(org, -100.0f);
+	establishRelation(state.getAliens(), 100.0f);
+	state.getAliens()->establishRelation(org, 100.0f);
 	for (auto &pair : state.organisations)
 	{
 		if (pair.second->id == id || !pair.second->takenOver)
 		{
 			continue;
 		}
-		current_relations[{&state, pair.first}] = 90.0f;
-		pair.second->current_relations[org] = 90.0f;
+		establishRelation({&state, pair.first}, 90.0f);
+		pair.second->establishRelation(org, 90.0f);
 	}
 	auto event = new GameOrganisationEvent(GameEventType::AlienTakeover, {&state, id});
 	fw().pushEvent(event);
@@ -643,13 +643,13 @@ float Organisation::updateRelations(StateRef<Organisation> &playerOrg)
 	float playerRelationshipDelta = 0.0;
 	for (auto &pair : current_relations)
 	{
-		float &long_term_value = long_term_relations[pair.first];
+		float &previous_value = previous_relations[pair.first];
 
 		if (pair.first == playerOrg)
 		{
-			playerRelationshipDelta = pair.second - long_term_value;
+			playerRelationshipDelta = pair.second - previous_value;
 		}
-		long_term_value = pair.second;
+		previous_value = pair.second;
 	}
 	return playerRelationshipDelta;
 }
@@ -799,14 +799,69 @@ float Organisation::getRelationTo(const StateRef<Organisation> &other) const
 	return x;
 }
 
-void Organisation::adjustRelationTo(GameState &state, StateRef<Organisation> other, float value)
+void Organisation::adjustRelationTo(GameState &state, StateRef<Organisation> other, float value,
+                                    bool applyReputationRipple)
 {
+	StateRef<Organisation> thisOrg{&state, id};
 	current_relations[other] = clamp(current_relations[other] + value, -100.0f, 100.0f);
-	// Mirror player relations except in battle
-	if (!state.current_battle && other == state.getPlayer())
+
+	// The ripple never runs mid-battle (relations should not visibly flip while a fight is in
+	// progress), and only when the caller opts in - most adjustRelationTo() calls are narrative
+	// nudges that should not cascade into every other org's standing.
+	if (applyReputationRipple && !state.current_battle)
 	{
-		other->current_relations[{&state, id}] = current_relations[other];
+		// Ally ripple: every other org (bar X-COM, which only ever follows the mirror below)
+		// reacts to this change in proportion to how much it likes us, with extra damping if it
+		// dislikes us. The ripple uses the raw requested delta, not the amount actually applied
+		// after clamping.
+		StateRef<Organisation> playerOrg = state.getPlayer();
+		for (auto &pair : state.organisations)
+		{
+			StateRef<Organisation> k{&state, pair.first};
+			if (k == thisOrg || k == other || k == playerOrg)
+			{
+				continue;
+			}
+			float allyFactor = pair.second->getRelationTo(thisOrg) / 2.0f;
+			if (allyFactor < 0.0f)
+			{
+				allyFactor /= 2.0f;
+			}
+			float ripple = (allyFactor * value) / 100.0f;
+			float rippled = pair.second->getRelationTo(other) + ripple;
+			// The original silently drops the ripple if it would cross a boundary, rather than
+			// clamping it to the boundary.
+			if (rippled > -100.0f && rippled < 100.0f)
+			{
+				pair.second->current_relations[other] = rippled;
+			}
+		}
 	}
+
+	// X-COM and the Aliens are always at war, and X-COM's relation to everyone else always
+	// mirrors what that org thinks of X-COM. This runs unconditionally, even mid-battle.
+	StateRef<Organisation> playerOrg = state.getPlayer();
+	StateRef<Organisation> alienOrg = state.getAliens();
+	if (thisOrg == playerOrg || other == playerOrg)
+	{
+		playerOrg->current_relations[alienOrg] = -100.0f;
+		alienOrg->current_relations[playerOrg] = -100.0f;
+		for (auto &pair : state.organisations)
+		{
+			StateRef<Organisation> k{&state, pair.first};
+			if (k == playerOrg)
+			{
+				continue;
+			}
+			playerOrg->current_relations[k] = pair.second->getRelationTo(playerOrg);
+		}
+	}
+}
+
+void Organisation::establishRelation(StateRef<Organisation> other, float relation)
+{
+	current_relations[other] = relation;
+	long_term_relations[other] = relation;
 }
 
 Organisation::Relation Organisation::isRelatedTo(const StateRef<Organisation> &other) const
@@ -969,8 +1024,8 @@ void Organisation::signTreatyWith(GameState &state, StateRef<Organisation> other
 	                       : (myRelation > 0) ? std::max(myRelation + 25, 100.0f)
 	                                          : 0;
 
-	current_relations[other] = newValue;
-	other->current_relations[currentOrg] = std::max(newValue, other->getRelationTo(currentOrg));
+	establishRelation(other, newValue);
+	other->establishRelation(currentOrg, std::max(newValue, other->getRelationTo(currentOrg)));
 
 	balance += bribe;
 	other->balance -= bribe;

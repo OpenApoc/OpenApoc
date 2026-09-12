@@ -184,9 +184,20 @@ class Organisation : public StateObject<Organisation>
 	void signTreatyWith(GameState &state, StateRef<Organisation> other, int bribe,
 	                    bool forceAlliance = false);
 	float getRelationTo(const StateRef<Organisation> &other) const;
-	void adjustRelationTo(GameState &state, StateRef<Organisation> other, float value);
+	void adjustRelationTo(GameState &state, StateRef<Organisation> other, float value,
+	                      bool applyReputationRipple = false);
+	// Snaps both current and long-term relation to 'other' to the same value. Used only by the
+	// rare narrative-scale events (alien takeover, treaty/merger) that should re-baseline the
+	// long-term relation, as opposed to the many small day-to-day adjustRelationTo() nudges.
+	void establishRelation(StateRef<Organisation> other, float relation);
 	std::map<StateRef<Organisation>, float> current_relations;
+	// Long-term "established" relation, only moved by establishRelation(). Read by the raid
+	// heuristic (how far has 'current' fallen below what's established) as a drift signal.
 	std::map<StateRef<Organisation>, float> long_term_relations;
+	// Snapshot of current_relations as of the last updateRelations() call. Used solely to compute
+	// the day-over-day relationship delta for diplomacy triggers; kept separate from
+	// long_term_relations now that the latter is event-gated rather than refreshed daily.
+	std::map<StateRef<Organisation>, float> previous_relations;
 
 	// Following members are not serialized, but rather are set in initCity method
 
