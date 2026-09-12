@@ -184,7 +184,8 @@ class Organisation : public StateObject<Organisation>
 	void signTreatyWith(GameState &state, StateRef<Organisation> other, int bribe,
 	                    bool forceAlliance = false);
 	float getRelationTo(const StateRef<Organisation> &other) const;
-	void adjustRelationTo(GameState &state, StateRef<Organisation> other, float value);
+	void adjustRelationTo(GameState &state, StateRef<Organisation> other, float value,
+	                      bool applyReputationRipple = false);
 	// Snaps both current and long-term relation to 'other' to the same value. Used only by the
 	// rare narrative-scale events (alien takeover, treaty/merger) that should re-baseline the
 	// long-term relation, as opposed to the many small day-to-day adjustRelationTo() nudges.
