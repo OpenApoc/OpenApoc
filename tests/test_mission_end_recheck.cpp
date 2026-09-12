@@ -1,12 +1,4 @@
-// Standalone headless harness for OpenApoc issue #647
-// ("Mothership Mission Won't Auto-end").
-//
-// Reproduces the checkMissionEnd() early-return guard swallowing the
-// recompute that should happen when the last hostile unit dies, in the case
-// where missionEndTimer is already running from an earlier, unrelated
-// recheck (e.g. a different unit having been stunned and later fully
-// killed). Not wired into ctest: it is a diagnostic tool for this issue,
-// run manually against the savegame attached to the issue.
+// Standalone headless harness; not wired into ctest, run manually against a savegame.
 #include "framework/configfile.h"
 #include "framework/framework.h"
 #include "framework/logger.h"
