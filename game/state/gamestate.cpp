@@ -958,10 +958,14 @@ bool GameState::canTurbo()
 		if (!v.second->isDead() && v.second->city == this->current_city &&
 		    v.second->tileObject != nullptr)
 		{
+			// A hostile aggressive vehicle holding no missions is just an idle parked
+			// fleet (e.g. sitting at its owner's home building) - not something the
+			// player is being asked to react to, so it shouldn't permanently lock out
+			// turbo for the rest of the game.
 			if (v.second->type->aggressiveness > 0 &&
 			    v.second->owner->isRelatedTo(this->getPlayer()) ==
 			        Organisation::Relation::Hostile &&
-			    !v.second->crashed)
+			    !v.second->crashed && !v.second->missions.empty())
 			{
 				return false;
 			}
