@@ -201,6 +201,7 @@ class BattleView : public BattleTileView
 	void updateAttackCost();
 
 	void updateSquadIndex(StateRef<BattleUnit> u);
+	void assignSelectionToSquad(int index);
 
 	// Debuggers
 
