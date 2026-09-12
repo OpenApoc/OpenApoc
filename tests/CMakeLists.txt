@@ -62,7 +62,7 @@ target_link_libraries(${TEST} OpenApoc_Library OpenApoc_Framework
 		OpenApoc_GameState)
 target_compile_definitions(${TEST} PRIVATE -DUNIT_TEST)
 
-# Standalone harness for #983/#1008 (crashed vehicle recovery throughput). Not wired to
+# Standalone harness for crashed vehicle recovery throughput. Not wired to
 # add_test: it is a manually-run before/after comparison, not a regression gate.
 set(TEST test_crashed_vehicle_recovery)
 add_executable(${TEST} ${TEST}.cpp)

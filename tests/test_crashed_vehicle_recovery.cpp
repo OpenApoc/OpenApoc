@@ -1,10 +1,3 @@
-// Headless harness for issues #983 / #1008: crashed vehicles are recovered at a rate that
-// depends on real-world game speed, because Organisation::updateMissions dispatches at most
-// one rescue mission per organisation per call, while GameState::update() is called once per
-// render frame regardless of speed. This drives the same one-hour game-time window through
-// updateTurbo() (few, large-tick calls) and through update(1) (many, small-tick calls matching
-// normal-speed cadence) and asserts both dispatch paths recover the same number of vehicles.
-//
 // Not registered as a ctest - it is a standalone harness, built as its own ninja target so it
 // does not change the ctest count on this branch.
 #include "framework/configfile.h"
