@@ -26,9 +26,19 @@
 // Build:
 //   1. Copy into tests/, add to tests/CMakeLists.txt like test_gravlift_lof.
 //   2. flock -w 3600 /tmp/openapoc-build.lock ninja -C build -j2 test_gravlift_ai_battle
-//   3. ./build/bin/test_gravlift_ai_battle <common> <gamestate> [tileset] \
+//   3. ./build/bin/test_gravlift_ai_battle <common> <gamestate> [tileset] [seed] \
 //        --OpenApoc.NewFeature.GravliftLineOfFire=true|false \
 //        --Framework.CD=data/cd.iso --Framework.Data=data
+//
+// [seed] is an optional fixed RNG seed (default 424242) used to make battle
+// map generation reproducible: OpenApoc.NewFeature.SeedRng defaults to true
+// and reseeds GameState::rng from wall-clock time in GameState::startGame(),
+// and BattleMap::generateMap consumes that same rng to decide vertical
+// stacking, sector packing order and sector choice, so without a fixed seed
+// two runs (e.g. flag=false vs flag=true) can silently generate different
+// map geometry and any AI-behaviour comparison between them is not
+// controlled. This harness forces OpenApoc.NewFeature.SeedRng off and pins
+// the seed explicitly so both arms of a comparison run see the same map.
 #include "framework/configfile.h"
 #include "framework/framework.h"
 #include "framework/logger.h"
@@ -49,11 +59,13 @@
 #include "game/state/tilemap/tileobject.h"
 #include "library/voxel.h"
 #include <chrono>
+#include <cstdint>
 #include <cstdio>
 #include <glm/glm.hpp>
 #include <iostream>
 #include <list>
 #include <set>
+#include <string>
 #include <vector>
 
 using namespace OpenApoc;
@@ -110,6 +122,8 @@ int main(int argc, char **argv)
 	config().addPositionalArgument("common", "Common gamestate to load");
 	config().addPositionalArgument("gamestate", "Gamestate to load");
 	config().addPositionalArgument("tileset", "Tileset to test (optional)");
+	config().addPositionalArgument("seed", "Fixed RNG seed for deterministic map generation "
+	                                       "(optional, default 424242)");
 	if (config().parseOptions(argc, argv))
 	{
 		return EXIT_FAILURE;
@@ -117,12 +131,14 @@ int main(int argc, char **argv)
 	auto common_name = config().getString("common");
 	auto gamestate_name = config().getString("gamestate");
 	auto forcedTileset = config().getString("tileset");
+	auto seedArg = config().getString("seed");
 	if (common_name.empty() || gamestate_name.empty())
 	{
 		std::cerr << "Must provide common and gamestate\n";
 		config().showHelp();
 		return EXIT_FAILURE;
 	}
+	const uint64_t rngSeed = seedArg.empty() ? 424242ULL : std::stoull(seedArg);
 
 	Framework fw("OpenApoc", false);
 
@@ -135,6 +151,20 @@ int main(int argc, char **argv)
 		LogError("Failed to load gamestate");
 		return EXIT_FAILURE;
 	}
+
+	// GameState::rng is not part of the save and OpenApoc.NewFeature.SeedRng
+	// defaults to true, which reseeds it from wall-clock time in startGame()
+	// below. That makes battle map generation (BattleMap::generateMap picks
+	// vertical stacking, sector packing order and sector choice off state.rng)
+	// nondeterministic between runs, so comparing flag=false against flag=true
+	// output was actually comparing two different maps. Force the time-based
+	// reseed off and pin the RNG to a fixed, caller-controlled seed instead so
+	// both arms of the comparison see identical map geometry.
+	config().set("OpenApoc.NewFeature.SeedRng", false);
+	state->rng.seed(rngSeed);
+	printf("RNG seed = %llu (OpenApoc.NewFeature.SeedRng forced off)\n",
+	       (unsigned long long)rngSeed);
+
 	state->startGame();
 	state->initState();
 	state->fillPlayerStartingProperty();
