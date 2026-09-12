@@ -1,6 +1,7 @@
 #include "framework/configfile.h"
 #include "framework/framework.h"
 #include "framework/logger.h"
+#include "game/state/battle/battle.h"
 #include "game/state/gamestate.h"
 #include "game/state/gamestate_serialize.h"
 #include "game/state/shared/organisation.h"
@@ -13,6 +14,125 @@ using namespace OpenApoc;
 static bool nearlyEqual(float a, float b, float epsilon = 0.001f)
 {
 	return std::fabs(a - b) < epsilon;
+}
+
+// X-COM and the Aliens are always at war, and X-COM's relation to every org mirrors what that
+// org thinks of X-COM, whenever any relation touching the player changes.
+static bool test_player_mirror_and_hard_war(sp<GameState> state)
+{
+	LogInfo("Testing X-COM/Alien hard war and player mirror...");
+
+	auto player = state->getPlayer();
+	auto aliens = state->getAliens();
+	auto other = state->getOrganisation("ORG_MEGAPOL");
+
+	state->current_battle = nullptr;
+
+	// Deliberately break the invariant, then trigger a player-involving change to see it restored
+	player->current_relations[aliens] = 3.0f;
+	aliens->current_relations[player] = -7.0f;
+	other->current_relations[player] = 55.0f;
+
+	other->adjustRelationTo(*state, player, 1.0f);
+
+	if (!nearlyEqual(player->current_relations[aliens], -100.0f) ||
+	    !nearlyEqual(aliens->current_relations[player], -100.0f))
+	{
+		LogError("Expected X-COM/Alien relation pinned at -100 both ways, got {0} / {1}",
+		         player->current_relations[aliens], aliens->current_relations[player]);
+		return false;
+	}
+
+	// other's own relation to player became 55 + 1 = 56; X-COM's mirrored view of it must match
+	// that concrete value, not just be self-consistent with whatever getRelationTo() returns.
+	if (!nearlyEqual(other->current_relations[player], 56.0f) ||
+	    !nearlyEqual(player->current_relations[other], 56.0f))
+	{
+		LogError("Expected X-COM's relation to org to mirror the org's 56 relation to X-COM, "
+		         "got other->player={0} player->other={1}",
+		         other->current_relations[player], player->current_relations[other]);
+		return false;
+	}
+
+	LogInfo("Player mirror and hard war test passed");
+	return true;
+}
+
+// The X-COM mirror runs unconditionally now, so it must still fire while a battle is in progress
+// (the ripple itself stays suppressed mid-battle; this only checks the mirror half).
+static bool test_mirror_fires_during_battle(sp<GameState> state)
+{
+	LogInfo("Testing X-COM mirror still fires mid-battle...");
+
+	auto player = state->getPlayer();
+	auto aliens = state->getAliens();
+	auto other = state->getOrganisation("ORG_MEGAPOL");
+
+	state->current_battle = mksp<Battle>();
+
+	player->current_relations[aliens] = 3.0f;
+	aliens->current_relations[player] = -7.0f;
+	other->current_relations[player] = 20.0f;
+
+	other->adjustRelationTo(*state, player, 1.0f, true);
+
+	state->current_battle = nullptr;
+
+	if (!nearlyEqual(player->current_relations[aliens], -100.0f) ||
+	    !nearlyEqual(aliens->current_relations[player], -100.0f))
+	{
+		LogError("Expected X-COM/Alien relation pinned at -100 both ways mid-battle, got {0} / {1}",
+		         player->current_relations[aliens], aliens->current_relations[player]);
+		return false;
+	}
+
+	if (!nearlyEqual(other->current_relations[player], 21.0f) ||
+	    !nearlyEqual(player->current_relations[other], 21.0f))
+	{
+		LogError("Expected X-COM's relation to org to mirror mid-battle, got other->player={0} "
+		         "player->other={1}",
+		         other->current_relations[player], player->current_relations[other]);
+		return false;
+	}
+
+	LogInfo("Mid-battle mirror test passed");
+	return true;
+}
+
+// Without opting in, adjustRelationTo() must move only the direct pair - no third party should
+// see any change at all.
+static bool test_no_ripple_by_default(sp<GameState> state)
+{
+	LogInfo("Testing default adjustRelationTo() produces no third-party movement...");
+
+	auto row = state->getOrganisation("ORG_GOVERNMENT");
+	auto col = state->getOrganisation("ORG_MEGAPOL");
+	auto third = state->getOrganisation("ORG_MARSEC");
+
+	state->current_battle = nullptr;
+
+	third->current_relations[row] = 80.0f;
+	third->current_relations[col] = 0.0f;
+	row->current_relations[col] = 0.0f;
+
+	row->adjustRelationTo(*state, col, 40.0f);
+
+	if (!nearlyEqual(row->current_relations[col], 40.0f))
+	{
+		LogError("Expected row's own relation to col to become 40, got {0}",
+		         row->current_relations[col]);
+		return false;
+	}
+
+	if (!nearlyEqual(third->current_relations[col], 0.0f))
+	{
+		LogError("Expected no ripple to a third party without opting in, got {0}",
+		         third->current_relations[col]);
+		return false;
+	}
+
+	LogInfo("Default no-ripple test passed");
+	return true;
 }
 
 // long_term_relations should stay put across ordinary adjustRelationTo() calls and daily
@@ -138,6 +258,9 @@ int main(int argc, char **argv)
 	state->fillPlayerStartingProperty();
 
 	bool ok = true;
+	ok &= test_player_mirror_and_hard_war(state);
+	ok &= test_mirror_fires_during_battle(state);
+	ok &= test_no_ripple_by_default(state);
 	ok &= test_long_term_event_gated(state);
 	ok &= test_daily_delta_unaffected(state);
 
