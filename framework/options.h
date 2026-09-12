@@ -80,6 +80,7 @@ extern ConfigOptionBool optionInstantExplosionDamage;
 extern ConfigOptionBool optionGravliftSounds;
 extern ConfigOptionBool optionNoScrollSounds;
 extern ConfigOptionBool optionNoInstantThrows;
+extern ConfigOptionBool optionGravliftLineOfFire;
 extern ConfigOptionBool optionFerryChecksRelationshipWhenBuying;
 extern ConfigOptionBool optionAllowManualCityTeleporters;
 extern ConfigOptionBool optionAllowManualCargoFerry;
