@@ -428,86 +428,71 @@ void Organisation::updateMissions(GameState &state)
 			m.execute(state, state.current_city, currentOrg);
 		}
 	}
-	// Find rescue-capable craft
-	StateRef<Vehicle> rescueTransport;
+	// Find all idle rescue-capable craft
+	std::vector<StateRef<Vehicle>> rescueTransports;
 	for (auto &v : state.vehicles)
 	{
 		if (v.second->owner.id == id && v.second->missions.empty() &&
 		    v.second->type->canRescueCrashed)
 		{
-			rescueTransport = {&state, v.first};
-			break;
+			rescueTransports.emplace_back(&state, v.first);
 		}
 	}
-	// Attempt rescue someone
-	if (rescueTransport)
+	if (rescueTransports.empty())
 	{
+		return;
+	}
+	// Victims already claimed by a RecoverVehicle mission, so two rescuers already dispatched
+	// (or dispatched earlier in this loop) never chase the same target
+	std::set<UString> claimedVictims;
+	for (auto &r : state.vehicles)
+	{
+		for (auto &m : r.second->missions)
+		{
+			if (m.type == VehicleMission::MissionType::RecoverVehicle)
+			{
+				claimedVictims.insert(m.targetVehicle.id);
+			}
+		}
+	}
+	// Dispatch every idle rescue craft this call, instead of just the first one
+	for (auto &rescueTransport : rescueTransports)
+	{
+		StateRef<Vehicle> target;
 		// Rescue owned
 		for (auto &v : state.vehicles)
 		{
 			if (v.second->city == rescueTransport->city && v.second->owner.id == id &&
+			    claimedVictims.find(v.first) == claimedVictims.end() &&
 			    VehicleMission::canRecoverVehicle(state, *rescueTransport, *v.second))
 			{
-				bool foundRescuer = false;
-				for (auto &r : state.vehicles)
+				target = {&state, v.first};
+				break;
+			}
+		}
+		// Rescue allies but not aliens
+		if (!target)
+		{
+			for (auto &v : state.vehicles)
+			{
+				if (v.second->city == rescueTransport->city &&
+				    v.second->owner != state.getAliens() && v.second->owner.id != id &&
+				    isRelatedTo(v.second->owner) == Relation::Allied &&
+				    claimedVictims.find(v.first) == claimedVictims.end() &&
+				    VehicleMission::canRecoverVehicle(state, *rescueTransport, *v.second))
 				{
-					if (r.second->city == rescueTransport->city && r.second->type->canRescueCrashed)
-					{
-						for (auto &m : r.second->missions)
-						{
-							if (m.type == VehicleMission::MissionType::RecoverVehicle &&
-							    m.targetVehicle.id == v.first)
-							{
-								foundRescuer = true;
-								break;
-							}
-						}
-					}
-				}
-				if (!foundRescuer)
-				{
-					rescueTransport->setMission(
-					    state,
-					    VehicleMission::recoverVehicle(state, *rescueTransport, {&state, v.first}));
-					rescueTransport->addMission(
-					    state, VehicleMission::gotoBuilding(state, *rescueTransport), true);
+					target = {&state, v.first};
 					break;
 				}
 			}
 		}
-		// Rescue allies but not aliens
-		for (auto &v : state.vehicles)
+		if (target)
 		{
-			if (v.second->city == rescueTransport->city && v.second->owner != state.getAliens() &&
-			    v.second->owner.id != id && isRelatedTo(v.second->owner) == Relation::Allied &&
-			    VehicleMission::canRecoverVehicle(state, *rescueTransport, *v.second))
-			{
-				bool foundRescuer = false;
-				for (auto &r : state.vehicles)
-				{
-					if (r.second->city == rescueTransport->city && r.second->type->canRescueCrashed)
-					{
-						for (auto &m : r.second->missions)
-						{
-							if (m.type == VehicleMission::MissionType::RecoverVehicle &&
-							    m.targetVehicle.id == v.first)
-							{
-								foundRescuer = true;
-								break;
-							}
-						}
-					}
-				}
-				if (!foundRescuer)
-				{
-					rescueTransport->setMission(
-					    state,
-					    VehicleMission::recoverVehicle(state, *rescueTransport, {&state, v.first}));
-					rescueTransport->addMission(
-					    state, VehicleMission::gotoBuilding(state, *rescueTransport), true);
-					break;
-				}
-			}
+			rescueTransport->setMission(
+			    state, VehicleMission::recoverVehicle(state, *rescueTransport, target));
+			rescueTransport->addMission(
+			    state, VehicleMission::gotoBuilding(state, *rescueTransport), true);
+			claimedVictims.insert(target.id);
 		}
 	}
 }
