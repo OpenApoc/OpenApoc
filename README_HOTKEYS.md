@@ -164,6 +164,7 @@ The cityscape debug keys above toggle these flags in `CityTileView`:
   - When giving moving orders, makes unit keep facing to the target (making unit strafe or move backwards)
   - When firing at a tile, makes the shot aim at the ground of the tile, rather than at unit's level
 - [Shift] Turns cursor into attack mode
+- [Mousewheel] Change map levels
 - [Left Click]
   - Order unit to execute action at cursor (move / throw / psi attack / teleport etc.)
   - Open probed unit's screen
@@ -200,6 +201,7 @@ The cityscape debug keys above toggle these flags in `CityTileView`:
 - [1..6] Select squad
 - [Shift] + [1..6] Select unit in current squad (as the only unit selected)
 - [Shift] + [Ctrl] + [1..6] Add unit to selection and make it first in the list
+- [Ctrl] + [1..6] Assign current selection to squad N (units that don't fit in a full squad are left where they are)
 - [Alt] + [1..6] Go through spotted enemies of unit
 - [Enter] Open inventory
 - [[] Throw left hand item
