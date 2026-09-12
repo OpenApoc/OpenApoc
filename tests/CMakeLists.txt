@@ -35,3 +35,11 @@ add_test(NAME ${TEST} COMMAND ${TEST}
 		${CMAKE_SOURCE_DIR}/data/mods/base/data/submods/org.openapoc.base/difficulty0
 		${CMAKE_SOURCE_DIR}/data/mods/base/base_gamestate
 		--Framework.CD=${CD_PATH} --Framework.Data=${CMAKE_SOURCE_DIR}/data)
+
+# Standalone harness for crashed vehicle recovery throughput. Not wired to
+# add_test: it is a manually-run before/after comparison, not a regression gate.
+set(TEST test_crashed_vehicle_recovery)
+add_executable(${TEST} ${TEST}.cpp)
+target_link_libraries(${TEST} OpenApoc_Library OpenApoc_Framework
+		OpenApoc_GameState)
+target_compile_definitions(${TEST} PRIVATE -DUNIT_TEST)
