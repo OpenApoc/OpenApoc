@@ -2308,11 +2308,11 @@ void Vehicle::updateEachSecond(GameState &state)
 		// Only consume fuel if flying or moving (parked ground vehicles don't consume fuel)
 		if (!this->isIdle() || !this->type->isGround())
 		{
-			fuelSpentTicks += FUEL_TICKS_PER_SECOND;
+			fuelSpentTicks += FUEL_SPENT_PER_SECOND;
 		}
-		if (fuelSpentTicks > FUEL_TICKS_PER_UNIT)
+		if (fuelSpentTicks > FUEL_SPENT_PER_UNIT)
 		{
-			fuelSpentTicks -= FUEL_TICKS_PER_UNIT;
+			fuelSpentTicks -= FUEL_SPENT_PER_UNIT;
 			sp<VEquipment> engine = getEngine();
 			if (engine && engine->type->max_ammo > 0)
 			{
