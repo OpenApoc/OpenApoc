@@ -58,6 +58,7 @@ static const std::list<std::pair<UString, UString>> battlescapeList = {
     {"OpenApoc.NewFeature", "UFODamageModel"},
     {"OpenApoc.NewFeature", "GravliftSounds"},
     {"OpenApoc.NewFeature", "NoInstantThrows"},
+    {"OpenApoc.NewFeature", "GravliftLineOfFire"},
     {"OpenApoc.NewFeature", "PayloadExplosion"},
     {"OpenApoc.NewFeature", "DisplayUnitPaths"},
     {"OpenApoc.NewFeature", "AllowForceFiringParallel"},

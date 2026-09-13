@@ -346,6 +346,9 @@ ConfigOptionBool optionNoScrollSounds("OpenApoc.NewFeature", "NoScrollSounds",
                                       tr("Disable scrolling sounds"), false);
 ConfigOptionBool optionNoInstantThrows("OpenApoc.NewFeature", "NoInstantThrows",
                                        tr("Throwing requires proper facing and pose"), true);
+ConfigOptionBool optionGravliftLineOfFire("OpenApoc.NewFeature", "GravliftLineOfFire",
+                                          tr("Gravlift floors don't block line of fire/sight"),
+                                          true);
 ConfigOptionBool optionFerryChecksRelationshipWhenBuying(
     "OpenApoc.NewFeature", "FerryChecksRelationshipWhenBuying",
     tr("Transtellar checks relationship when buying items"), true);
