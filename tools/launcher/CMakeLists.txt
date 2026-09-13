@@ -12,6 +12,8 @@ qt_standard_project_setup()
 set (LAUNCHER_SOURCE_FILES
 	main.cpp
 	launcherwindow.cpp
+	cddetect.h
+	cddetect.cpp
 	launcherwindow.ui)
 
 set(sources ${sources} "apocicon.rc")
