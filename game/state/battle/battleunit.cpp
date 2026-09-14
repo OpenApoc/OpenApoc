@@ -4618,7 +4618,7 @@ void BattleUnit::tryToRiseUp(GameState &state)
 
 void BattleUnit::dropDown(GameState &state)
 {
-	state.current_battle->checkMissionEnd(state, false);
+	state.current_battle->checkMissionEnd(state, false, true);
 	state.current_battle->checkIfBuildingDisabled(state);
 	// Reset states, cancel actions
 	cloakTicksAccumulated = 0;
@@ -4756,7 +4756,7 @@ void BattleUnit::retreat(GameState &state)
 	removeFromSquad(*state.current_battle);
 	state.current_battle->refreshLeadershipBonus(agent->owner);
 	sendAgentEvent(state, GameEventType::AgentLeftCombat, true);
-	state.current_battle->checkMissionEnd(state, true);
+	state.current_battle->checkMissionEnd(state, true, true);
 }
 
 bool BattleUnit::useSpawner(GameState &state, const AEquipmentType &item)

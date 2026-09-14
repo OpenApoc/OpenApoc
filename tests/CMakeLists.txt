@@ -51,6 +51,15 @@ target_compile_definitions(${TEST} PRIVATE -DUNIT_TEST)
 set(TEST test_gravlift_ai_battle)
 add_executable(${TEST} ${TEST}.cpp)
 target_link_libraries(${TEST} OpenApoc_Library OpenApoc_Framework OpenApoc_GameState)
+
+# Manual diagnostic harness for issue #647, run by hand against its
+# attached savegame; deliberately not add_test'd.
+
+# Standalone harness, run by hand against a savegame; deliberately not add_test'd.
+set(TEST test_mission_end_recheck)
+add_executable(${TEST} ${TEST}.cpp)
+target_link_libraries(${TEST} OpenApoc_Library OpenApoc_Framework
+		OpenApoc_GameState)
 target_compile_definitions(${TEST} PRIVATE -DUNIT_TEST)
 
 # test_city_dimension_gate requires args (same as test_serialize)
