@@ -192,6 +192,11 @@ class Battle : public std::enable_shared_from_this<Battle>
 	bool skirmish = false;
 	std::map<StateRef<Organisation>, float> relationshipsBeforeSkirmish;
 	int scoreBeforeSkirmish = 0;
+	// A skirmish is staged from a synthetic base and building, built in
+	// Skirmish::goToBattle and torn down in Battle::exitBattle. Both ends need the
+	// same ids, so they live here rather than being spelled out in each file.
+	static constexpr const char *SKIRMISH_BUILDING_ID = "BUILDING_SKIRMISH";
+	static constexpr const char *SKIRMISH_BASE_ID = "BASE_SKIRMISH";
 
 	// BattleView and BattleTileView settings, saved here so that we can return to them
 

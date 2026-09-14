@@ -28,12 +28,11 @@
         <alignment horizontal="left" vertical="top"/>
         <font>smalfont</font>
       </label>
-      <label text = "_____________________________________________________">
-        <position x="36" y="95"/>
-        <size width="500" height="16"/>
-        <alignment horizontal="left" vertical="top"/>
-        <font>smalfont</font>
-      </label>
+      <control>
+        <position x="36" y="103"/>
+        <size width="500" height="1"/>
+        <backcolour r="160" g="160" b="160" a="255"/>
+      </control>
 
       <label text = "ALIENS">
         <position x="36" y="115"/>
@@ -60,6 +59,12 @@
         <alignment horizontal="centre" vertical="top"/>
         <font>smalfont</font>
       </label>
+      <graphic>
+        <position x="61" y="160"/>
+        <size width="105" height="6"/>
+        <image>BUTTON_SLIDER_TRACK</image>
+        <imageposition>stretch</imageposition>
+      </graphic>
       <scroll id="NUM_BSK_SLIDER">
         <position x="61" y="155"/>
         <size width="105" height="15"/>
@@ -90,6 +95,12 @@
         <alignment horizontal="centre" vertical="top"/>
         <font>smalfont</font>
       </label>
+      <graphic>
+        <position x="231" y="160"/>
+        <size width="105" height="6"/>
+        <image>BUTTON_SLIDER_TRACK</image>
+        <imageposition>stretch</imageposition>
+      </graphic>
       <scroll id="NUM_CHRYS_SLIDER">
         <position x="231" y="155"/>
         <size width="105" height="15"/>
@@ -120,6 +131,12 @@
         <alignment horizontal="centre" vertical="top"/>
         <font>smalfont</font>
       </label>
+      <graphic>
+        <position x="401" y="160"/>
+        <size width="105" height="6"/>
+        <image>BUTTON_SLIDER_TRACK</image>
+        <imageposition>stretch</imageposition>
+      </graphic>
       <scroll id="NUM_EGG_SLIDER">
         <position x="401" y="155"/>
         <size width="105" height="15"/>
@@ -150,6 +167,12 @@
         <alignment horizontal="centre" vertical="top"/>
         <font>smalfont</font>
       </label>
+      <graphic>
+        <position x="61" y="210"/>
+        <size width="105" height="6"/>
+        <image>BUTTON_SLIDER_TRACK</image>
+        <imageposition>stretch</imageposition>
+      </graphic>
       <scroll id="NUM_SPITTER_SLIDER">
         <position x="61" y="205"/>
         <size width="105" height="15"/>
@@ -180,6 +203,12 @@
         <alignment horizontal="centre" vertical="top"/>
         <font>smalfont</font>
       </label>
+      <graphic>
+        <position x="231" y="210"/>
+        <size width="105" height="6"/>
+        <image>BUTTON_SLIDER_TRACK</image>
+        <imageposition>stretch</imageposition>
+      </graphic>
       <scroll id="NUM_ANTHROPOD_SLIDER">
         <position x="231" y="205"/>
         <size width="105" height="15"/>
@@ -210,6 +239,12 @@
         <alignment horizontal="centre" vertical="top"/>
         <font>smalfont</font>
       </label>
+      <graphic>
+        <position x="401" y="210"/>
+        <size width="105" height="6"/>
+        <image>BUTTON_SLIDER_TRACK</image>
+        <imageposition>stretch</imageposition>
+      </graphic>
       <scroll id="NUM_MULTIWORM_SLIDER">
         <position x="401" y="205"/>
         <size width="105" height="15"/>
@@ -240,6 +275,12 @@
         <alignment horizontal="centre" vertical="top"/>
         <font>smalfont</font>
       </label>
+      <graphic>
+        <position x="61" y="260"/>
+        <size width="105" height="6"/>
+        <image>BUTTON_SLIDER_TRACK</image>
+        <imageposition>stretch</imageposition>
+      </graphic>
       <scroll id="NUM_POPPER_SLIDER">
         <position x="61" y="255"/>
         <size width="105" height="15"/>
@@ -270,6 +311,12 @@
         <alignment horizontal="centre" vertical="top"/>
         <font>smalfont</font>
       </label>
+      <graphic>
+        <position x="231" y="260"/>
+        <size width="105" height="6"/>
+        <image>BUTTON_SLIDER_TRACK</image>
+        <imageposition>stretch</imageposition>
+      </graphic>
       <scroll id="NUM_SKEL_SLIDER">
         <position x="231" y="255"/>
         <size width="105" height="15"/>
@@ -300,6 +347,12 @@
         <alignment horizontal="centre" vertical="top"/>
         <font>smalfont</font>
       </label>
+      <graphic>
+        <position x="401" y="260"/>
+        <size width="105" height="6"/>
+        <image>BUTTON_SLIDER_TRACK</image>
+        <imageposition>stretch</imageposition>
+      </graphic>
       <scroll id="NUM_HYPERWORM_SLIDER">
         <position x="401" y="255"/>
         <size width="105" height="15"/>
@@ -330,6 +383,12 @@
         <alignment horizontal="centre" vertical="top"/>
         <font>smalfont</font>
       </label>
+      <graphic>
+        <position x="61" y="310"/>
+        <size width="105" height="6"/>
+        <image>BUTTON_SLIDER_TRACK</image>
+        <imageposition>stretch</imageposition>
+      </graphic>
       <scroll id="NUM_MEGA_SLIDER">
         <position x="61" y="305"/>
         <size width="105" height="15"/>
@@ -360,6 +419,12 @@
         <alignment horizontal="centre" vertical="top"/>
         <font>smalfont</font>
       </label>
+      <graphic>
+        <position x="231" y="310"/>
+        <size width="105" height="6"/>
+        <image>BUTTON_SLIDER_TRACK</image>
+        <imageposition>stretch</imageposition>
+      </graphic>
       <scroll id="NUM_PSI_SLIDER">
         <position x="231" y="305"/>
         <size width="105" height="15"/>
@@ -390,6 +455,12 @@
         <alignment horizontal="centre" vertical="top"/>
         <font>smalfont</font>
       </label>
+      <graphic>
+        <position x="401" y="310"/>
+        <size width="105" height="6"/>
+        <image>BUTTON_SLIDER_TRACK</image>
+        <imageposition>stretch</imageposition>
+      </graphic>
       <scroll id="NUM_MICRO_SLIDER">
         <position x="401" y="305"/>
         <size width="105" height="15"/>
@@ -429,12 +500,11 @@
         <font>smalfont</font>
       </label>
 
-      <label text = "_____________________________________________________">
-        <position x="36" y="365"/>
-        <size width="500" height="16"/>
-        <alignment horizontal="left" vertical="top"/>
-        <font>smalfont</font>
-      </label>
+      <control>
+        <position x="36" y="373"/>
+        <size width="500" height="1"/>
+        <backcolour r="160" g="160" b="160" a="255"/>
+      </control>
 
       <label id="GUARDS_LABEL2" text = "Guards">
         <position x="61" y="385"/>
@@ -442,6 +512,12 @@
         <alignment horizontal="left" vertical="top"/>
         <font>smalfont</font>
       </label>
+      <graphic>
+        <position x="61" y="410"/>
+        <size width="105" height="6"/>
+        <image>BUTTON_SLIDER_TRACK</image>
+        <imageposition>stretch</imageposition>
+      </graphic>
       <scroll id="NUM_GUARD_SLIDER">
         <position x="61" y="405"/>
         <size width="105" height="15"/>
@@ -485,6 +561,12 @@
         <alignment horizontal="left" vertical="top"/>
         <font>smalfont</font>
       </label>
+      <graphic>
+        <position x="231" y="410"/>
+        <size width="105" height="6"/>
+        <image>BUTTON_SLIDER_TRACK</image>
+        <imageposition>stretch</imageposition>
+      </graphic>
       <scroll id="NUM_CIVILIAN_SLIDER">
         <position x="231" y="405"/>
         <size width="105" height="15"/>
@@ -539,9 +621,11 @@
       </graphic>
 
       <graphicbutton id="BUTTON_OK">
-        <position x="604" y="445"/>
-        <size width="50" height="48"/>
-        <imagedepressed>PCK:xcom3/tacdata/tacbut.pck:xcom3/tacdata/tacbut.tab:5:xcom3/tacdata/tactical.pal</imagedepressed>
+        <tooltip text="Confirm these forces" font="smallset"/>
+        <position x="602" y="443"/>
+        <size width="35" height="34"/>
+        <image/>
+        <imagedepressed>BUTTON_OK_DEPRESSED</imagedepressed>
       </graphicbutton>
     </style>
   </form>

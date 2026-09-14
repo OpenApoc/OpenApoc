@@ -60,6 +60,16 @@ std::shared_future<void> loadBattleBuilding(bool hotseat, sp<Building> building,
 		    StateRef<Vehicle> veh = {};
 
 		    const std::map<StateRef<AgentType>, int> *aliensRef = customAliens ? &aliens : nullptr;
+		    if (playerBase->building == building && aliensRef)
+		    {
+			    // Base defence is the one mission type BattleMap::createBattle staffs from
+			    // building->current_crew rather than from the alien list. Passing a list
+			    // sends it down the "enemy raid" branch instead, which spawns guards for
+			    // the alien org - and aliens have none, so nobody deploys. Hand the chosen
+			    // aliens over as the crew and let the crew branch run.
+			    building->current_crew = *aliensRef;
+			    aliensRef = nullptr;
+		    }
 		    const int *guardsRef = customGuards ? &guards : nullptr;
 		    const int *civiliansRef = customCivilians ? &civilians : nullptr;
 
@@ -139,9 +149,10 @@ std::shared_future<void> loadBattleVehicle(bool hotseat, sp<VehicleType> vehicle
 }
 } // namespace
 
-Skirmish::Skirmish(sp<GameState> state) : Stage(), menuform(ui().getForm("skirmish")), state(*state)
+Skirmish::Skirmish(sp<GameState> gameState)
+    : Stage(), menuform(ui().getForm("skirmish")), ownedState(gameState), state(*gameState)
 {
-	menuform->findControlTyped<Label>("TEXT_FUNDS")->setText(state->getPlayerBalance());
+	menuform->findControlTyped<Label>("TEXT_FUNDS")->setText(state.getPlayerBalance());
 	updateLocationLabel();
 	menuform->findControlTyped<ScrollBar>("NUM_HUMANS_SLIDER")
 	    ->addCallback(
@@ -201,7 +212,7 @@ Skirmish::Skirmish(sp<GameState> state) : Stage(), menuform(ui().getForm("skirmi
 		        menuform->findControlTyped<Label>("PLAYER_TECH")
 		            ->setText(
 		                menuform->findControlTyped<ScrollBar>("PLAYER_TECH_SLIDER")->getValue() == 0
-		                    ? "NO"
+		                    ? "None"
 		                    : format("{0}",
 		                             menuform->findControlTyped<ScrollBar>("PLAYER_TECH_SLIDER")
 		                                 ->getValue()));
@@ -307,15 +318,18 @@ void Skirmish::goToBattle(bool customAliens, std::map<StateRef<AgentType>, int> 
 	auto sourceBase = locBase ? locBase : StateRef<Base>(&state, "BASE_1");
 	auto city = sourceBase->building->city;
 
+	// Registered in GameState so the StateRefs below resolve, but deliberately not added
+	// to city->buildings: battle map generation never reads city coordinates, and a
+	// building with default bounds sitting in the city wins Battle::finishBattle's
+	// nearest-building search for retreated aliens.
 	auto newBuilding = mksp<Building>();
-	state.buildings["BUILDING_SKIRMISH"] = newBuilding;
-	city->buildings.emplace_back(&state, "BUILDING_SKIRMISH");
+	state.buildings[Battle::SKIRMISH_BUILDING_ID] = newBuilding;
 
 	auto newBase = mksp<Base>();
-	state.player_bases["BASE_SKIRMISH"] = newBase;
+	state.player_bases[Battle::SKIRMISH_BASE_ID] = newBase;
 
-	StateRef<Building> playerBuilding = {&state, "BUILDING_SKIRMISH"};
-	StateRef<Base> playerBase = {&state, "BASE_SKIRMISH"};
+	StateRef<Building> playerBuilding = {&state, Battle::SKIRMISH_BUILDING_ID};
+	StateRef<Base> playerBase = {&state, Battle::SKIRMISH_BASE_ID};
 
 	playerBuilding->owner = state.getPlayer();
 	playerBuilding->base = playerBase;
@@ -477,20 +491,11 @@ void Skirmish::goToBattle(bool customAliens, std::map<StateRef<AgentType>, int> 
 		}
 	}
 
-	LogWarning("Resetting base inventory");
+	LogInfo("Stocking the skirmish base with every available item");
 	playerBase->inventoryAgentEquipment.clear();
+	// Every entry in agent_equipment is offered, so anything a mod adds is available too.
 	for (auto &t : state.agent_equipment)
 	{
-		// Ignore unfinished items
-		if (t.second->type == AEquipmentType::Type::AlienDetector ||
-		    t.second->type == AEquipmentType::Type::DimensionForceField ||
-		    t.second->type == AEquipmentType::Type::MindShield ||
-		    t.second->type == AEquipmentType::Type::MultiTracker ||
-		    t.second->type == AEquipmentType::Type::StructureProbe ||
-		    t.second->type == AEquipmentType::Type::VortexAnalyzer)
-		{
-			// continue;
-		}
 		// Ignore alien builtin weapons
 		if (t.second->store_space == 5 && t.second->manufacturer == state.getAliens())
 		{
@@ -555,7 +560,7 @@ void Skirmish::goToBattle(bool customAliens, std::map<StateRef<AgentType>, int> 
 	sp<Agent> firstAgent;
 	for (auto &a : state.agents)
 	{
-		if (a.second->homeBuilding.id == "BUILDING_SKIRMISH")
+		if (a.second->homeBuilding.id == Battle::SKIRMISH_BUILDING_ID)
 		{
 			firstAgent = a.second;
 			break;
@@ -574,7 +579,7 @@ void Skirmish::customizeForces(bool force)
 		return;
 	}
 	std::map<StateRef<AgentType>, int> *aliens = nullptr;
-	std::map<StateRef<AgentType>, int> aliensNone;
+	std::map<StateRef<AgentType>, int> aliensDefault;
 	if (locVehicle)
 	{
 		aliens = &locVehicle->crew_downed;
@@ -592,7 +597,30 @@ void Skirmish::customizeForces(bool force)
 	}
 	else if (force)
 	{
-		aliens = &aliensNone;
+		// A base has no UFO crew and no preset crew to draw on, so without a default the
+		// roster opens empty, every slider sits at zero, and the battle is won on turn
+		// one. A base assault is delivered by an alien assault ship, so its crew is the
+		// natural default - and a mod that retunes that ship retunes this with it.
+		const auto assaultShip = state.vehicle_types.find("VEHICLETYPE_ALIEN_ASSAULT_SHIP");
+		if (assaultShip != state.vehicle_types.end() && !assaultShip->second->crew_downed.empty())
+		{
+			aliensDefault = assaultShip->second->crew_downed;
+		}
+		else
+		{
+			// No assault ship in this mod set - fall back to the force the campaign
+			// seeds at this difficulty. Entries are a {min, max} range; take the
+			// midpoint so the default is stable rather than re-rolled each time.
+			const auto difficultyAliens = state.initial_aliens.find(state.difficulty);
+			if (difficultyAliens != state.initial_aliens.end())
+			{
+				for (auto &a : difficultyAliens->second)
+				{
+					aliensDefault[a.first] += (a.second.x + a.second.y) / 2;
+				}
+			}
+		}
+		aliens = &aliensDefault;
 	}
 	int guards = -1;
 	if (locBuilding)

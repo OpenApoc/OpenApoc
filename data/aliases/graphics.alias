@@ -10,6 +10,7 @@
   <alias type="image" id="BUTTON_SLIDER_LEFT">PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:55:ui/menuopt.pal</alias>
   <alias type="image" id="BUTTON_SLIDER_RIGHT_DEPRESSED">PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:54:ui/menuopt.pal</alias>
   <alias type="image" id="BUTTON_SLIDER_RIGHT">PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:56:ui/menuopt.pal</alias>
+  <alias type="image" id="BUTTON_SLIDER_TRACK">PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:63:ui/menuopt.pal</alias>
   <alias type="image" id="BUTTON_SCROLL_LEFT_DEPRESSED">PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:2:ui/menuopt.pal</alias>
   <alias type="image" id="BUTTON_SCROLL_RIGHT_DEPRESSED">PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:3:ui/menuopt.pal</alias>
   <alias type="image" id="BUTTON_SCROLL_UP_DEPRESSED">PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:1:ui/menuopt.pal</alias>

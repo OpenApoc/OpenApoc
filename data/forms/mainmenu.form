@@ -24,23 +24,28 @@
 				</label>
 			</graphic>
 			<textbutton id="BUTTON_NEWGAME" text="Start Campaign Game">
-				<position x="centre" y="190"/>
+				<position x="centre" y="180"/>
+				<size width="300" height="32"/>
+				<font>smalfont</font>
+			</textbutton>
+			<textbutton id="BUTTON_SKIRMISH" text="Skirmish Mode">
+				<position x="centre" y="220"/>
 				<size width="300" height="32"/>
 				<font>smalfont</font>
 			</textbutton>
 			<textbutton id="BUTTON_LOADGAME" text="Load Saved Game">
-				<position x="centre" y="240"/>
+				<position x="centre" y="260"/>
 				<size width="300" height="32"/>
 				<font>smalfont</font>
 			</textbutton>
 			<!-- Options menu commented out until useful -->
 			<!-- <textbutton id="BUTTON_OPTIONS" text="Options">
-				<position x="centre" y="290"/>
+				<position x="centre" y="300"/>
 				<size width="300" height="32"/>
 				<font>smalfont</font>
 			</textbutton> -->
 			<textbutton id="BUTTON_CREDITS" text="Credits">
-				<position x="centre" y="290"/>
+				<position x="centre" y="300"/>
 				<size width="300" height="32"/>
 				<font>smalfont</font>
 			</textbutton>

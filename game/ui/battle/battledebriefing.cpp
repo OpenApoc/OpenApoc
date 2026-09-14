@@ -9,6 +9,7 @@
 #include "game/state/battle/battle.h"
 #include "game/state/battle/battleunit.h"
 #include "game/state/gamestate.h"
+#include "game/ui/general/mainmenu.h"
 #include "game/ui/tileview/cityview.h"
 
 namespace OpenApoc
@@ -20,9 +21,18 @@ BattleDebriefing::BattleDebriefing(sp<GameState> state)
 	    ->addCallback(FormEventType::ButtonClick,
 	                  [this](Event *)
 	                  {
+		                  const bool returnToMainMenu = this->state->skirmishFromMainMenu;
 		                  Battle::exitBattle(*this->state);
-		                  fw().stageQueueCommand(
-		                      {StageCmd::Command::REPLACEALL, mksp<CityView>(this->state)});
+		                  if (returnToMainMenu)
+		                  {
+			                  fw().stageQueueCommand(
+			                      {StageCmd::Command::REPLACEALL, mksp<MainMenu>()});
+		                  }
+		                  else
+		                  {
+			                  fw().stageQueueCommand(
+			                      {StageCmd::Command::REPLACEALL, mksp<CityView>(this->state)});
+		                  }
 	                  });
 
 	menuform->findControlTyped<Label>("TEXT_SCORE_COMBAT_RATING")
