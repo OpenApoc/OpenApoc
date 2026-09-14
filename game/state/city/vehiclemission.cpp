@@ -1555,6 +1555,11 @@ bool VehicleMission::isFinishedInternal(GameState &state, Vehicle &v)
 				LogInfo("Vehicle attack mission: Target not on the map");
 				return true;
 			}
+			if (t->city != v.city)
+			{
+				LogInfo("Vehicle attack mission: Target left the city");
+				return true;
+			}
 			if (!attackCrashed && (t->crashed || t->sliding || t->falling))
 			{
 				return true;
