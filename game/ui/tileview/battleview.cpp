@@ -2480,6 +2480,18 @@ void BattleView::updateSquadIndex(StateRef<BattleUnit> u)
 	}
 }
 
+void BattleView::assignSelectionToSquad(int index)
+{
+	for (auto &u : battle.battleViewSelectedUnits)
+	{
+		if (u->squadNumber != index &&
+		    battle.forces[battle.currentPlayer].squads[index].getNumUnits() < 6)
+		{
+			u->assignToSquad(battle, index);
+		}
+	}
+}
+
 void BattleView::debugVortex()
 {
 	auto vortex = StateRef<AEquipmentType>(state.get(), "AEQUIPMENTTYPE_VORTEX_MINE");
@@ -3396,6 +3408,10 @@ bool BattleView::handleKeyDown(Event *e)
 				{
 					baseForm->findControl("UNIT_1")->click();
 				}
+				else if (modifierLCtrl || modifierRCtrl)
+				{
+					assignSelectionToSquad(0);
+				}
 				else if (modifierLAlt || modifierRAlt)
 				{
 					baseForm->findControl("UNIT_1_HOSTILES")->click();
@@ -3409,6 +3425,10 @@ bool BattleView::handleKeyDown(Event *e)
 				if (modifierLShift || modifierRShift)
 				{
 					baseForm->findControl("UNIT_2")->click();
+				}
+				else if (modifierLCtrl || modifierRCtrl)
+				{
+					assignSelectionToSquad(1);
 				}
 				else if (modifierLAlt || modifierRAlt)
 				{
@@ -3424,6 +3444,10 @@ bool BattleView::handleKeyDown(Event *e)
 				{
 					baseForm->findControl("UNIT_3")->click();
 				}
+				else if (modifierLCtrl || modifierRCtrl)
+				{
+					assignSelectionToSquad(2);
+				}
 				else if (modifierLAlt || modifierRAlt)
 				{
 					baseForm->findControl("UNIT_3_HOSTILES")->click();
@@ -3437,6 +3461,10 @@ bool BattleView::handleKeyDown(Event *e)
 				if (modifierLShift || modifierRShift)
 				{
 					baseForm->findControl("UNIT_4")->click();
+				}
+				else if (modifierLCtrl || modifierRCtrl)
+				{
+					assignSelectionToSquad(3);
 				}
 				else if (modifierLAlt || modifierRAlt)
 				{
@@ -3452,6 +3480,10 @@ bool BattleView::handleKeyDown(Event *e)
 				{
 					baseForm->findControl("UNIT_5")->click();
 				}
+				else if (modifierLCtrl || modifierRCtrl)
+				{
+					assignSelectionToSquad(4);
+				}
 				else if (modifierLAlt || modifierRAlt)
 				{
 					baseForm->findControl("UNIT_5_HOSTILES")->click();
@@ -3465,6 +3497,10 @@ bool BattleView::handleKeyDown(Event *e)
 				if (modifierLShift || modifierRShift)
 				{
 					baseForm->findControl("UNIT_6")->click();
+				}
+				else if (modifierLCtrl || modifierRCtrl)
+				{
+					assignSelectionToSquad(5);
 				}
 				else if (modifierLAlt || modifierRAlt)
 				{
