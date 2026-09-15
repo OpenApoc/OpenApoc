@@ -3,13 +3,15 @@
 # zip tool or library dependency is required.
 
 set(MOD_SRC_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src)
-set(MOD_OUTPUT ${CMAKE_CURRENT_SOURCE_DIR}/crashing_vehicles_gamestate)
+set(MOD_OUTPUT_DIR ${EXTRACTED_DATA_DIR}/mods/crashing_vehicles)
+set(MOD_OUTPUT ${MOD_OUTPUT_DIR}/crashing_vehicles_gamestate)
 
 set(MOD_SOURCES
 	${MOD_SRC_DIR}/gamestate.xml
 	${MOD_SRC_DIR}/gamestate/vehicle_types.xml)
 
 add_custom_command(OUTPUT ${MOD_OUTPUT}
+	COMMAND ${CMAKE_COMMAND} -E make_directory ${MOD_OUTPUT_DIR}
 	COMMAND ${CMAKE_COMMAND} -E tar cf ${MOD_OUTPUT} --format=zip
 		gamestate.xml gamestate
 	DEPENDS ${MOD_SOURCES}
