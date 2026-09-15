@@ -24,8 +24,6 @@ class StageCmd;
 class Stage;
 class RGBImage;
 
-#define FRAMES_PER_SECOND 100
-
 class Framework
 {
   private:
