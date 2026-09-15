@@ -947,7 +947,7 @@ void GameState::invasion()
 	}
 }
 
-bool GameState::canTurbo() const
+bool GameState::canTurbo()
 {
 	if (!this->current_city->projectiles.empty())
 	{
@@ -958,17 +958,27 @@ bool GameState::canTurbo() const
 		if (!v.second->isDead() && v.second->city == this->current_city &&
 		    v.second->tileObject != nullptr)
 		{
+			// A hostile aggressive vehicle holding no missions is just an idle parked
+			// fleet (e.g. sitting at its owner's home building) - not something the
+			// player is being asked to react to, so it shouldn't permanently lock out
+			// turbo for the rest of the game.
 			if (v.second->type->aggressiveness > 0 &&
 			    v.second->owner->isRelatedTo(this->getPlayer()) ==
 			        Organisation::Relation::Hostile &&
-			    !v.second->crashed)
+			    !v.second->crashed && !v.second->missions.empty())
 			{
 				return false;
 			}
 			for (auto &m : v.second->missions)
 			{
-				if (m.type == VehicleMission::MissionType::AttackBuilding ||
-				    m.type == VehicleMission::MissionType::AttackVehicle)
+				// A finished AttackVehicle/AttackBuilding mission is a stale leftover
+				// (e.g. the target fled to another city) that the sim will self-heal on
+				// its next tick - re-use the engine's own liveness check rather than
+				// treating mission *type* alone as a permanent lock. callUpdateIfFinished
+				// is false so this stays a pure read with no side effects.
+				if ((m.type == VehicleMission::MissionType::AttackBuilding ||
+				     m.type == VehicleMission::MissionType::AttackVehicle) &&
+				    !m.isFinished(*this, *v.second, false))
 				{
 					return false;
 				}
