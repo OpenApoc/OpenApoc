@@ -2021,48 +2021,12 @@ void Vehicle::adjustRelationshipOnDowned(GameState &state, StateRef<Vehicle> att
 	// If we're hostile to attacker - lose 5 points
 	if (owner->isRelatedTo(attacker->owner) == Organisation::Relation::Hostile)
 	{
-		owner->adjustRelationTo(state, attacker->owner, -5.0f);
+		owner->adjustRelationTo(state, attacker->owner, -5.0f, true);
 	}
 	// If we're not hostile to attacker - lose 30 points
 	else
 	{
-		owner->adjustRelationTo(state, attacker->owner, -30.0f);
-	}
-	// Our allies lose 15 points, enemies gain 5 points
-	// Otherwise 20+ relationship is +-3 points, 10+ is +-1 points
-	for (auto &org : state.organisations)
-	{
-		if (org.first != attacker->owner.id && org.first != state.getCivilian().id)
-		{
-			if (org.second->isRelatedTo(owner) == Organisation::Relation::Hostile)
-			{
-				org.second->adjustRelationTo(state, attacker->owner, 5.0f);
-			}
-			else if (org.second->isRelatedTo(owner) == Organisation::Relation::Allied)
-			{
-				org.second->adjustRelationTo(state, attacker->owner, -15.0f);
-			}
-			else
-			{
-				auto rel = org.second->getRelationTo(owner);
-				if (rel > 20.0f)
-				{
-					org.second->adjustRelationTo(state, attacker->owner, -3.0f);
-				}
-				else if (rel > 10.0f)
-				{
-					org.second->adjustRelationTo(state, attacker->owner, -1.0f);
-				}
-				else if (rel < -10.0f)
-				{
-					org.second->adjustRelationTo(state, attacker->owner, 1.0f);
-				}
-				else if (rel < -20.0f)
-				{
-					org.second->adjustRelationTo(state, attacker->owner, 3.0f);
-				}
-			}
-		}
+		owner->adjustRelationTo(state, attacker->owner, -30.0f, true);
 	}
 }
 
