@@ -75,16 +75,17 @@ Note: The following libraries will be fetched and built with vcpkg in a later st
 * [Libunwind](https://nongnu.org/libunwind/download.html) - debug backtracing on linux - not needed on windows.
 * [LibVorbis](https://xiph.org/vorbis/) - Ogg vorbis music decoder library.
 
-The following libraries are also used, but are shipped as submodules in the repository and directly included in the build, so you don't need to install these dependencies to build or use OpenApoc.
+The following libraries are also used, and are fetched and built with vcpkg via `vcpkg.json`, so you don't need to install these dependencies to build or use OpenApoc.
 
 * [GLM](https://glm.g-truc.net) - Math library.
-* [libsmacker](https://sourceforge.net/projects/libsmacker/) - Decoder for .smk video files.
 * [lodepng](https://github.com/lvandeve/lodepng) - Reading/writing PNG image files.
 * [miniz](https://github.com/richgel999/miniz) - Zlib-comptible compression library.
-* [physfs](https://icculus.org/physfs/) - Library for reading data from .iso files or directory trees (Note: We use a patched version, available on [GitHub](https://github.com/JonnyH/physfs-hg-import/tree/fix-iso) - required to read the .iso files we use).
+* [physfs](https://icculus.org/physfs/) - Library for reading data from .iso files or directory trees.
 * [pugixml](https://pugixml.org) - XML library used for reading/writing the game data files.
 * [fmtlib](https://github.com/fmtlib/fmt) - A c++ string formatting library - proposed for c++20 standard.
 * [magic_enum](https://github.com/Neargye/magic_enum) - Header-only C++17 library provides static reflection for enums, work with any enum type without any macro or boilerplate code.
+
+[libsmacker](https://sourceforge.net/projects/libsmacker/) - the decoder for .smk video files - is vendored in-tree under `framework/video/smacker/`.
 
 
 ### Building on Windows
@@ -92,12 +93,6 @@ The following libraries are also used, but are shipped as submodules in the repo
 * Install [Visual Studio](https://visualstudio.microsoft.com/vs/) (2017 or later) with "Desktop Development with C++" workload.
 * Install a Git client eg. [Github Desktop](https://desktop.github.com/).
 * Checkout OpenApoc from GitHub.
-* If you are using the GitHub Desktop client, the submodules should already be setup at first checkout. If not, or if the submodules have been updated, run the following commands in the 'git shell' from the root of the OpenApoc repository. This should reset the submodule checkouts to the latest versions (NOTE: This will overwrite any changes to code in the dependencies/ directory).
-
-```cmd
-git submodule update --init --recursive
-```
-
 * All the other dependencies (Boost, SDL2, Qt) need to be supplied separately. Install [Vcpkg](https://github.com/Microsoft/vcpkg) and integrate with Visual Studio. If you'd rather install them manually, run the following command:
 
   * For x64 builds:
@@ -167,25 +162,19 @@ yum install git SDL2-devel cmake libunwind-devel qt6-qtbase-devel libvorbis-deve
 git clone https://github.com/OpenApoc/OpenApoc.git
 ```
 
-* Fetch the dependencies from git with the following terminal command (run from the just-created OpenApoc folder).
-
-```sh
-git submodule update --init --recursive
-```
-
 * Copy the cd.iso file to the 'data' directory under the repository root (Note - despite dosbox having good linux support, the steam version of X-Com Apocalypse will only install if Steam Play is enabled).
 
 ```sh
 cp /path/to/cd.iso data/
 ```
 
-* Create a subdirectory ('build' in this example) in the OpenApoc checkout directory, and from that use cmake to configure OpenApoc.
+* Create a subdirectory ('build' in this example) in the OpenApoc checkout directory, and from that use cmake to configure OpenApoc. The configure needs `-DCMAKE_TOOLCHAIN_FILE=<vcpkg>/scripts/buildsystems/vcpkg.cmake` so the manifest dependencies in `vcpkg.json` are fetched and built.
 
 ```sh
 cd /path/to/OpenApoc
 mkdir build
 cd build
-cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo ..
+cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_TOOLCHAIN_FILE=<vcpkg>/scripts/buildsystems/vcpkg.cmake ..
 ```
 
 * This cmake command will fail if we're missing a dependency, or your system is for some other reason unable to build - if you have any issues please contact us (see above for links).
@@ -218,13 +207,6 @@ make -j4
 git clone https://github.com/OpenApoc/OpenApoc.git
 ```
 
-* Fetch the dependencies from git with the following terminal command (run from the just-created OpenApoc folder):
-
-```sh
-cd /path/to/OpenApoc
-git submodule update --init --recursive
-```
-
 * Use the homebrew install the following dependencies:
 
 ```sh
@@ -248,13 +230,13 @@ echo 'export PATH="/opt/homebrew/opt/qt@6/bin:$PATH"' >> ~/.bashrc
 cp /path/to/cd.iso data/
 ```
 
-* Create a subdirectory ('build' in this example) in the OpenApoc checkout directory, and from that use cmake to configure OpenApoc.
+* Create a subdirectory ('build' in this example) in the OpenApoc checkout directory, and from that use cmake to configure OpenApoc. The configure needs `-DCMAKE_TOOLCHAIN_FILE=<vcpkg>/scripts/buildsystems/vcpkg.cmake` so the manifest dependencies in `vcpkg.json` are fetched and built.
 
 ```sh
 cd /path/to/OpenApoc
 mkdir build
 cd build
-cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo ..
+cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_TOOLCHAIN_FILE=<vcpkg>/scripts/buildsystems/vcpkg.cmake ..
 ```
 
 * This cmake command will fail if we're missing a dependency, or your system is for some other reason unable to build - if you have any issues please contact us (see above for links).

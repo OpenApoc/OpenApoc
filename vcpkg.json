@@ -1,6 +1,7 @@
 {
   "name": "openapoc",
   "version-string": "0.1.0-dev",
+  "builtin-baseline": "30ef65cad98f08e7197c9a1656fbd871bcb72f2d",
   "dependencies": [
     {
       "name": "sdl2",
@@ -14,7 +15,14 @@
     "boost-program-options",
     "boost-uuid",
     "boost-crc",
-    "libvorbis"
+    "libvorbis",
+    "fmt",
+    "glm",
+    "magic-enum",
+    "pugixml",
+    "lodepng",
+    "miniz",
+    "physfs"
   ],
   "features": {
     "launcher": {

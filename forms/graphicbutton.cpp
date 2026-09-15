@@ -1,5 +1,4 @@
 #include "forms/graphicbutton.h"
-#include "dependencies/pugixml/src/pugixml.hpp"
 #include "forms/scrollbar.h"
 #include "framework/data.h"
 #include "framework/event.h"
@@ -8,6 +7,7 @@
 #include "framework/renderer.h"
 #include "framework/sound.h"
 #include "library/sp.h"
+#include <pugixml.hpp>
 
 namespace OpenApoc
 {
