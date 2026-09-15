@@ -1,5 +1,7 @@
 #pragma once
 
+#include "library/strings.h"
+
 #include "framework/logger.h"
 #include "library/sp.h"
 
@@ -104,6 +106,15 @@ class Stage : public std::enable_shared_from_this<Stage>
 	    This function is called when the screen needs to be redrawn
 	*/
 	virtual void render() = 0;
+
+	/*
+	    Function: HarnessDetail
+	    Extra identification for the test harness, for stages whose C++ type does not say which
+	    screen this actually is. The ending cutscenes are the motivating case: victory and defeat
+	    are both a VideoScreen and differ only by which video is playing, so a driver watching
+	    stage names alone cannot tell a won campaign from a lost one.
+	*/
+	virtual UString harnessDetail() const { return ""; }
 
 	/*
 	    Function: IsTransition

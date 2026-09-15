@@ -143,6 +143,8 @@ class Control : public std::enable_shared_from_this<Control>
 	sp<Control> getAncestor(sp<Control> Parent);
 
 	Vec2<int> getLocationOnScreen() const { return resolvedLocation; }
+	// UI-space position, so a harness can address a control without pixel maths.
+	Vec2<int> getLocationInUi() const { return resolvedLocation; }
 
 	void setRelativeWidth(float widthPercent);
 	void setRelativeHeight(float widthPercent);

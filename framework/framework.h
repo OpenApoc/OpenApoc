@@ -29,6 +29,10 @@ class RGBImage;
 class Framework
 {
   private:
+	// Monotonic frame counter, exposed through getFrameNumber() so an automated driver can
+	// wait a definite number of frames rather than sleeping and hoping.
+	uint64_t frameNumber = 0;
+
 	up<FrameworkPrivate> p;
 	UString programName;
 	bool createWindow;
@@ -71,6 +75,12 @@ class Framework
 	int displayGetWidth();
 	int displayGetHeight();
 	Vec2<int> displayGetSize();
+	// Resize the window as if the user dragged it. Automation hook: the harness RESIZE command
+	// needs a deterministic display size, since a driver reasoning about screen coordinates
+	// cannot depend on whatever size the window happened to open at.
+	void displaySetSize(Vec2<int> size);
+	// Read the last rendered frame back and write it to disk. Automation hook for SCREENSHOT.
+	bool writeScreenshot(const UString &path);
 	void displaySetTitle(UString NewTitle);
 	void displaySetIcon(sp<RGBImage> icon);
 	bool displayHasWindow() const;
@@ -80,6 +90,10 @@ class Framework
 	int coordWindowToDisplayX(int x) const;
 	int coordWindowToDisplayY(int y) const;
 	Vec2<int> coordWindowsToDisplay(const Vec2<int> &coord) const;
+
+	// Frame counter, so an automated driver can wait a definite number of frames rather than
+	// sleeping and hoping.
+	uint64_t getFrameNumber() const { return frameNumber; }
 
 	bool isSlowMode();
 	void setSlowMode(bool SlowEnabled);
