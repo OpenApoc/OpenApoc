@@ -273,6 +273,9 @@ class GameState : public std::enable_shared_from_this<GameState>
 	// Following members are not serialized
 	bool newGame = false;
 	bool skipTurboCalculations = false;
+	// Set when Skirmish is launched from the main menu (no CityView underneath). Debrief
+	// must return to MainMenu instead of constructing a CityView on a disposable state.
+	bool skirmishFromMainMenu = false;
 
 	// Loads all mods set in the options - note this likely requires the mod data directories to
 	// already be added to the filesystem

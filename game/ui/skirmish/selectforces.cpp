@@ -308,7 +308,7 @@ SelectForces::SelectForces(sp<GameState> state, Skirmish &skirmish,
 	}
 	else
 	{
-		menuform->findControlTyped<CheckBox>("NUM_CIVILIAN_SLIDER")->setChecked(true);
+		menuform->findControlTyped<CheckBox>("DEFAULT_CIVILIANS")->setChecked(true);
 	}
 }
 

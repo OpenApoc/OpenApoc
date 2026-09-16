@@ -2991,19 +2991,14 @@ void Battle::exitBattle(GameState &state)
 			}
 		}
 
-		// Erase base and building
-		StateRef<Base> fakeBase = {&state, "BASE_SKIRMISH"};
-		auto city = fakeBase->building->city;
+		// Erase base and building. They were never added to city->buildings, so there is
+		// nothing to unpick there.
+		StateRef<Base> fakeBase = {&state, SKIRMISH_BASE_ID};
 		fakeBase->building->currentAgents.clear();
 		fakeBase->building->base.clear();
 		fakeBase->building.clear();
-		auto &cityBuildings = city->buildings;
-		cityBuildings.erase(std::remove_if(cityBuildings.begin(), cityBuildings.end(),
-		                                   [](const StateRef<Building> &b)
-		                                   { return b.id == "BUILDING_SKIRMISH"; }),
-		                    cityBuildings.end());
-		state.buildings.erase("BUILDING_SKIRMISH");
-		state.player_bases.erase("BASE_SKIRMISH");
+		state.buildings.erase(SKIRMISH_BUILDING_ID);
+		state.player_bases.erase(SKIRMISH_BASE_ID);
 
 		// Erase vehicle
 		if (state.current_battle->player_craft)

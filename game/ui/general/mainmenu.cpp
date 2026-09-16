@@ -7,15 +7,35 @@
 #include "framework/framework.h"
 #include "framework/jukebox.h"
 #include "framework/keycodes.h"
+#include "game/state/gamestate.h"
 #include "game/ui/debugtools/debugmenu.h"
 #include "game/ui/general/difficultymenu.h"
 #include "game/ui/general/loadingscreen.h"
 #include "game/ui/general/savemenu.h"
+#include "game/ui/skirmish/skirmish.h"
 #include "game/ui/tileview/cityview.h"
 #include "version.h"
+#include <future>
 
 namespace OpenApoc
 {
+namespace
+{
+
+std::shared_future<void> loadSkirmishState(sp<GameState> state)
+{
+	return fw().threadPoolEnqueue(
+	    [state]()
+	    {
+		    state->loadMods();
+		    state->startGame();
+		    state->initState();
+		    state->fillPlayerStartingProperty();
+		    state->fillOrgStartingProperty();
+	    });
+}
+
+} // namespace
 
 MainMenu::MainMenu() : Stage(), mainmenuform(ui().getForm("mainmenu"))
 {
@@ -76,6 +96,17 @@ void MainMenu::eventOccurred(Event *e)
 		if (e->forms().RaisedBy->Name == "BUTTON_NEWGAME")
 		{
 			fw().stageQueueCommand({StageCmd::Command::PUSH, mksp<DifficultyMenu>()});
+			return;
+		}
+		if (e->forms().RaisedBy->Name == "BUTTON_SKIRMISH")
+		{
+			auto loadedState = mksp<GameState>();
+			loadedState->difficulty = 0;
+			loadedState->skirmishFromMainMenu = true;
+			fw().stageQueueCommand(
+			    {StageCmd::Command::PUSH,
+			     mksp<LoadingScreen>(nullptr, loadSkirmishState(loadedState),
+			                         [loadedState]() { return mksp<Skirmish>(loadedState); })});
 			return;
 		}
 		if (e->forms().RaisedBy->Name == "BUTTON_DEBUG")
