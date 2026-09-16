@@ -240,7 +240,7 @@ class GameState : public std::enable_shared_from_this<GameState>
 	// Cannot be done if:
 	// - there are any enemy units on the current map
 	// - there are any projectiles on the current map
-	bool canTurbo() const;
+	bool canTurbo();
 
 	// Immediately remove all dead objects.
 	void cleanUpDeathNote();
