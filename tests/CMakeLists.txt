@@ -91,3 +91,16 @@ add_test(NAME ${TEST} COMMAND ${TEST}
 		${CMAKE_SOURCE_DIR}/data/mods/base/data/submods/org.openapoc.base/difficulty0
 		${CMAKE_SOURCE_DIR}/data/mods/base/base_gamestate
 		--Framework.CD=${CD_PATH} --Framework.Data=${CMAKE_SOURCE_DIR}/data)
+
+# test_base_defense_abort requires args (same as test_serialize); it also links
+# OpenApoc_GameUI/OpenApoc_Forms to construct CityView headlessly and prove it survives
+# a null current_base.
+set(TEST test_base_defense_abort)
+add_executable(${TEST} ${TEST}.cpp)
+target_link_libraries(${TEST} OpenApoc_Library OpenApoc_Framework
+		OpenApoc_GameState OpenApoc_GameUI OpenApoc_Forms)
+target_compile_definitions(${TEST} PRIVATE -DUNIT_TEST)
+add_test(NAME ${TEST} COMMAND ${TEST}
+		${CMAKE_SOURCE_DIR}/data/mods/base/data/submods/org.openapoc.base/difficulty0
+		${CMAKE_SOURCE_DIR}/data/mods/base/base_gamestate
+		--Framework.CD=${CD_PATH} --Framework.Data=${CMAKE_SOURCE_DIR}/data)

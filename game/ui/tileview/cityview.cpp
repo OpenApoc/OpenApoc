@@ -1824,6 +1824,13 @@ void CityView::begin()
 {
 	vanillaControls = !config().getBool("OpenApoc.NewFeature.OpenApocCityControls");
 	CityTileView::begin();
+	// Deliver a pending after-battle GameLost only once this CityView is the current stage:
+	// realizing it any earlier (e.g. from the debriefing screen's OK handler) queues the event
+	// while that screen is still current, and it is discarded unread.
+	if (state->player_bases.empty() && state->gameTimeBeforeBattle.getTicks() != 0)
+	{
+		state->updateAfterBattle();
+	}
 	if (state->current_city.id == "CITYMAP_ALIEN")
 	{
 
@@ -1853,7 +1860,15 @@ void CityView::resume()
 	modifierRCtrl = false;
 	modifierRShift = false;
 
-	this->uiTabs[0]->findControlTyped<Label>("TEXT_BASE_NAME")->setText(state->current_base->name);
+	// current_base can be a default, unresolved ref here: the last base can be destroyed while
+	// returning from a battle, after which the city view exists only long enough to deliver the
+	// queued GameLost event.
+	if (!state->current_base.id.empty())
+	{
+		this->uiTabs[0]
+		    ->findControlTyped<Label>("TEXT_BASE_NAME")
+		    ->setText(state->current_base->name);
+	}
 
 	refreshBaseView();
 }
@@ -1862,9 +1877,12 @@ void CityView::refreshBaseView()
 {
 	if (miniViews.size() != state->player_bases.size())
 	{
-		this->uiTabs[0]
-		    ->findControlTyped<Label>("TEXT_BASE_NAME")
-		    ->setText(state->current_base->name);
+		if (!state->current_base.id.empty())
+		{
+			this->uiTabs[0]
+			    ->findControlTyped<Label>("TEXT_BASE_NAME")
+			    ->setText(state->current_base->name);
+		}
 		for (auto view : miniViews)
 		{
 			view->setData(nullptr);
