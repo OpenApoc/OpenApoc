@@ -20,6 +20,7 @@
 #include "game/ui/general/aequipscreen.h"
 #include "game/ui/skirmish/mapselector.h"
 #include "game/ui/skirmish/selectforces.h"
+#include <utility>
 namespace OpenApoc
 {
 
@@ -63,8 +64,12 @@ std::shared_future<void> loadBattleBuilding(bool hotseat, sp<Building> building,
 		    const int *guardsRef = customGuards ? &guards : nullptr;
 		    const int *civiliansRef = customCivilians ? &civilians : nullptr;
 
-		    Battle::beginBattle(*state, hotseat, org, agents, aliensRef, guardsRef, civiliansRef,
-		                        veh, bld);
+		    if (!Battle::beginBattle(*state, hotseat, org, agents, aliensRef, guardsRef,
+		                             civiliansRef, veh, bld))
+		    {
+			    // current_battle belongs to whoever did start a battle - leave its bookkeeping be.
+			    return;
+		    }
 		    // Skirmish settings
 		    state->current_battle->skirmish = true;
 		    state->current_battle->scoreBeforeSkirmish = state->totalScore.tacticalMissions;
@@ -119,7 +124,11 @@ std::shared_future<void> loadBattleVehicle(bool hotseat, sp<VehicleType> vehicle
 			    agent->enterVehicle(*state, playerVehRef);
 		    }
 		    const std::map<StateRef<AgentType>, int> *aliensRef = customAliens ? &aliens : nullptr;
-		    Battle::beginBattle(*state, hotseat, org, agents, aliensRef, playerVehRef, ufo);
+		    if (!Battle::beginBattle(*state, hotseat, org, agents, aliensRef, playerVehRef, ufo))
+		    {
+			    // current_battle belongs to whoever did start a battle - leave its bookkeeping be.
+			    return;
+		    }
 		    // Skirmish settings
 		    state->current_battle->skirmish = true;
 		    state->current_battle->scoreBeforeSkirmish = state->totalScore.tacticalMissions;
@@ -301,6 +310,14 @@ void Skirmish::setLocation(StateRef<Base> base)
 void Skirmish::goToBattle(bool customAliens, std::map<StateRef<AgentType>, int> aliens,
                           bool customGuards, int guards, bool customCivilians, int civilians)
 {
+	// A second OK press before the first load finishes would start another concurrent battle
+	// build against the same GameState, racing the first one on unsynchronised containers.
+	if (battleQueued || state.current_battle)
+	{
+		return;
+	}
+	battleQueued = true;
+
 	auto score = menuform->findControlTyped<ScrollBar>("ALIEN_SCORE_SLIDER")->getValue() * 1000;
 
 	// Create a temporary base
@@ -698,7 +715,10 @@ void Skirmish::resume()
 {
 	if (loadBattle)
 	{
-		loadBattle();
+		// Consume it: a later resume() must not replay a load that has already been launched.
+		auto load = std::move(loadBattle);
+		loadBattle = nullptr;
+		load();
 	}
 }
 

@@ -2441,7 +2441,7 @@ void Battle::giveInterruptChanceToUnit(GameState &state, StateRef<BattleUnit> gi
 
 // To be called when battle must be started, before showing battle briefing screen
 // In case battle is in a craft (UFO)
-void Battle::beginBattle(GameState &state, bool hotseat, StateRef<Organisation> opponent,
+bool Battle::beginBattle(GameState &state, bool hotseat, StateRef<Organisation> opponent,
                          std::list<StateRef<Agent>> &player_agents,
                          const std::map<StateRef<AgentType>, int> *aliens,
                          StateRef<Vehicle> player_craft, StateRef<Vehicle> target_craft)
@@ -2449,22 +2449,23 @@ void Battle::beginBattle(GameState &state, bool hotseat, StateRef<Organisation> 
 	if (state.current_battle)
 	{
 		LogError("Battle::beginBattle called while another battle is in progress!");
-		return;
+		return false;
 	}
 	auto b =
 	    BattleMap::createBattle(state, opponent, player_agents, aliens, player_craft, target_craft);
 	if (!b)
 	{
-		return;
+		return false;
 	}
 	b->locationOwner = target_craft->owner;
 	b->hotseat = hotseat;
 	state.current_battle = b;
+	return true;
 }
 
 // To be called when battle must be started, before showing battle briefing screen
 // In case battle is in a building
-void Battle::beginBattle(GameState &state, bool hotseat, StateRef<Organisation> opponent,
+bool Battle::beginBattle(GameState &state, bool hotseat, StateRef<Organisation> opponent,
                          std::list<StateRef<Agent>> &player_agents,
                          const std::map<StateRef<AgentType>, int> *aliens, const int *guards,
                          const int *civilians, StateRef<Vehicle> player_craft,
@@ -2473,18 +2474,19 @@ void Battle::beginBattle(GameState &state, bool hotseat, StateRef<Organisation> 
 	if (state.current_battle)
 	{
 		LogError("Battle::beginBattle called while another battle is in progress!");
-		return;
+		return false;
 	}
 	auto b = BattleMap::createBattle(state, opponent, player_agents, aliens, guards, civilians,
 	                                 player_craft, target_building);
 	if (!b)
 	{
-		return;
+		return false;
 	}
 	b->hotseat = hotseat;
 	b->locationOwner = target_building->owner;
 	b->buildingCanBeDisabled = !b->tryDisableBuilding();
 	state.current_battle = b;
+	return true;
 }
 
 // To be called when battle must be started, after the player has assigned agents to squads

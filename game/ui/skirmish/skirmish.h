@@ -26,6 +26,10 @@ class Skirmish : public Stage
 	StateRef<Base> locBase;
 
 	std::function<void()> loadBattle = 0;
+	// Latched as soon as a battle load is armed and never cleared: this stage is replaced
+	// when the battle actually starts, so a Skirmish still on screen with this set means the
+	// load is still in flight and OK must stay inert.
+	bool battleQueued = false;
 
 	void clearLocation();
 	void updateLocationLabel();

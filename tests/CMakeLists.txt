@@ -91,3 +91,14 @@ add_test(NAME ${TEST} COMMAND ${TEST}
 		${CMAKE_SOURCE_DIR}/data/mods/base/data/submods/org.openapoc.base/difficulty0
 		${CMAKE_SOURCE_DIR}/data/mods/base/base_gamestate
 		--Framework.CD=${CD_PATH} --Framework.Data=${CMAKE_SOURCE_DIR}/data)
+
+# test_skirmish_reentrancy drives the Skirmish stage itself, so it also needs the game UI
+set(TEST test_skirmish_reentrancy)
+add_executable(${TEST} ${TEST}.cpp)
+target_link_libraries(${TEST} OpenApoc_Library OpenApoc_Framework
+		OpenApoc_GameState OpenApoc_GameUI)
+target_compile_definitions(${TEST} PRIVATE -DUNIT_TEST)
+add_test(NAME ${TEST} COMMAND ${TEST}
+		${CMAKE_SOURCE_DIR}/data/mods/base/data/submods/org.openapoc.base/difficulty0
+		${CMAKE_SOURCE_DIR}/data/mods/base/base_gamestate
+		--Framework.CD=${CD_PATH} --Framework.Data=${CMAKE_SOURCE_DIR}/data)

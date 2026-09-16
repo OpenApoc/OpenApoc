@@ -353,13 +353,15 @@ void Framework::run(sp<Stage> initialStage)
 			p->ProgramStages.current()->update();
 		}
 
-		// Iterate a copy. REPLACEALL and QUIT below clear the stage stack, which destroys
-		// every stage and everything it owns; anything in that teardown that queues another
-		// stage command appends to this very vector mid-iteration and invalidates the
-		// range-for. Copying keeps the existing semantics -- commands raised while processing
-		// this batch are still discarded by the clear() below -- without the undefined
-		// behaviour.
-		const auto commandsThisFrame = stageCommands;
+		// Take the whole batch, leaving stageCommands empty. REPLACEALL and QUIT below clear
+		// the stage stack, which destroys every stage and everything it owns; anything in that
+		// teardown that queues another stage command must not touch the container being
+		// iterated. Whatever lands in stageCommands while this batch runs is a cascade raised
+		// from a stage's pause()/resume()/finish() - it stays queued and runs next frame rather
+		// than being thrown away.
+		std::list<StageCmd> commandsThisFrame;
+		commandsThisFrame.swap(stageCommands);
+		bool stackTornDown = false;
 		for (const StageCmd &cmd : commandsThisFrame)
 		{
 			switch (cmd.cmd)
@@ -373,6 +375,7 @@ void Framework::run(sp<Stage> initialStage)
 				case StageCmd::Command::REPLACEALL:
 					p->ProgramStages.clear();
 					p->ProgramStages.push(cmd.nextStage);
+					stackTornDown = true;
 					break;
 				case StageCmd::Command::PUSH:
 					p->ProgramStages.push(cmd.nextStage);
@@ -383,6 +386,7 @@ void Framework::run(sp<Stage> initialStage)
 				case StageCmd::Command::QUIT:
 					p->quitProgram = true;
 					p->ProgramStages.clear();
+					stackTornDown = true;
 					break;
 			}
 			if (p->quitProgram)
@@ -390,7 +394,14 @@ void Framework::run(sp<Stage> initialStage)
 				break;
 			}
 		}
-		stageCommands.clear();
+		if (stackTornDown)
+		{
+			// StageStack::clear() finishes every stage and resumes each one it uncovers on the
+			// way down, so a teardown can queue commands (NotificationScreen::resume()'s POP,
+			// WeeklyFundingScreen::finish()'s PUSH) that were meant for the stack that has just
+			// been thrown away. Running them next frame would apply them to the replacement.
+			stageCommands.clear();
+		}
 
 		auto surface = p->scaleSurface ? p->scaleSurface : p->defaultSurface;
 		RendererSurfaceBinding b(*this->renderer, surface);
