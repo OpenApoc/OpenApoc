@@ -1,7 +1,7 @@
 #include "framework/modinfo.h"
-#include "dependencies/pugixml/src/pugixml.hpp"
 #include "framework/framework.h"
 #include "framework/logger.h"
+#include <pugixml.hpp>
 
 namespace OpenApoc
 {

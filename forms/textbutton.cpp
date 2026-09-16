@@ -1,5 +1,4 @@
 #include "forms/textbutton.h"
-#include "dependencies/pugixml/src/pugixml.hpp"
 #include "forms/label.h"
 #include "forms/ui.h"
 #include "framework/data.h"
@@ -10,6 +9,7 @@
 #include "framework/sound.h"
 #include "library/sp.h"
 #include "library/strings_format.h"
+#include <pugixml.hpp>
 
 namespace OpenApoc
 {

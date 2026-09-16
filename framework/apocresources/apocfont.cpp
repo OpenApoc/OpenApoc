@@ -1,10 +1,10 @@
 #include "framework/apocresources/apocfont.h"
-#include "dependencies/pugixml/src/pugixml.hpp"
 #include "framework/data.h"
 #include "framework/font.h"
 #include "framework/framework.h"
 #include "framework/logger.h"
 #include "library/sp.h"
+#include <pugixml.hpp>
 
 #include <boost/locale.hpp>
 

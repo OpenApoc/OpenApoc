@@ -105,8 +105,6 @@ if ("${CMAKE_C_COMPILER_ID}" STREQUAL "Clang")
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Qunused-arguments")
 endif()
 
-set(GLM_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/dependencies/glm)
-MARK_AS_ADVANCED(GLM_INCLUDE_DIR)
 add_compile_definitions(GLM_ENABLE_EXPERIMENTAL)
 
 add_subdirectory(library)
@@ -115,7 +113,6 @@ add_subdirectory(forms)
 add_subdirectory(game/state)
 add_subdirectory(game/ui)
 add_subdirectory(tools)
-add_subdirectory(dependencies)
 add_subdirectory(data/mods/crashing_vehicles)
 
 if (WIN32)
@@ -185,6 +182,7 @@ file(GLOB_RECURSE FORMAT_SOURCES
 		${CMAKE_SOURCE_DIR}/tests/*.c
 		${CMAKE_SOURCE_DIR}/tests/*.h
 		)
+list(FILTER FORMAT_SOURCES EXCLUDE REGEX "/framework/video/smacker/")
 
 add_custom_target(format)
 add_custom_target(format-sources)

@@ -175,6 +175,20 @@ set (FILESYSTEM_HEADER_FILES
 source_group(framework\\fs\\headers FILES ${FILESYSTEM_HEADER_FILES})
 list(APPEND ALL_HEADER_FILES ${FILESYSTEM_HEADER_FILES})
 
+# Vendored in-tree (not a vcpkg port, not a submodule) - see framework/video/smacker/smacker.c
+set (LIBSMACKER_SOURCE_FILES
+	video/smacker/smacker.c)
+
+source_group(framework\\video\\smacker\\sources FILES ${LIBSMACKER_SOURCE_FILES})
+list(APPEND ALL_SOURCE_FILES ${LIBSMACKER_SOURCE_FILES})
+
+set (LIBSMACKER_HEADER_FILES
+	video/smacker/smacker.h
+	video/smacker/smk_malloc.h)
+
+source_group(framework\\video\\smacker\\headers FILES ${LIBSMACKER_HEADER_FILES})
+list(APPEND ALL_HEADER_FILES ${LIBSMACKER_HEADER_FILES})
+
 add_library(OpenApoc_Framework STATIC
 	${FRAMEWORK_SOURCE_FILES} ${FRAMEWORK_HEADER_FILES}
 	${APOCRESOURCES_SOURCE_FILES} ${APOCRESOURCES_HEADER_FILES}
@@ -183,7 +197,15 @@ add_library(OpenApoc_Framework STATIC
 	${MUSICLOADER_SOURCE_FILES} ${MUSICLOADER_HEADER_FILES}
 	${SOUND_SOURCE_FILES} ${SOUND_HEADER_FILES}
 	${RENDERER_SOURCE_FILES} ${RENDERER_HEADER_FILES}
-	${FILESYSTEM_SOURCE_FILES} ${FILESYSTEM_HEADER_FILES})
+	${FILESYSTEM_SOURCE_FILES} ${FILESYSTEM_HEADER_FILES}
+	${LIBSMACKER_SOURCE_FILES} ${LIBSMACKER_HEADER_FILES})
+
+# Vendored third-party code - not held to our coding standards
+if (MSVC)
+	set_source_files_properties(${LIBSMACKER_SOURCE_FILES} PROPERTIES COMPILE_DEFINITIONS "_CRT_SECURE_NO_WARNINGS")
+else()
+	set_source_files_properties(${LIBSMACKER_SOURCE_FILES} PROPERTIES COMPILE_OPTIONS "-w")
+endif()
 
 target_compile_definitions(OpenApoc_Framework PUBLIC
 		"-DRENDERERS=\"GLES_3_0:GL_2_0\"")
@@ -215,8 +237,6 @@ target_include_directories(OpenApoc_Framework PUBLIC ${Boost_INCLUDE_DIRS})
 
 find_package(Threads)
 target_link_libraries(OpenApoc_Framework PUBLIC ${CMAKE_THREAD_LIBS_INIT})
-
-target_include_directories(OpenApoc_Framework PUBLIC ${GLM_INCLIDE_DIR})
 
 #Require SDL2 for input/graphics/sound/pretty much everything
 if(WIN32)
@@ -268,22 +288,21 @@ else()
 	target_include_directories(OpenApoc_Framework PUBLIC ${OPENGL_INCLUDE_DIR})
 endif()
 target_link_libraries(OpenApoc_Framework PUBLIC OpenApoc_Library)
-target_link_libraries(OpenApoc_Framework PUBLIC OpenApoc_LibSmacker)
-target_link_libraries(OpenApoc_Framework PUBLIC OpenApoc_LibPugixml)
-target_link_libraries(OpenApoc_Framework PUBLIC OpenApoc_LibLodepng)
-target_link_libraries(OpenApoc_Framework PUBLIC OpenApoc_Miniz)
+find_package(pugixml CONFIG REQUIRED)
+target_link_libraries(OpenApoc_Framework PUBLIC pugixml::pugixml)
+find_package(lodepng CONFIG REQUIRED)
+target_link_libraries(OpenApoc_Framework PUBLIC lodepng)
+find_package(miniz CONFIG REQUIRED)
+target_link_libraries(OpenApoc_Framework PUBLIC miniz::miniz)
 target_link_libraries(OpenApoc_Framework PUBLIC ${CMAKE_DL_LIBS})
 
-if(USE_SYSTEM_PHYSFS)
-	target_link_libraries(OpenApoc_Framework PUBLIC ${PHYSFS_LIBRARY})
-else()
-	target_link_libraries(OpenApoc_Framework PUBLIC physfs-static)
-endif()
+find_package(PhysFS CONFIG REQUIRED)
+target_link_libraries(OpenApoc_Framework PUBLIC
+		$<IF:$<TARGET_EXISTS:PhysFS::PhysFS>,PhysFS::PhysFS,PhysFS::PhysFS-static>)
 
-target_include_directories(OpenApoc_Framework PRIVATE
-		${CMAKE_SOURCE_DIR}/dependencies/physfs/src)
 target_include_directories(OpenApoc_Framework PUBLIC ${CMAKE_SOURCE_DIR})
 
 if (USE_PCH)
 	target_precompile_headers(OpenApoc_Framework PUBLIC framework_pch.h)
+	set_source_files_properties(${LIBSMACKER_SOURCE_FILES} PROPERTIES SKIP_PRECOMPILE_HEADERS ON)
 endif()

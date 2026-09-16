@@ -1,6 +1,8 @@
 # project name, and type
 PROJECT(OpenApoc_GameState CXX C)
 
+find_package(magic_enum CONFIG REQUIRED)
+
 set(THREADS_PREFER_PTHREAD_FLAG ON)
 find_package(Threads REQUIRED)
 
@@ -210,6 +212,7 @@ target_link_libraries(OpenApoc_GameState PUBLIC OpenApoc_Framework)
 
 target_link_libraries(OpenApoc_GameState PUBLIC ${Boost_LIBRARIES}
 		Threads::Threads)
+target_link_libraries(OpenApoc_GameState PRIVATE magic_enum::magic_enum)
 if (WIN32)
 	target_link_libraries(OpenApoc_GameState PUBLIC bcrypt)
 endif()

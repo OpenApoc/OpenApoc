@@ -238,6 +238,12 @@ FileSystem::FileSystem(std::vector<UString> paths)
 {
 	// FIXME: Is this the right thing to do that?
 	LogInfo("Registering external archivers...");
+	// physfs's builtin ISO9660 archiver claims any file with a valid volume descriptor before
+	// it finishes parsing directory entries (see PHYSFS_ARCHIVER_ISO9660::isArchive), so on
+	// a .iso it would win the extension-priority race and never let the cue archiver below see
+	// the file, even if the builtin parser then fails on it. Evict it so our own ISO9660
+	// parser (which already handles the .cue/.bin case) is the only .iso handler.
+	PHYSFS_deregisterArchiver("ISO");
 	PHYSFS_registerArchiver(getCueArchiver());
 	// Paths are supplied in inverse-search order (IE the last in 'paths' should be the first
 	// searched)
