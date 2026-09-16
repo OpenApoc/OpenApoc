@@ -95,7 +95,7 @@ class Stage : public std::enable_shared_from_this<Stage>
 
 	/*
 	    Function: Update
-	    Called for each game tick based upon the <FRAMES_PER_SECOND>.
+	    Called once per rendered frame, paced by <Options::targetFPS>.
 	*/
 	virtual void update() = 0;
 

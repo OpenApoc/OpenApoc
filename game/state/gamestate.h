@@ -51,7 +51,6 @@ class BuildingFunction;
 class UFOMissionPreference;
 
 static const int MAX_MESSAGES = 50;
-static const unsigned ORIGINAL_TICKS = 36;
 static const bool UPDATE_EVERY_TICK = false;
 
 class GameScore
