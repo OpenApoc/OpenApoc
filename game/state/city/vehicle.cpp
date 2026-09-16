@@ -829,6 +829,46 @@ class GroundVehicleMover : public VehicleMover
 		{
 			vehicle.updateSprite(state);
 		}
+		if (config().getBool("OpenApoc.NewFeature.VehicleCollisions"))
+		{
+			checkContact(state);
+		}
+	}
+
+  private:
+	// Lane separation keeps opposing traffic apart on a straight road, but nothing keeps it apart
+	// head on with lanes turned off, across a junction, or when a pass goes wrong.
+	void checkContact(GameState &state)
+	{
+		if (vehicle.crashed || vehicle.falling || vehicle.sliding || !vehicle.tileObject ||
+		    vehicle.ticksContactAvailable > state.gameTime.getTicks())
+		{
+			return;
+		}
+		for (auto &obj : vehicle.tileObject->getOwningTile()->intersectingObjects)
+		{
+			if (obj->getType() != TileObject::Type::Vehicle)
+			{
+				continue;
+			}
+			auto other = std::static_pointer_cast<TileObjectVehicle>(obj)->getVehicle();
+			if (!other || other.get() == &vehicle || !other->type->isGround() || other->crashed ||
+			    other->falling || other->sliding ||
+			    other->ticksContactAvailable > state.gameTime.getTicks())
+			{
+				continue;
+			}
+			Vec3<float> gap = other->position - vehicle.position;
+			if ((int)other->position.z != (int)vehicle.position.z ||
+			    glm::length(Vec2<float>{gap.x, gap.y}) > GV_CONTACT_DISTANCE)
+			{
+				continue;
+			}
+			if (vehicle.handleVehicleCollision(state, *other))
+			{
+				return;
+			}
+		}
 	}
 };
 
@@ -2662,6 +2702,28 @@ bool Vehicle::handleCollision(GameState &state, Collision &c, bool &soundHandled
 		                   soundHandled, projectile->firerVehicle);
 	}
 	return false;
+}
+
+bool Vehicle::handleVehicleCollision(GameState &state, Vehicle &other)
+{
+	if (!this->tileObject || !other.tileObject)
+	{
+		return false;
+	}
+	// Two vehicles rolling along together barely touch; a head-on meeting hurts.
+	float closingSpeed = glm::length(this->velocity - other.velocity);
+	int damage = (int)std::min(GV_CONTACT_DAMAGE_LIMIT, closingSpeed * GV_CONTACT_DAMAGE_PER_SPEED);
+	if (damage <= 0)
+	{
+		return false;
+	}
+	uint64_t nextContact = state.gameTime.getTicks() + GV_CONTACT_COOLDOWN;
+	this->ticksContactAvailable = nextContact;
+	other.ticksContactAvailable = nextContact;
+	// Armour covers a facing against a weapon and has nothing to say about being driven into.
+	bool died = this->applyDamage(state, damage, 0.0f);
+	other.applyDamage(state, damage, 0.0f);
+	return died;
 }
 
 sp<TileObjectVehicle> Vehicle::findClosestEnemy(GameState &state, sp<TileObjectVehicle> vehicleTile,

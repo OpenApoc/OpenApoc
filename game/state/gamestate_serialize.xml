@@ -508,6 +508,7 @@
     <member>subvert</member>
     <member>attackCrashed</member>
     <member>cancelled</member>
+    <member>overtakeTilesRemaining</member>
   </object>
   <object>
     <name>AgentMission</name>

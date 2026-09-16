@@ -46,6 +46,19 @@ static const float FV_PLOW_CHANCE_HIGH_SPEED_MULTIPLIER = 1.5f;
 static const float FV_PLOW_CHANCE_CONSTITUTION_MULTIPLIER = 2.0f;
 // How much 1 of X is the damage evasion chance (i.e. 8 means 1/8th or 12.5%)
 static const int FV_COLLISION_DAMAGE_ONE_IN_CHANCE_TO_EVADE = 8;
+// Ground vehicle contact params. The original game documents nothing about road vehicles
+// damaging each other on contact, so these are picked to be survivable rather than measured.
+// Damage dealt to both vehicles per unit of closing speed
+static const float GV_CONTACT_DAMAGE_PER_SPEED = 0.5f;
+// Most damage a single contact can deal
+static const float GV_CONTACT_DAMAGE_LIMIT = 10.0f;
+// How close two ground vehicle centres have to be to count as touching. Under the gap the lane
+// offsets put between opposing lanes, so traffic that is correctly separated never touches.
+static const float GV_CONTACT_DISTANCE = 0.4f;
+// One contact deals damage at most this often, so a vehicle sitting in another one is not
+// ground down a tick at a time
+static const unsigned GV_CONTACT_COOLDOWN = TICKS_PER_SECOND;
+
 // How much X in 100 is the chance for recovered vehicle to arrive intact (otherwise scrapped)
 static const int FV_CHANCE_TO_RECOVER_VEHICLE = 100;
 // How much X in 100 is chance to recover every equipment part (otherwise scrapped)
@@ -226,6 +239,9 @@ class Vehicle : public StateObject<Vehicle>,
 	unsigned int teleportTicksAccumulated = 0;
 
 	uint64_t ticksAutoActionAvailable = 0;
+	// Game time from which this vehicle can take contact damage again. Deliberately not
+	// serialized: reloading mid-contact at worst costs one extra hit.
+	uint64_t ticksContactAvailable = 0;
 
 	StateRef<Building> homeBuilding;
 	// Building the vehicle is currently stored inside, nullptr if it's in the city
@@ -292,6 +308,8 @@ class Vehicle : public StateObject<Vehicle>,
 	bool applyDamage(GameState &state, int damage, float armour, bool &soundHandled,
 	                 StateRef<Vehicle> attacker = nullptr);
 	bool handleCollision(GameState &state, Collision &c, bool &soundHandled);
+	// Damages both vehicles for driving into each other. Returns true if this one died.
+	bool handleVehicleCollision(GameState &state, Vehicle &other);
 	sp<TileObjectVehicle> findClosestEnemy(GameState &state, sp<TileObjectVehicle> vehicleTile,
 	                                       Vec2<int> arc = {8, 8});
 	sp<TileObjectProjectile> findClosestHostileMissile(GameState &state,

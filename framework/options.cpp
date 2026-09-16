@@ -117,6 +117,9 @@ void dumpOptionsToLog()
 	dumpOption(optionEnableAgentTemplates);
 	dumpOption(optionStoreDroppedEquipment);
 	dumpOption(optionFallingGroundVehicles);
+	dumpOption(optionTwoWayRoads);
+	dumpOption(optionDriveOnLeft);
+	dumpOption(optionVehicleCollisions);
 
 	dumpOption(optionEnforceCargoLimits);
 	dumpOption(optionAllowNearbyVehicleLootPickup);
@@ -389,6 +392,12 @@ ConfigOptionBool
 ConfigOptionBool optionFallingGroundVehicles(
     "OpenApoc.NewFeature", "CrashingGroundVehicles",
     tr("Unsupported ground vehicles crash (Weapons and Modules may be lost in crash)"), true);
+ConfigOptionBool optionTwoWayRoads("OpenApoc.NewFeature", "TwoWayRoads",
+                                   tr("Ground vehicles keep to one side of two-way roads"), true);
+ConfigOptionBool optionDriveOnLeft("OpenApoc.NewFeature", "DriveOnLeft",
+                                   tr("Ground vehicles drive on the left"), false);
+ConfigOptionBool optionVehicleCollisions("OpenApoc.NewFeature", "VehicleCollisions",
+                                         tr("Ground vehicles damage each other on contact"), false);
 
 ConfigOptionBool optionEnforceCargoLimits("OpenApoc.NewFeature", "EnforceCargoLimits",
                                           tr("Enforce vehicle cargo limits"), false);
