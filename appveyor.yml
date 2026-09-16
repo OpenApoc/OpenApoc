@@ -24,6 +24,7 @@ before_build:
   - cd %APPVEYOR_BUILD_FOLDER%
   - vcpkg install
   - git submodule update --init --recursive
+  - mkdir temp
   - curl http://s2.jonnyh.net/pub/cd_minimal.iso.xz -o temp\cd.iso.xz
   - 7z e temp\cd.iso.xz -odata\
   - choco install nsis -pre

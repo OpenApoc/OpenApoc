@@ -52,7 +52,8 @@ Icon
 *.log
 [Pp]ackages/
 [Ii]pch/
-.vs/
+/.vs/*
+!/.vs/launch.vs.json
 *.VC.*
 CMakeSettings.json
 #Dependencies build information
@@ -82,7 +83,10 @@ CMakeSettings.json
 [Dd]ata/cd.iso
 [Dd]ata/[Xx][Cc][Oo][Mm].[Bb][Ii][Nn]
 [Dd]ata.old/
-[Dd]ata/mods/
+[Dd]ata/mods/base/base_gamestate
+[Dd]ata/mods/base/data/submods/org.openapoc.base/difficulty[0-4]
+[Dd]ata/mods/base/modinfo.xml
+[Dd]ata/mods/crashing_vehicles/crashing_vehicles_gamestate
 
 # Netbeans project folder
 nbproject/
