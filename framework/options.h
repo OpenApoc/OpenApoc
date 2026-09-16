@@ -154,6 +154,11 @@ extern ConfigOptionBool packSaveOption;
 extern ConfigOptionBool skipIntroOption;
 extern ConfigOptionString loadGameOption;
 
+// Test harness: a localhost line protocol for driving the game programmatically.
+extern ConfigOptionBool harnessEnable;
+extern ConfigOptionInt harnessPort;
+extern ConfigOptionBool harnessWarpCursor;
+
 extern ConfigOptionString modList;
 extern ConfigOptionString modPath;
 

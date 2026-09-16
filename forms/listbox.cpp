@@ -482,6 +482,31 @@ void ListBox::setSelected(sp<Control> c)
 	this->setDirty();
 }
 
+bool ListBox::selectItemByIndex(size_t index)
+{
+	// Selection is only half of what a click does. A real MouseDown sets `selected` *and* raises
+	// ListBoxChangeSelected, which is what screens actually listen to -- ResearchScreen swaps the
+	// active lab on it, for one. setSelected() raises nothing, and Control::click() on the item
+	// raises MouseClick, which ListBox does not treat as selection at all. A harness "set" built
+	// on either reports success and changes nothing.
+	if (index >= this->Controls.size())
+	{
+		return false;
+	}
+	auto item = this->Controls[index];
+	if (!item)
+	{
+		return false;
+	}
+	if (selected != item)
+	{
+		selected = item;
+		this->pushFormEvent(FormEventType::ListBoxChangeSelected, nullptr);
+	}
+	this->setDirty();
+	return true;
+}
+
 sp<Control> ListBox::getSelectedItem() { return selected; }
 
 sp<Control> ListBox::getHoveredItem() { return hovered; }
