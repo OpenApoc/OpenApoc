@@ -6,6 +6,7 @@
 #include "library/sp.h"
 #include <array>
 #include <atomic>
+#include <cstdlib>
 #include <glm/gtx/rotate_vector.hpp>
 #include <list>
 #include <memory>
@@ -23,6 +24,36 @@ namespace
 using namespace OpenApoc;
 
 std::atomic<bool> renderer_dead = true;
+
+// Single-channel texture format for palette index data.
+//
+// GL_RED only became a legal external format for glTexImage2D in GL 3.0 (ARB_texture_rg).
+// This backend routinely runs on a 2.1 context -- macOS hands one out whenever the 3.0
+// request in displayInitialise fails, which it does there -- and on 2.1 GL_RED is
+// GL_INVALID_ENUM. The call is rejected, the index texture is never populated, the driver
+// reports it as unloadable and substitutes the zero texture, and every paletted sprite
+// samples index 0 and draws transparent. That is the whole game UI: RGB images such as the
+// mouse cursor keep working, so the window looks black rather than obviously broken.
+//
+// GL_LUMINANCE is the 2.1 spelling and replicates its single channel into .r, which is
+// exactly what the palette shaders sample. Both spellings are valid as internal format in
+// the version that accepts them, so one value serves for both arguments.
+static GLenum indexTextureFormat()
+{
+	static const GLenum format = []() -> GLenum
+	{
+		const auto *version = reinterpret_cast<const char *>(gl20::GetString(gl20::VERSION));
+		const int major = version ? atoi(version) : 0;
+		if (major >= 3)
+		{
+			return gl20::RED;
+		}
+		LogInfo("GL version \"{0}\" predates GL_RED - using GL_LUMINANCE for palette indices",
+		        version ? version : "unknown");
+		return gl20::LUMINANCE;
+	}();
+	return format;
+}
 
 // Forward declaration needed for RendererImageData
 class OGL20Renderer;
@@ -659,8 +690,9 @@ class GLPaletteImage : public RendererImageData
 		gl20::TexParameteri(gl20::TEXTURE_2D, gl20::TEXTURE_MAG_FILTER, gl20::NEAREST);
 		gl20::TexParameteri(gl20::TEXTURE_2D, gl20::TEXTURE_WRAP_S, gl20::CLAMP_TO_EDGE);
 		gl20::TexParameteri(gl20::TEXTURE_2D, gl20::TEXTURE_WRAP_T, gl20::CLAMP_TO_EDGE);
-		gl20::TexImage2D(gl20::TEXTURE_2D, 0, 1, parent->size.x, parent->size.y, 0, gl20::RED,
-		                 gl20::UNSIGNED_BYTE, l.getData());
+		const GLenum indexFormat = indexTextureFormat();
+		gl20::TexImage2D(gl20::TEXTURE_2D, 0, indexFormat, parent->size.x, parent->size.y, 0,
+		                 indexFormat, gl20::UNSIGNED_BYTE, l.getData());
 	}
 	~GLPaletteImage() override;
 };
