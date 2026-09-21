@@ -92,6 +92,7 @@ class GameState : public std::enable_shared_from_this<GameState>
 	StateRefMap<SceneryTileType> scenery_tile_types;
 	StateRefMap<Vehicle> vehicles;
 	std::set<UString> vehiclesDeathNote;
+	std::set<UString> crashedVehicles;
 	StateRefMap<UfopaediaCategory> ufopaedia;
 	StateRefMap<UfopaediaEntry> ufopaedia_entries;
 	ResearchState research;

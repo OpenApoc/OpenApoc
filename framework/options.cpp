@@ -128,6 +128,8 @@ void dumpOptionsToLog()
 	dumpOption(optionMarketRight);
 	dumpOption(optionDGCrashingVehicles);
 	dumpOption(optionFuelCrashingVehicles);
+	dumpOption(optionCrashingDamagedVehicles);
+	dumpOption(optionRescueCrashedVehicles);
 	dumpOption(optionSkipTurbo);
 	dumpOption(optionRunAndKneel);
 	dumpOption(optionSeedRng);
@@ -388,7 +390,7 @@ ConfigOptionBool
                                 tr("Attempt to recover agent equipment dropped in city"), true);
 ConfigOptionBool optionFallingGroundVehicles(
     "OpenApoc.NewFeature", "CrashingGroundVehicles",
-    tr("Unsupported ground vehicles crash (Weapons and Modules may be lost in crash)"), true);
+    tr("Unsupported ground vehicles crash (Weapons and Modules may be lost in crash)"), false);
 
 ConfigOptionBool optionEnforceCargoLimits("OpenApoc.NewFeature", "EnforceCargoLimits",
                                           tr("Enforce vehicle cargo limits"), false);
@@ -413,10 +415,17 @@ ConfigOptionBool optionMarketRight("OpenApoc.NewFeature", "MarketOnRight",
 ConfigOptionBool optionDGCrashingVehicles(
     "OpenApoc.NewFeature", "CrashingDimensionGate",
     tr("Uncapable vehicles crash when entering gates (Weapons and Modules may be lost in crash)"),
-    true);
+    false);
 ConfigOptionBool optionFuelCrashingVehicles(
     "OpenApoc.NewFeature", "CrashingOutOfFuel",
-    tr("Vehicles crash when out of fuel (Weapons and Modules may be lost in crash)"), true);
+    tr("Vehicles crash when out of fuel (Weapons and Modules may be lost in crash)"), false);
+ConfigOptionBool optionCrashingDamagedVehicles(
+    "OpenApoc.NewFeature", "CrashingDamagedVehicles",
+    tr("Damaged vehicles crash instead of flying on (Weapons and Modules may be lost in crash)"),
+    false);
+ConfigOptionBool optionRescueCrashedVehicles(
+    "OpenApoc.NewFeature", "RescueCrashedVehicles",
+    tr("Organisations dispatch rescue craft to recover crashed vehicles"), false);
 ConfigOptionBool optionSkipTurbo("OpenApoc.NewFeature", "SkipTurboMovement",
                                  tr("Skip turbo movement calculations"), false);
 ConfigOptionBool optionRunAndKneel("OpenApoc.NewFeature", "RunAndKneel",

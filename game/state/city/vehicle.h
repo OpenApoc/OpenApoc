@@ -216,6 +216,7 @@ class Vehicle : public StateObject<Vehicle>,
 	unsigned int shieldRecharge = 0;
 	int stunTicksRemaining = 0;
 	bool crashed = false;
+	uint64_t rescueAvailableTick = 0;
 	bool falling = false;
 	bool sliding = false;
 	int fuelSpentTicks = 0;

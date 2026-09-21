@@ -39,6 +39,7 @@
 #include "library/strings_format.h"
 #include <ctime>
 #include <random>
+#include <set>
 
 namespace OpenApoc
 {
@@ -165,6 +166,7 @@ void GameState::initState()
 			}
 		}
 	}
+	crashedVehicles.clear();
 	for (auto &c : this->cities)
 	{
 		auto &city = c.second;
@@ -195,6 +197,10 @@ void GameState::initState()
 			}
 			vehicle->strategyImages = city_common_image_list->strategyImages;
 			vehicle->setupMover();
+			if (vehicle->crashed)
+			{
+				crashedVehicles.insert(v.first);
+			}
 		}
 		for (auto &p : c.second->projectiles)
 		{
@@ -989,6 +995,7 @@ void OpenApoc::GameState::cleanUpDeathNote()
 		for (auto &name : this->vehiclesDeathNote)
 		{
 			vehicles.erase(name);
+			crashedVehicles.erase(name);
 
 			// Remove vehicle from selection
 			for (const auto &[cityId, city] : cities)
@@ -1090,9 +1097,48 @@ void GameState::update(unsigned int ticks)
 
 		current_city->update(*this, ticks);
 
+		bool rescueDispatchNeeded = false;
+		std::set<UString> claimedVictims;
+		if (config().getBool("OpenApoc.NewFeature.RescueCrashedVehicles"))
+		{
+			for (auto it = crashedVehicles.begin(); it != crashedVehicles.end();)
+			{
+				auto v = this->vehicles.find(*it);
+				if (v == this->vehicles.end() || !v->second->crashed)
+				{
+					it = crashedVehicles.erase(it);
+					continue;
+				}
+				if (!v->second->carriedByVehicle && !v->second->isDead() &&
+				    v->second->owner != this->getAliens() &&
+				    this->gameTime.getTicks() >= v->second->rescueAvailableTick)
+				{
+					rescueDispatchNeeded = true;
+				}
+				++it;
+			}
+			if (rescueDispatchNeeded)
+			{
+				for (auto &r : this->vehicles)
+				{
+					for (auto &m : r.second->missions)
+					{
+						if (m.type == VehicleMission::MissionType::RecoverVehicle)
+						{
+							claimedVictims.insert(m.targetVehicle.id);
+						}
+					}
+				}
+			}
+		}
+
 		for (auto &o : this->organisations)
 		{
 			o.second->updateMissions(*this);
+			if (rescueDispatchNeeded)
+			{
+				o.second->dispatchRescueCraft(*this, claimedVictims);
+			}
 		}
 
 		for (auto &v : this->vehicles)

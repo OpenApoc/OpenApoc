@@ -149,6 +149,7 @@ class Organisation : public StateObject<Organisation>
 
 	void setRaidMissions(GameState &state, StateRef<City> city);
 	void updateMissions(GameState &state);
+	void dispatchRescueCraft(GameState &state, std::set<UString> &claimedVictims);
 	void updateHirableAgents(GameState &state);
 	void updateInfiltration(GameState &state);
 	void updateTakeOver(GameState &state, unsigned int ticks);

@@ -107,6 +107,8 @@ extern ConfigOptionBool optionScrambleOnUnintentionalHit;
 extern ConfigOptionBool optionMarketRight;
 extern ConfigOptionBool optionDGCrashingVehicles;
 extern ConfigOptionBool optionFuelCrashingVehicles;
+extern ConfigOptionBool optionCrashingDamagedVehicles;
+extern ConfigOptionBool optionRescueCrashedVehicles;
 extern ConfigOptionBool optionSkipTurbo;
 extern ConfigOptionBool optionRunAndKneel;
 extern ConfigOptionBool optionSeedRng;

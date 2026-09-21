@@ -1319,7 +1319,11 @@ void Vehicle::enterDimensionGate(GameState &state)
 {
 	LogAssert(this->betweenDimensions == false);
 	carriedByVehicle.clear();
-	crashed = false;
+	if (crashed)
+	{
+		crashed = false;
+		state.crashedVehicles.erase(StateRef<Vehicle>{&state, shared_from_this()}.id);
+	}
 	if (this->currentBuilding)
 	{
 		LogError("Vehicle entering dimension gate from a building?");
@@ -1369,7 +1373,11 @@ void Vehicle::leaveBuilding(GameState &state, Vec3<float> initialPosition, float
 void Vehicle::enterBuilding(GameState &state, StateRef<Building> b)
 {
 	carriedByVehicle.clear();
-	crashed = false;
+	if (crashed)
+	{
+		crashed = false;
+		state.crashedVehicles.erase(StateRef<Vehicle>{&state, shared_from_this()}.id);
+	}
 	if (b->currentVehicles.find(&state) != b->currentVehicles.end())
 	{
 		LogError("Vehicle already in a building?");
@@ -1460,6 +1468,21 @@ void Vehicle::setCrashed(GameState &state, bool crashed)
 		                                StateRef<DoodadType>{&state, "DOODAD_13_SMOKE_FUME"});
 		city->map->addObjectToMap(smoke);
 		smokeDoodad = smoke;
+	}
+	if (this->crashed != crashed)
+	{
+		auto ref = StateRef<Vehicle>{&state, shared_from_this()};
+		if (crashed)
+		{
+			rescueAvailableTick = state.gameTime.getTicks() +
+			                      randBoundsInclusive(state.rng, 60, 600) * TICKS_PER_SECOND;
+			state.crashedVehicles.insert(ref.id);
+		}
+		else
+		{
+			rescueAvailableTick = 0;
+			state.crashedVehicles.erase(ref.id);
+		}
 	}
 	this->crashed = crashed;
 }
@@ -1565,7 +1588,11 @@ void Vehicle::processRecoveredVehicle(GameState &state)
 
 void Vehicle::dropCarriedVehicle(GameState &state)
 {
-	carriedVehicle->crashed = false;
+	if (carriedVehicle->crashed)
+	{
+		carriedVehicle->crashed = false;
+		state.crashedVehicles.erase(StateRef<Vehicle>{&state, carriedVehicle.getSp()}.id);
+	}
 	carriedVehicle->startFalling(state);
 	carriedVehicle->carriedByVehicle.clear();
 	carriedVehicle.clear();
@@ -1941,6 +1968,9 @@ void Vehicle::crash(GameState &state, StateRef<Vehicle> attacker)
 	}
 	// Actually crash
 	crashed = true;
+	rescueAvailableTick =
+	    state.gameTime.getTicks() + randBoundsInclusive(state.rng, 60, 600) * TICKS_PER_SECOND;
+	state.crashedVehicles.insert(StateRef<Vehicle>{&state, shared_from_this()}.id);
 	health = std::min(health, (type->crash_health > 0) ? type->crash_health : type->health / 10);
 	switch (type->type)
 	{
@@ -2588,7 +2618,7 @@ bool Vehicle::applyDamage(GameState &state, int damage, float armour, bool &soun
 				{
 					crash(state, attacker);
 				}
-				else
+				else if (config().getBool("OpenApoc.NewFeature.CrashingDamagedVehicles"))
 				{
 					if (!falling)
 					{

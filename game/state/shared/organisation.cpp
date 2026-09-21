@@ -428,6 +428,14 @@ void Organisation::updateMissions(GameState &state)
 			m.execute(state, state.current_city, currentOrg);
 		}
 	}
+}
+
+void Organisation::dispatchRescueCraft(GameState &state, std::set<UString> &claimedVictims)
+{
+	if (state.getPlayer().id == id)
+	{
+		return;
+	}
 	// Find all idle rescue-capable craft
 	std::vector<StateRef<Vehicle>> rescueTransports;
 	for (auto &v : state.vehicles)
@@ -442,48 +450,51 @@ void Organisation::updateMissions(GameState &state)
 	{
 		return;
 	}
-	// Victims already claimed by a RecoverVehicle mission, so two rescuers already dispatched
-	// (or dispatched earlier in this loop) never chase the same target
-	std::set<UString> claimedVictims;
-	for (auto &r : state.vehicles)
-	{
-		for (auto &m : r.second->missions)
-		{
-			if (m.type == VehicleMission::MissionType::RecoverVehicle)
-			{
-				claimedVictims.insert(m.targetVehicle.id);
-			}
-		}
-	}
 	// Dispatch every idle rescue craft this call, instead of just the first one
 	for (auto &rescueTransport : rescueTransports)
 	{
 		StateRef<Vehicle> target;
 		// Rescue owned
-		for (auto &v : state.vehicles)
+		for (auto it = state.crashedVehicles.begin(); it != state.crashedVehicles.end();)
 		{
-			if (v.second->city == rescueTransport->city && v.second->owner.id == id &&
-			    claimedVictims.find(v.first) == claimedVictims.end() &&
-			    VehicleMission::canRecoverVehicle(state, *rescueTransport, *v.second))
+			auto v = state.vehicles.find(*it);
+			if (v == state.vehicles.end() || !v->second->crashed)
 			{
-				target = {&state, v.first};
+				it = state.crashedVehicles.erase(it);
+				continue;
+			}
+			if (v->second->city == rescueTransport->city && v->second->owner.id == id &&
+			    claimedVictims.find(*it) == claimedVictims.end() &&
+			    state.gameTime.getTicks() >= v->second->rescueAvailableTick &&
+			    VehicleMission::canRecoverVehicle(state, *rescueTransport, *v->second))
+			{
+				target = {&state, *it};
 				break;
 			}
+			++it;
 		}
 		// Rescue allies but not aliens
 		if (!target)
 		{
-			for (auto &v : state.vehicles)
+			for (auto it = state.crashedVehicles.begin(); it != state.crashedVehicles.end();)
 			{
-				if (v.second->city == rescueTransport->city &&
-				    v.second->owner != state.getAliens() && v.second->owner.id != id &&
-				    isRelatedTo(v.second->owner) == Relation::Allied &&
-				    claimedVictims.find(v.first) == claimedVictims.end() &&
-				    VehicleMission::canRecoverVehicle(state, *rescueTransport, *v.second))
+				auto v = state.vehicles.find(*it);
+				if (v == state.vehicles.end() || !v->second->crashed)
 				{
-					target = {&state, v.first};
+					it = state.crashedVehicles.erase(it);
+					continue;
+				}
+				if (v->second->city == rescueTransport->city &&
+				    v->second->owner != state.getAliens() && v->second->owner.id != id &&
+				    isRelatedTo(v->second->owner) == Relation::Allied &&
+				    claimedVictims.find(*it) == claimedVictims.end() &&
+				    state.gameTime.getTicks() >= v->second->rescueAvailableTick &&
+				    VehicleMission::canRecoverVehicle(state, *rescueTransport, *v->second))
+				{
+					target = {&state, *it};
 					break;
 				}
+				++it;
 			}
 		}
 		if (target)
