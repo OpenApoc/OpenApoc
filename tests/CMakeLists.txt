@@ -2,7 +2,7 @@ PROJECT (OpenApoc_Tests CXX C)
 
 set (TEST_LIST test_rect test_voxel test_tilemap test_rng test_images
 		test_unicode test_colour test_backtrace test_strings
-		test_gravlift_lineoffire test_squad_assignment)
+		test_gravlift_lineoffire test_gravlift_floor_overlap test_squad_assignment)
 
 foreach(TEST ${TEST_LIST})
 		add_executable(${TEST} ${TEST}.cpp)

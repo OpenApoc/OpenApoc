@@ -406,6 +406,12 @@ void Tile::updateBattlescapeParameters()
 			closedDoorRight = mp->door && !mp->door->open;
 		}
 	}
+	if (hasLift)
+	{
+		// A lift feature is the vertical passage; a plain floor drawn in the same tile must not
+		// block it.
+		solidGround = false;
+	}
 	canStand = solidGround || hasLift;
 	if (!canStand && position.z > 0)
 	{
