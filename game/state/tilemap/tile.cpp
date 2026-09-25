@@ -378,7 +378,10 @@ void Tile::updateBattlescapeParameters()
 			              (o->getType() == TileObject::Type::Feature && !mp->type->gravlift);
 			hasLift = hasLift || mp->type->gravlift;
 			hasExit = hasExit || mp->type->exit;
-			movementCostIn = std::max(movementCostIn, mp->type->movement_cost);
+			if (mp->type->movement_cost > 0)
+			{
+				movementCostIn = std::max(movementCostIn, mp->type->movement_cost);
+			}
 			if (mp->type->sfxIndex != -1)
 			{
 				walkSfx = mp->type->walkSounds;
