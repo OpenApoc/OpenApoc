@@ -2729,11 +2729,21 @@ void VehicleMission::setPathTo(GameState &state, Vehicle &v, Vec3<int> target, i
 		// If target was close enough to reach
 		if (maxIterations > (int)distance)
 		{
-			// If told to give up - cancel mission and crash vehicle so recovery can be initiated
+			// If told to give up - cancel mission
 			if (giveUpIfInvalid)
 			{
 				cancelled = true;
-				v.setCrashed(state);
+				// A genuinely unreachable target crashes the vehicle so recovery can be
+				// initiated. Another vehicle sitting on the target is a transient
+				// obstruction: let the caller retry instead.
+				if (adjustResult.reachability == Reachability::Reachable)
+				{
+					if (v.carriedVehicle)
+					{
+						v.dropCarriedVehicle(state);
+					}
+					v.setCrashed(state);
+				}
 				return;
 			}
 			// If not told to give up - subtract attempt
