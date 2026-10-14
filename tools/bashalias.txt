@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+#variables
+#filename: build_mod.sh, generate_crc.sh
+MODNAME=testmod #User variable, your mod folder name
+MODNAME_ZIP=testmod_common #User variable, the named zip file
+
+#filename: pretty_print_xml.sh
+INPUT_FOLDER=AB_input #User variable
+OUTPUT_FOLDER=AB_output #User variable
+
+#Variables for commonly used flags, program specific
+#grep/filter
+KEEPFOUNDONLY=-Eo #Default -Eo
+#move/rm, get rid of junk?
+CLEANUP="YES" #User variable, default "YES"
+#General variables
+TRASH=/dev/null #Should be left as it is
+DEBUG_TXT="0" #User Variable, Setting it to "1" increase some verbosity such as creating temporay text file
+DEBUG="0" #User variable
+
+
+#aliaes for programs, so that other persons can easily know
+#what it is supposed to do
+alias search_file='ls -F'
+alias open='cat'
+alias string_match='sed'
+alias move='mv'
+alias filter='grep'
+
+
