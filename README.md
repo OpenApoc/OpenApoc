@@ -173,10 +173,14 @@ git clone https://github.com/OpenApoc/OpenApoc.git
 git submodule update --init --recursive
 ```
 
-* Copy the cd.iso file to the 'data' directory under the repository root (Note - despite dosbox having good linux support, the steam version of X-Com Apocalypse will only install if Steam Play is enabled).
+* Put the original disc image in the 'data' directory under the repository root, or point the build at it directly with `-DCD_PATH=/path/to/image`. The build extracts some data tables from the image, so an installed game directory on its own is not enough. A Steam `cd.iso` works as-is (on Linux, install it with Steam Play enabled). A GOG install ships `XCOM.cue` plus `XCOM.BIN` rather than an ISO; either rename `XCOM.cue` to `cd.iso` and copy `XCOM.BIN` next to it, or leave the names alone and configure with `-DCD_PATH=/path/to/XCOM.cue` (point at the cue sheet, not the directory that contains it). The image must include the audio tracks: the runtime opens `music` from it, and an image without them starts with sound disabled.
 
 ```sh
 cp /path/to/cd.iso data/
+
+# or, from a GOG BIN/CUE pair:
+cp /path/to/XCOM.cue data/cd.iso
+cp /path/to/XCOM.BIN data/
 ```
 
 * Create a subdirectory ('build' in this example) in the OpenApoc checkout directory, and from that use cmake to configure OpenApoc.
@@ -204,7 +208,7 @@ make -j4
 
 ### Building on macOS
 
-(Tested on macOS Sequoia 15.6 (24G84)
+(Tested on macOS Sequoia 15.6 (24G84))
 
 * On macOS, install the [Homebrew](https://brew.sh):
 
@@ -242,10 +246,14 @@ echo 'export PATH="/opt/homebrew/opt/qt@6/bin:$PATH"' >> ~/.zprofile
 echo 'export PATH="/opt/homebrew/opt/qt@6/bin:$PATH"' >> ~/.bashrc
 ```
 
-* Copy the cd.iso file to the 'data' directory under the repository root (Note - despite dosbox having good linux support, the steam version of X-Com Apocalypse will only install if Steam Play is enabled).
+* Put the original disc image in the 'data' directory under the repository root, or point the build at it directly with `-DCD_PATH=/path/to/image`. The build extracts some data tables from the image, so an installed game directory on its own is not enough. A Steam `cd.iso` works as-is. A GOG install ships `XCOM.cue` plus `XCOM.BIN` rather than an ISO; either rename `XCOM.cue` to `cd.iso` and copy `XCOM.BIN` next to it, or leave the names alone and configure with `-DCD_PATH=/path/to/XCOM.cue` (point at the cue sheet, not the directory that contains it). The image must include the audio tracks: the runtime opens `music` from it, and an image without them starts with sound disabled.
 
 ```sh
 cp /path/to/cd.iso data/
+
+# or, from a GOG BIN/CUE pair:
+cp /path/to/XCOM.cue data/cd.iso
+cp /path/to/XCOM.BIN data/
 ```
 
 * Create a subdirectory ('build' in this example) in the OpenApoc checkout directory, and from that use cmake to configure OpenApoc.

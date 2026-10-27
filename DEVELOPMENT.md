@@ -10,7 +10,7 @@ Clone the repository and initialize submodules before configuring a build:
 git submodule update --init --recursive
 ```
 
-OpenApoc needs data from a lawful copy of the original X-COM: Apocalypse release. Place `cd.iso` in `data/`, or set `CD_PATH` during CMake configuration to point at the ISO or extracted CD tree:
+OpenApoc needs data from a lawful copy of the original X-COM: Apocalypse release. Place `cd.iso` in `data/`, or set `CD_PATH` during CMake configuration to point at the ISO, a `.cue` sheet (for GOG's BIN/CUE image), or an extracted CD tree:
 
 ```sh
 cmake -S . -B build -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCD_PATH=/path/to/cd.iso
@@ -40,7 +40,7 @@ Useful CMake options include:
 - `USE_SYSTEM_QT=ON|OFF` to use a system Qt installation instead of the vcpkg-provided package where supported.
 - `ENABLE_TESTS=ON|OFF` to build or skip the test binaries.
 - `EXTRACT_DATA=ON|OFF` to run the data extractor as part of the default target.
-- `CD_PATH=/path/to/cd.iso` to override the default `data/cd.iso` path.
+- `CD_PATH=/path/to/cd.iso` (or a GOG `.cue` sheet) to override the default `data/cd.iso` path.
 - `USE_PCH=ON|OFF` to enable precompiled headers.
 - `LTO=ON|OFF` to request link-time optimization where supported.
 
