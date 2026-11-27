@@ -293,8 +293,12 @@ void Tile::updateBattlescapeUnitPresent()
 			auto pos = o->getPosition();
 			auto x = pos.x - position.x;
 			auto y = pos.y - position.y;
+			// A small unit's bounds can reach into the tile above it, so only count it
+			// if it is standing in this tile, otherwise it opens doors on the level above
+			bool standingHere = o->getOwningTile() == this;
 			doorOpeningUnitPresent =
-			    doorOpeningUnitPresent | (x > 0.45f && x < 0.55f && y > 0.45f && y < 0.55f) ||
+			    doorOpeningUnitPresent |
+			        (standingHere && x > 0.45f && x < 0.55f && y > 0.45f && y < 0.55f) ||
 			    u->getUnit()->isLarge();
 			if (firstUnitPresent && doorOpeningUnitPresent)
 			{
