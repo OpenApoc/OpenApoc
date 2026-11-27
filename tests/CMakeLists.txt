@@ -55,6 +55,12 @@ target_link_libraries(${TEST} OpenApoc_Library OpenApoc_Framework OpenApoc_GameS
 # Manual diagnostic harness for issue #647, run by hand against its
 # attached savegame; deliberately not add_test'd.
 
+# Manual diagnostic harness for issue #1724, run by hand against its
+# attached savegame; deliberately not add_test'd.
+set(TEST test_door_level)
+add_executable(${TEST} ${TEST}.cpp)
+target_link_libraries(${TEST} OpenApoc_Library OpenApoc_Framework OpenApoc_GameState)
+
 # Standalone harness, run by hand against a savegame; deliberately not add_test'd.
 set(TEST test_mission_end_recheck)
 add_executable(${TEST} ${TEST}.cpp)
